@@ -5,17 +5,20 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RoleSeeder extends Seeder
 {
     public function run(): void
     {
         // Reset cached roles and permissions
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Create roles
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
         $memberRole = Role::firstOrCreate(['name' => 'member']);
+        Role::firstOrCreate(['name' => 'staff']);
+        Role::firstOrCreate(['name' => 'subscriber']);
         Role::firstOrCreate(['name' => 'guest']);
 
         // Create permissions

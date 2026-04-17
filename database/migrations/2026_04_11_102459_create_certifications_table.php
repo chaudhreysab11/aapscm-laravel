@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('certifications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('course_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('course_id')->nullable(); // FK added after courses table exists
             $table->string('certificate_number')->unique();
             $table->timestamp('issued_at');
             $table->timestamp('expires_at')->nullable();

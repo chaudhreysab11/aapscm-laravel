@@ -23,6 +23,7 @@ class ProductService
 
     public function findProduct(int $id): ?Product
     {
+        /** @var Product|null */
         return $this->productRepository->find($id);
     }
 
@@ -37,6 +38,7 @@ class ProductService
             $data['slug'] = Str::slug($data['name']);
         }
 
+        /** @var Product */
         return $this->productRepository->create($data);
     }
 

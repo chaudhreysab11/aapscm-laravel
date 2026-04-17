@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use App\Models\Page;
@@ -18,8 +20,27 @@ class PageRepository extends BaseRepository implements PageRepositoryInterface
         return Page::where('slug', $slug)->first();
     }
 
-    public function getPublished(): Collection
+    public function findPublished(): Collection
     {
-        return Page::where('status', 'published')->get();
+        return Page::published()->get();
+    }
+
+    public function findNavTree(): Collection
+    {
+        return Page::published()
+            ->navVisible()
+            ->orderBy('sort_order')
+            ->with('children')
+            ->get();
+    }
+
+    public function findChildren(int $parentId): Collection
+    {
+        return Page::where('parent_id', $parentId)->orderBy('sort_order')->get();
+    }
+
+    public function findById(int $id): ?Page
+    {
+        return Page::find($id);
     }
 }

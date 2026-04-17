@@ -1,0 +1,8 @@
+{{-- WordPress page content: board-of-directors-dr-theophilus-owusu --}}
+<div class="wp-content">
+<h3>Dr. Theophilus Owusu</h3>		
+															<img width="206" height="206" src="https://aapscm.org/wp-content/uploads/2023/10/5-2.png" alt="" loading="lazy" srcset="https://aapscm.org/wp-content/uploads/2023/10/5-2.png 206w, https://aapscm.org/wp-content/uploads/2023/10/5-2-150x150.png 150w, https://aapscm.org/wp-content/uploads/2023/10/5-2-100x100.png 100w" sizes="(max-width: 206px) 100vw, 206px" />															
+			<h2>Dr. Theophilus Owusu</h2>		
+			<h5>Board Executive Director, Affiliate Partners Unit</h5>		
+		<p>Dr. Owusu is the Executive Board Director in charge of the Affiliate Partners’ Unit.  He is presently an Associate Professor with the Department of Supply Chain Management at Keiser University, FL USA. He received his BS from Robert Morris University, PA, his Masters and Ph.D. from the same University. Dr. Owusu has spent time in Japan, Korea, Australia, and Brazil, gaining invaluable knowledge about their cultural and business practices. Through his travels and research abroad studying distribution practices, Dr. Owusu has gained a greater understanding of the ideology of logistics and distribution.</p><p>Dr. Owusu pulls from these international experiences to enhance his lectures and encourage students to understand cultural differences existent in the business world. He believes a great challenge to conducting business abroad is dealing with a diversity of cultures and languages. Despite these inherent challenges, he stresses the value of doing business abroad and its ability to broaden students’ understanding of the global environment.</p>
+</div>

@@ -1,0 +1,41 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Policies;
+
+use App\Models\Page;
+use App\Models\User;
+
+class PagePolicy
+{
+    public function viewAny(User $user): bool
+    {
+        return $user->hasRole(['admin', 'staff']);
+    }
+
+    public function view(User $user, Page $page): bool
+    {
+        return $user->hasRole(['admin', 'staff']);
+    }
+
+    public function create(User $user): bool
+    {
+        return $user->hasRole(['admin', 'staff']);
+    }
+
+    public function update(User $user, Page $page): bool
+    {
+        return $user->hasRole(['admin', 'staff']);
+    }
+
+    public function delete(User $user, Page $page): bool
+    {
+        return $user->hasRole('admin');
+    }
+
+    public function publish(User $user, Page $page): bool
+    {
+        return $user->hasRole(['admin', 'staff']);
+    }
+}

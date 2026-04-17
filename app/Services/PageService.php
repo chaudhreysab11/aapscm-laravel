@@ -18,11 +18,12 @@ class PageService
 
     public function getPublishedPages(): Collection
     {
-        return $this->pageRepository->getPublished();
+        return $this->pageRepository->findPublished();
     }
 
     public function findPage(int $id): ?Page
     {
+        /** @var Page|null */
         return $this->pageRepository->find($id);
     }
 
@@ -37,6 +38,7 @@ class PageService
             $data['slug'] = Str::slug($data['title']);
         }
 
+        /** @var Page */
         return $this->pageRepository->create($data);
     }
 

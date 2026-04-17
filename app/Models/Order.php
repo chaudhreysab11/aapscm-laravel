@@ -15,10 +15,16 @@ class Order extends Model
         'user_id',
         'order_number',
         'status',
+        'payment_method',
+        'payment_intent_id',
+        'payment_status',
+        'currency',
         'subtotal',
         'tax',
+        'discount',
         'total',
         'notes',
+        'source_id',
     ];
 
     protected function casts(): array
@@ -26,9 +32,12 @@ class Order extends Model
         return [
             'subtotal' => 'decimal:2',
             'tax' => 'decimal:2',
+            'discount' => 'decimal:2',
             'total' => 'decimal:2',
         ];
     }
+
+    // ─── Relationships ──────────────────────────────────────────────────────────
 
     public function user(): BelongsTo
     {
@@ -38,5 +47,12 @@ class Order extends Model
     public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    // ─── Helpers ────────────────────────────────────────────────────────────────
+
+    public function isPaid(): bool
+    {
+        return $this->payment_status === 'paid';
     }
 }

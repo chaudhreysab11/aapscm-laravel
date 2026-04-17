@@ -16,6 +16,8 @@ class OrderItem extends Model
         'quantity',
         'unit_price',
         'total_price',
+        'item_type',
+        'meta',
     ];
 
     protected function casts(): array
@@ -23,6 +25,7 @@ class OrderItem extends Model
         return [
             'unit_price' => 'decimal:2',
             'total_price' => 'decimal:2',
+            'meta' => 'array',
         ];
     }
 

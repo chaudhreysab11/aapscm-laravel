@@ -17,8 +17,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             UserSeeder::class,
-            ProductSeeder::class,
-            PageSeeder::class,
+            MembershipTiersSeeder::class,
+            RedirectsSeeder::class,
+            WpCmsPagesImportSeeder::class,
+            WpRedirectsSeeder::class,
         ]);
     }
 }

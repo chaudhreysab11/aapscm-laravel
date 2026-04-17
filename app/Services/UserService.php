@@ -17,6 +17,7 @@ class UserService
 
     public function findUser(int $id): ?User
     {
+        /** @var User|null */
         return $this->userRepository->find($id);
     }
 
@@ -27,6 +28,7 @@ class UserService
 
     public function createUser(array $data): User
     {
+        /** @var User */
         return $this->userRepository->create($data);
     }
 
