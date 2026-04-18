@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\SeoMeta;
+use Database\Seeders\Support\UrlRewriter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +23,7 @@ class SeoMetaFactory extends Factory
             'url_path' => '/' . $slug . '/',
             'seo_title' => fake()->sentence(4) . ' | AAPSCM',
             'seo_description' => fake()->sentence(15),
-            'canonical_url' => 'https://aapscm.org/' . $slug . '/',
+            'canonical_url' => UrlRewriter::canonical($slug),
             'og_title' => fake()->sentence(4) . ' | AAPSCM',
             'og_description' => fake()->sentence(15),
             'og_image' => null,
@@ -37,7 +38,7 @@ class SeoMetaFactory extends Factory
     {
         return $this->state([
             'url_path' => $urlPath,
-            'canonical_url' => 'https://aapscm.org' . $urlPath,
+            'canonical_url' => UrlRewriter::canonical(trim($urlPath, '/')),
         ]);
     }
 }

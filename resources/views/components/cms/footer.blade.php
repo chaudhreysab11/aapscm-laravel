@@ -7,6 +7,9 @@
 --}}
 
 @php
+// Internal URL with enforced trailing slash. Trims incidental whitespace in slug data.
+$u = fn (string $p): string => rtrim(url(trim($p)), '/') . '/';
+
 $socialLinks = [
     ['https://www.facebook.com/AAPSCM',                      'Facebook',  'M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z'],
     ['https://www.instagram.com/aapscmofficial/',             'Instagram', 'M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01'],
@@ -41,7 +44,7 @@ $socialLinks = [
                         ['Become a Student Member',               '/student-membership'],
                         ['Membership FAQs',                       '/membership-faqs'],
                     ] as [$l, $h])
-                    <li><a href="{{ url($h) }}" class="text-white no-underline hover:text-yellow-400 transition-colors leading-snug">{!! $l !!}</a></li>
+                    <li><a href="{{ $u($h) }}" class="text-white no-underline hover:text-yellow-400 transition-colors leading-snug">{!! $l !!}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -57,7 +60,7 @@ $socialLinks = [
                         ['Career Center/Job Seeker',     '/career-center'],
                         ['Privacy Policy/Legal Terms',   '/privacy-policy-legal'],
                     ] as [$l, $h])
-                    <li><a href="{{ url($h) }}" class="text-white no-underline hover:text-yellow-400 transition-colors">{{ $l }}</a></li>
+                    <li><a href="{{ $u($h) }}" class="text-white no-underline hover:text-yellow-400 transition-colors">{{ $l }}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -74,7 +77,7 @@ $socialLinks = [
                         ['Job Opportunities',    '/post-job-opportunities'],
                         ['Member Services',      '/member-services'],
                     ] as [$l, $h])
-                    <li><a href="{{ url($h) }}" class="text-white no-underline hover:text-yellow-400 transition-colors">{{ $l }}</a></li>
+                    <li><a href="{{ $u($h) }}" class="text-white no-underline hover:text-yellow-400 transition-colors">{{ $l }}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -94,7 +97,7 @@ $socialLinks = [
                         ['Verify a Certification',     '/verify-a-certificate'],
                         ['Digital Badges',             '/digital-badges'],
                     ] as [$l, $h])
-                    <li><a href="{{ url($h) }}" class="text-white no-underline hover:text-yellow-400 transition-colors">{!! $l !!}</a></li>
+                    <li><a href="{{ $u($h) }}" class="text-white no-underline hover:text-yellow-400 transition-colors">{!! $l !!}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -112,8 +115,8 @@ $socialLinks = [
 
             {{-- Logo + social --}}
             <div>
-                <a href="{{ url('/') }}" class="inline-block mb-5 no-underline" aria-label="AAPSCM Home">
-                    <img src="https://aapscm.org/wp-content/uploads/2023/04/logo.jpg"
+                <a href="{{ $u('/') }}" class="inline-block mb-5 no-underline" aria-label="AAPSCM Home">
+                    <img src="/storage/cms-images/2023/04/logo.jpg"
                          alt="AAPSCM® — American Association of Procurement, Supply Chain &amp; Tourism Management"
                          class="h-[150px] w-auto object-contain"
                          loading="lazy">
@@ -171,7 +174,7 @@ $socialLinks = [
 
                 {{-- ICE badge --}}
                 <div class="mt-5">
-                    <img src="https://aapscm.org/wp-content/uploads/2023/04/Image.jpg"
+                    <img src="/storage/cms-images/2023/04/Image.jpg"
                          alt="Proud Member of the Institute for Credentialing Excellence"
                          class="w-48 h-auto object-contain"
                          loading="lazy">

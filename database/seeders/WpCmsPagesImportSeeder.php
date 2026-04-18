@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Page;
 use App\Models\Redirect;
 use App\Models\SeoMeta;
+use Database\Seeders\Support\UrlRewriter;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -54,6 +55,9 @@ class WpCmsPagesImportSeeder extends Seeder
         $slugToId = [];
 
         foreach ($this->definitions() as $def) {
+            $def = $this->normalizeUrls($def);
+            $canonical = UrlRewriter::canonical($def['slug']);
+
             $page = Page::updateOrCreate(
                 ['source_id' => $def['source_id']],
                 [
@@ -69,7 +73,7 @@ class WpCmsPagesImportSeeder extends Seeder
                     'meta_description' => $def['seo_description'] ?? '',
                     'seo_title' => $def['seo_title'] ?? $def['title'],
                     'seo_description' => $def['seo_description'] ?? '',
-                    'seo_canonical' => $def['canonical'],
+                    'seo_canonical' => $canonical,
                     'is_published' => true,
                     'show_in_nav' => $def['show_in_nav'] ?? false,
                     'sort_order' => $def['sort_order'] ?? 0,
@@ -84,7 +88,7 @@ class WpCmsPagesImportSeeder extends Seeder
                 [
                     'seo_title' => $def['seo_title'] ?? $def['title'],
                     'seo_description' => $def['seo_description'] ?? '',
-                    'canonical_url' => $def['canonical'],
+                    'canonical_url' => $canonical,
                     'og_title' => $def['seo_title'] ?? $def['title'],
                     'og_description' => $def['seo_description'] ?? '',
                     'og_image' => $def['og_image'] ?? null,
@@ -97,6 +101,61 @@ class WpCmsPagesImportSeeder extends Seeder
         }
 
         return $slugToId;
+    }
+
+    /**
+     * Walks a $def array and rewrites any aapscm.org URLs it finds to local paths.
+     * Applied before the page is persisted so nothing in the DB points at the live WP origin.
+     *
+     * @param array<string, mixed> $def
+     * @return array<string, mixed>
+     */
+    private function normalizeUrls(array $def): array
+    {
+        if (isset($def['content']) && is_string($def['content'])) {
+            $def['content'] = UrlRewriter::rewriteHtml($def['content']);
+        }
+
+        if (isset($def['og_image']) && is_string($def['og_image'])) {
+            $def['og_image'] = UrlRewriter::image($def['og_image']);
+        }
+
+        if (isset($def['blocks']) && is_array($def['blocks'])) {
+            $def['blocks'] = $this->walkAndRewrite($def['blocks']);
+        }
+
+        if (isset($def['page_data']) && is_array($def['page_data'])) {
+            $def['page_data'] = $this->walkAndRewrite($def['page_data']);
+        }
+
+        return $def;
+    }
+
+    /**
+     * Recursively walks an array and rewrites string leaves that contain
+     * aapscm.org URLs (both image URLs and internal page URLs).
+     */
+    private function walkAndRewrite(mixed $value): mixed
+    {
+        if (is_string($value)) {
+            if (str_contains($value, '/wp-content/uploads/')) {
+                return UrlRewriter::image($value);
+            }
+
+            if (str_contains($value, '<') || str_contains($value, 'aapscm.org')) {
+                return UrlRewriter::rewriteHtml($value);
+            }
+
+            return $value;
+        }
+
+        if (is_array($value)) {
+            foreach ($value as $k => $v) {
+                $value[$k] = $this->walkAndRewrite($v);
+            }
+        }
+
+        return $value;
     }
 
     // ---------------------------------------------------------------------------

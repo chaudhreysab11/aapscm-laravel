@@ -6,6 +6,9 @@
         stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 18l6-6-6-6"/>
     </svg>';
+
+    // Internal URL with enforced trailing slash. Trims incidental whitespace in slug data.
+    $u = fn (string $p): string => rtrim(url(trim($p)), '/') . '/';
 ?>
 
 <header
@@ -15,7 +18,7 @@
         mobileSection: null,
         _t: null,
         on(m)  { clearTimeout(this._t); this.openMenu = m; },
-        off()  { this._t = setTimeout(() => { this.openMenu = null; }, 180); },
+        off()  { this._t = setTimeout(() => { this.openMenu = null; }, 280); },
         keep(m){ clearTimeout(this._t); this.openMenu = m; },
         mob(s) { this.mobileSection = this.mobileSection === s ? null : s; }
     }"
@@ -27,10 +30,10 @@
     <div class="flex items-center py-3">
 
         
-        <a href="<?php echo e(url('/')); ?>" class="flex-shrink-0 mr-4 lg:mr-6" aria-label="AAPSCM Home">
-            <img src="https://aapscm.org/wp-content/uploads/2023/04/logo.jpg"
+        <a href="<?php echo e($u('/')); ?>" class="flex-shrink-0 mr-4 lg:mr-6" aria-label="AAPSCM Home">
+            <img src="/storage/cms-images/2023/04/logo.jpg"
                  alt="AAPSCM®"
-                 class="h-[150px] w-auto object-contain"
+                 class="h-[120px] w-auto object-contain"
                  loading="eager">
         </a>
 
@@ -39,66 +42,77 @@
 
             
             <nav class="flex items-center justify-end gap-1 pb-2 mb-1 border-b border-gray-100" aria-label="Utility navigation">
-                <a href="<?php echo e(url('/')); ?>"
+                <a href="<?php echo e($u('/')); ?>"
                    class="px-1 py-1 text-sm text-gray-600 hover:text-[#0B2F5E] rounded transition-colors">Home</a>
-                <a href="<?php echo e(url('/about-us')); ?>"
+                <a href="<?php echo e($u('/about-us')); ?>"
                    class="px-1 py-1 text-sm text-gray-600 hover:text-[#0B2F5E] rounded transition-colors">About Us</a>
-                <a href="<?php echo e(url('/affiliate-partners')); ?>"
+                <a href="<?php echo e($u('/affiliate-partners')); ?>"
                    class="px-1 py-1 text-sm text-gray-600 hover:text-[#0B2F5E] rounded transition-colors">Affiliate Partners</a>
-                <a href="<?php echo e(url('/our-usa-chapters')); ?>"
+                <a href="<?php echo e($u('/us-charters')); ?>"
                    class="px-1 py-1 text-sm text-gray-600 hover:text-[#0B2F5E] rounded transition-colors">USA Chapters</a>
-                <a href="<?php echo e(url('/workshop-trainings')); ?>"
+                <a href="<?php echo e($u('/aapscm-training')); ?>"
                    class="px-1 py-1 text-sm text-gray-600 hover:text-[#0B2F5E] rounded transition-colors">AAPSCM&reg; Training</a>
 
                 
-                <div class="relative" x-data="{ utilFst: false }" @mouseenter="utilFst=true" @mouseleave="utilFst=false">
-                    <button @click="utilFst=!utilFst"
+                <div class="relative"
+                     x-data="{ open: false, _t: null, show(){ clearTimeout(this._t); this.open = true; }, hide(){ this._t = setTimeout(() => { this.open = false; }, 220); } }"
+                     @mouseenter="show()" @mouseleave="hide()">
+                    <button @click="open = !open"
                             class="flex items-center gap-0.5 px-2 py-1 text-sm text-gray-600 hover:text-[#0B2F5E] rounded transition-colors">
                         Free Student Training
-                        <svg class="w-3 h-3 transition-transform" :class="utilFst ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-3 h-3 transition-transform" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
-                    <div x-show="utilFst"
+                    
+                    <div x-show="open"
                          x-transition:enter="transition ease-out duration-100" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                         class="absolute right-0 top-full mt-1 w-56 bg-white rounded-lg shadow-xl border border-gray-100 py-1 z-50"
+                         @mouseenter="show()" @mouseleave="hide()"
+                         class="absolute right-0 top-full pt-1 w-56 z-50"
                          style="display:none">
-                        <a href="<?php echo e(url('/procurement-management')); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0B2F5E]">Procurement Management</a>
-                        <a href="<?php echo e(url('/supply-chain-management ')); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0B2F5E]">Supply Chain Management</a>
+                        <div class="bg-white rounded-lg shadow-xl border border-gray-100 py-1">
+                            <a href="<?php echo e($u('/procurement-management')); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0B2F5E]">Procurement Management</a>
+                            <a href="<?php echo e($u('/supply-chain-management')); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0B2F5E]">Supply Chain Management</a>
+                        </div>
                     </div>
                 </div>
 
                 
-                <div class="relative" x-data="{ utilExam: false }" @mouseenter="utilExam=true" @mouseleave="utilExam=false">
-                    <button @click="utilExam=!utilExam"
+                <div class="relative"
+                     x-data="{ open: false, _t: null, show(){ clearTimeout(this._t); this.open = true; }, hide(){ this._t = setTimeout(() => { this.open = false; }, 220); } }"
+                     @mouseenter="show()" @mouseleave="hide()">
+                    <button @click="open = !open"
                             class="flex items-center gap-0.5 px-2 py-1 text-sm text-gray-600 hover:text-[#0B2F5E] rounded transition-colors">
                         Exam, Tests & Training
-                        <svg class="w-3 h-3 transition-transform" :class="utilExam ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-3 h-3 transition-transform" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
-                    <div x-show="utilExam"
+                    <div x-show="open"
                          x-transition:enter="transition ease-out duration-100" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                         class="absolute right-0 top-full mt-1 w-44 bg-white rounded-lg shadow-xl border border-gray-100 py-1 z-50"
+                         @mouseenter="show()" @mouseleave="hide()"
+                         class="absolute right-0 top-full pt-1 w-44 z-50"
                          style="display:none">
-                        <a href="<?php echo e(url('/all-courses')); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0B2F5E]">All Courses</a>
-                        <a href="<?php echo e(url('/online-exam')); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0B2F5E]">Online Exams</a>
+                        <div class="bg-white rounded-lg shadow-xl border border-gray-100 py-1">
+                            <a href="<?php echo e($u('/all-courses')); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0B2F5E]">All Courses</a>
+                            <a href="<?php echo e($u('/online-exam')); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#0B2F5E]">Online Exams</a>
+                        </div>
                     </div>
                 </div>
 
                 
                 <div class="ml-3 pl-3 border-l border-gray-200 flex-shrink-0">
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
-                        <a href="<?php echo e(url('/dashboard')); ?>" class="text-[#08186A] text-sm mr-2 transition-colors font-medium hover:bg-[#08186A] hover:text-white px-3 py-1.5 rounded-full border border-[#08186A]">Dashboard</a>
+                        <a href="<?php echo e($u('/dashboard')); ?>" class="bg-[#08186A] text-white text-sm mr-2 transition-colors font-medium hover:bg-white hover:text-[#08186A] px-3 py-1.5 rounded-full border border-[#08186A]">Dashboard</a>
                         <form method="POST" action="<?php echo e(route('logout')); ?>" class="inline">
                             <?php echo csrf_field(); ?>
-                            <button type="submit" class="border border-[#08186A] text-[#08186A] text-sm font-medium px-4 py-1.5 rounded-full hover:bg-[#08186A] hover:text-white transition-colors">
+                            <button type="submit" class="border border-[#08186A] bg-[#08186A] text-white text-sm font-medium px-4 py-1.5 rounded-full hover:bg-white hover:text-[#08186A] transition-colors">
                                 Logout
                             </button>
                         </form>
                     <?php else: ?>
                         <a href="<?php echo e(route('login')); ?>"
-                           class="border-2 border-[#08186A] text-[#08186A] text-sm font-semibold px-5 py-1.5 rounded-full hover:bg-[#08186A] hover:text-white transition-colors whitespace-nowrap">
+                           class="border-2 border-[#08186A] bg-[#08186A] text-white text-sm font-semibold px-5 py-1.5 rounded-full hover:bg-white hover:text-[#08186A] transition-colors whitespace-nowrap">
                             Members Login
                         </a>
                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
@@ -134,7 +148,7 @@
                                 ['Student Membership',            '/student-membership'],
                                 ['Fellow Membership',             '/fellow-membership'],
                             ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                            <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
+                            <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
                                 <?php echo $chevron; ?> <?php echo e($l); ?>
 
                             </a>
@@ -142,10 +156,10 @@
                         </div>
                         <div class="px-5">
                             <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Why AAPSCM</p>
-                            <a href="<?php echo e(url('/why-join-aapscm')); ?>" class="flex items-start gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors leading-snug" role="menuitem">
+                            <a href="<?php echo e($u('/why-join-aapscm')); ?>" class="flex items-start gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors leading-snug" role="menuitem">
                                 <?php echo $chevron; ?> Why Join AAPSCM®
                             </a>
-                            <a href="<?php echo e(url('/chartered-supply-chain-professional-member')); ?>" class="flex items-start gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors leading-snug" role="menuitem">
+                            <a href="<?php echo e($u('/chartered-supply-chain-professional-member')); ?>" class="flex items-start gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors leading-snug" role="menuitem">
                                 <?php echo $chevron; ?> Become a Chartered Professional/Manager
                             </a>
                         </div>
@@ -157,7 +171,7 @@
                                 ['Membership FAQs',                   '/membership-faqs'],
                                 ['Benefits and Resources',            '/benefits-and-resources'],
                             ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                            <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
+                            <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
                                 <?php echo $chevron; ?> <?php echo e($l); ?>
 
                             </a>
@@ -196,16 +210,16 @@
                                     ['Benefits and Resources',    '/benefits-and-resources'],
                                     ['Resources',                 '/benefits-and-resources'],
                                     ['4 Steps to Certification',  '/4-steps-to-verification'],
-                                    ['Workshop/Training',          '/workshop-trainings'],
+                                    ['Workshop/Training',          '/aapscm-training'],
                                 ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                                <a href="<?php echo e(url($h)); ?>" class="block py-1.5 text-[13px] text-[#0B2F5E] hover:underline leading-snug" role="menuitem"><?php echo e($l); ?></a>
+                                <a href="<?php echo e($u($h)); ?>" class="block py-1.5 text-[13px] text-[#0B2F5E] hover:underline leading-snug" role="menuitem"><?php echo e($l); ?></a>
                                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                             </div>
                             
                             <div class="grid grid-cols-6 gap-3 flex-1 min-w-0">
                                 
                                 <div>
-                                    <a href="<?php echo e(url('/procurement-management-certifications')); ?>"
+                                    <a href="<?php echo e($u('/procurement-management-certifications')); ?>"
                                        class="block text-[11px] font-bold text-center bg-[#1e5c38] text-white px-2 py-2 rounded mb-2 hover:bg-[#174d2f] transition-colors leading-tight" role="menuitem">
                                         Procurement<br>Management
                                     </a>
@@ -232,12 +246,12 @@
                                         ['CIPPM®',        '/certified-international-professional-in-procurement-materials-management-cippm'],
                                         ['CIMPM®',        '/certified-international-manager-in-procurement-materials-management-cimpm'],
                                     ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                                    <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-1.5 py-0.5 text-[12px] text-gray-700 hover:text-[#0B2F5E] transition-colors" role="menuitem"><?php echo $ob; ?> <?php echo e($l); ?></a>
+                                    <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-1.5 py-0.5 text-[12px] text-gray-700 hover:text-[#0B2F5E] transition-colors" role="menuitem"><?php echo $ob; ?> <?php echo e($l); ?></a>
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                                 </div>
                                 
                                 <div>
-                                    <a href="<?php echo e(url('/supply-chain-management-certifications')); ?>"
+                                    <a href="<?php echo e($u('/supply-chain-management-certifications')); ?>"
                                        class="block text-[11px] font-bold text-center bg-[#1e5c38] text-white px-2 py-2 rounded mb-2 hover:bg-[#174d2f] transition-colors leading-tight" role="menuitem">
                                         Supply Chain<br>Management
                                     </a>
@@ -260,12 +274,12 @@
                                         ['CIMWIM®',     '/certified-international-manager-in-warehouse-inventory-management-cimwim'],
                                         ['CHSTE®',      '/chartered-healthcare-supply-chain-transformation-executive-chste'],
                                     ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                                    <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-1.5 py-0.5 text-[12px] text-gray-700 hover:text-[#0B2F5E] transition-colors" role="menuitem"><?php echo $ob; ?> <?php echo e($l); ?></a>
+                                    <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-1.5 py-0.5 text-[12px] text-gray-700 hover:text-[#0B2F5E] transition-colors" role="menuitem"><?php echo $ob; ?> <?php echo e($l); ?></a>
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                                 </div>
                                 
                                 <div>
-                                    <a href="<?php echo e(url('/tourism-management-certifications')); ?>"
+                                    <a href="<?php echo e($u('/tourism-management-certifications')); ?>"
                                        class="block text-[11px] font-bold text-center bg-[#1e5c38] text-white px-2 py-2 rounded mb-2 hover:bg-[#174d2f] transition-colors leading-tight" role="menuitem">
                                         Tourism<br>Management
                                     </a>
@@ -287,12 +301,12 @@
                                         ['SDMP®',       '/certified-smart-destination-management-professional-sdmp'],
                                         ['DTTS®',       '/certified-digital-tourism-transformation-specialist-dtts'],
                                     ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                                    <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-1.5 py-0.5 text-[12px] text-gray-700 hover:text-[#0B2F5E] transition-colors" role="menuitem"><?php echo $ob; ?> <?php echo e($l); ?></a>
+                                    <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-1.5 py-0.5 text-[12px] text-gray-700 hover:text-[#0B2F5E] transition-colors" role="menuitem"><?php echo $ob; ?> <?php echo e($l); ?></a>
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                                 </div>
                                 
                                 <div>
-                                    <a href="<?php echo e(url('/e-commerce-certifications ')); ?>"
+                                    <a href="<?php echo e($u('/e-commerce-certifications ')); ?>"
                                        class="block text-[11px] font-bold text-center bg-[#1e5c38] text-white px-2 py-2 rounded mb-2 hover:bg-[#174d2f] transition-colors leading-tight" role="menuitem">
                                         E-Commerce Management & Administration
                                     </a>
@@ -303,12 +317,12 @@
                                         ['AC-SEEP®',    '/american-certified-ethical-practices-sustainable-e-commerce-professional-ac-seep'],
                                         ['CGCBE®',      '/chartered-global-cross-border-e-commerce-manager-cgcbe'],
                                     ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                                    <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-1.5 py-0.5 text-[12px] text-gray-700 hover:text-[#0B2F5E] transition-colors" role="menuitem"><?php echo $ob; ?> <?php echo e($l); ?></a>
+                                    <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-1.5 py-0.5 text-[12px] text-gray-700 hover:text-[#0B2F5E] transition-colors" role="menuitem"><?php echo $ob; ?> <?php echo e($l); ?></a>
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                                 </div>
                                 
                                 <div>
-                                    <a href="<?php echo e(url('/combined-procurement-logistics-and-supply-chain-certifications')); ?>"
+                                    <a href="<?php echo e($u('/combined-procurement-logistics-and-supply-chain-certifications')); ?>"
                                        class="block text-[11px] font-bold text-center bg-[#1e5c38] text-white px-2 py-2 rounded mb-2 hover:bg-[#174d2f] transition-colors leading-tight" role="menuitem">
                                         Combined Procurement and Supply Chain Certifications
                                     </a>
@@ -324,12 +338,12 @@
                                         ['EDPLSCL®',    '/executive-diploma-in-procurement-logistics-supply-chain-leadership-edplscl'],
                                         ['CPLIMP®',     '/combined-procurement-logistics-and-supply-chain-certifications'],
                                     ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                                    <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-1.5 py-0.5 text-[12px] text-gray-700 hover:text-[#0B2F5E] transition-colors" role="menuitem"><?php echo $ob; ?> <?php echo e($l); ?></a>
+                                    <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-1.5 py-0.5 text-[12px] text-gray-700 hover:text-[#0B2F5E] transition-colors" role="menuitem"><?php echo $ob; ?> <?php echo e($l); ?></a>
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                                 </div>
                                 
                                 <div>
-                                    <a href="<?php echo e(url('/artificial-intelligence-ai-courses')); ?>"
+                                    <a href="<?php echo e($u('/artificial-intelligence-ai-courses')); ?>"
                                        class="block text-[11px] font-bold text-center bg-[#1e5c38] text-white px-2 py-2 rounded mb-2 hover:bg-[#174d2f] transition-colors leading-tight" role="menuitem">
                                         Artificial Intelligence (AI) courses
                                     </a>
@@ -354,7 +368,7 @@
                                         ['AITP-DMP®',   '/certified-ai-enabled-travel-personalization-digital-marketing-professional-aitp-dmp'],
                                         ['AITP-DMM®',   '/certified-ai-enabled-travel-personalization-digital-marketing-manager-aitp-dmm'],
                                     ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                                    <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-1.5 py-0.5 text-[12px] text-gray-700 hover:text-[#0B2F5E] transition-colors" role="menuitem"><?php echo $ob; ?> <?php echo e($l); ?></a>
+                                    <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-1.5 py-0.5 text-[12px] text-gray-700 hover:text-[#0B2F5E] transition-colors" role="menuitem"><?php echo $ob; ?> <?php echo e($l); ?></a>
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                                 </div>
                             </div>
@@ -386,7 +400,7 @@
                                 ['Certification/Program Match',   '/programs-match'],
                                 ['In-Person Exam Proctoring',     '/exam-proctoring '],
                             ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                            <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
+                            <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
                                 <?php echo $chevron; ?> <?php echo e($l); ?>
 
                             </a>
@@ -400,7 +414,7 @@
                                 ['Online Courses',        '/online-courses'],
                                 ['Workshop / Training',   '/workshop-trainings'],
                             ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                            <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
+                            <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
                                 <?php echo $chevron; ?> <?php echo e($l); ?>
 
                             </a>
@@ -434,21 +448,21 @@
                                 ['Exam FAQs',                     '/certifications-faq'],
                                 ['Verify a Certificate',          '/verify-a-certificate '],
                             ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                            <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
+                            <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
                                 <?php echo $chevron; ?> <?php echo e($l); ?>
 
                             </a>
                             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                         </div>
                         <div>
-                            <img src="https://aapscm.org/wp-content/uploads/2023/10/Why-Join.jpg" alt="Why Join AAPSCM" class="rounded-lg w-full object-cover h-20">
+                            <img src="/storage/cms-images/2023/10/Why-Join.jpg" alt="Why Join AAPSCM" class="rounded-lg w-full object-cover h-20">
                             <div class="px-5 mt-3">
                                 <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Brochures & Test Questions</p>
                                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = [
                                     ['Become Authorized Training Partner', '/become-a-authorized-training-partner'],
                                     ['Purchase Brochures and Books',        '/online-courses'],
                                 ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                                <a href="<?php echo e(url($h)); ?>" class="flex items-start gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors leading-snug" role="menuitem">
+                                <a href="<?php echo e($u($h)); ?>" class="flex items-start gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors leading-snug" role="menuitem">
                                     <?php echo $chevron; ?> <?php echo e($l); ?>
 
                                 </a>
@@ -462,7 +476,7 @@
                                 ['AAPSCM® Community',       '/communities'],
                                 ['USA Chapters',            '/us-charters'],
                             ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                            <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
+                            <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
                                 <?php echo $chevron; ?> <?php echo e($l); ?>
 
                             </a>
@@ -493,9 +507,9 @@
                                 ['Corporate Membership',               '/corporate-membership'],
                                 ['Become Authorized Training Partner', '/become-a-authorized-training-partner'],
                                 ['Affiliate Partners',                 '/affiliate-partners'],
-                                ['USA Chapters',                       '/our-usa-chapters '],
+                                ['USA Chapters',                       '/us-charters '],
                             ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                            <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
+                            <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
                                 <?php echo $chevron; ?> <?php echo e($l); ?>
 
                             </a>
@@ -508,7 +522,7 @@
                                 ['Corporate Training',       '/workshop-trainings'],
                                 ['Bulk Certification Seats', '/online-courses'],
                             ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                            <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
+                            <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
                                 <?php echo $chevron; ?> <?php echo e($l); ?>
 
                             </a>
@@ -541,7 +555,7 @@
                                 ['Verify a Certification',                 '/verify-a-certificate'],
                                 ['Digital Badges',                         '/digital-badges'],
                             ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                            <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
+                            <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
                                 <?php echo $chevron; ?> <?php echo e($l); ?>
 
                             </a>
@@ -555,7 +569,7 @@
                                 ['Certification FAQs',         '/certifications-faq'],
                                 ['Benefits and Resources',     '/benefits-and-resources'],
                             ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                            <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
+                            <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
                                 <?php echo $chevron; ?> <?php echo e($l); ?>
 
                             </a>
@@ -587,7 +601,7 @@
                                 [ 'ED-SRCEAI® — AI-Powered Supplier Risk, Compliance & ESG Management',   '/executive-diploma-in-ai-powered-supplier-risk-compliance-esg-management-ed-srceai'],
                                 [ 'ED-CMAAI® — AI-Integrated Contract Management & Automation',           '/executive-diploma-in-ai-integrated-contract-management-automation-ed-cmaai'],
                             ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                            <a href="<?php echo e(url($h)); ?>" class="flex items-start gap-2 py-2 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors leading-snug" role="menuitem">
+                            <a href="<?php echo e($u($h)); ?>" class="flex items-start gap-2 py-2 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors leading-snug" role="menuitem">
                                 <?php echo $chevron; ?> <?php echo $l; ?>
 
                             </a>
@@ -599,7 +613,7 @@
                                 [ 'ED-SSNI-AI® — AI-Based Strategic Sourcing & Negotiation Intelligence',  '/executive-diploma-in-ai-based-strategic-sourcing-negotiation-intelligence-ed-ssni-ai'],
                                 [ 'ED-POAAI® — AI-Driven Procurement Operations & Automation',             '/executive-diploma-in-ai-driven-procurement-operations-automation-ed-poaai'],
                             ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                            <a href="<?php echo e(url($h)); ?>" class="flex items-start gap-2 py-2 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors leading-snug" role="menuitem">
+                            <a href="<?php echo e($u($h)); ?>" class="flex items-start gap-2 py-2 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors leading-snug" role="menuitem">
                                 <?php echo $chevron; ?> <?php echo $l; ?>
 
                             </a>
@@ -611,7 +625,7 @@
 
             
             <li role="none">
-                <a href="<?php echo e(url('/artificial-intelligence-ai-courses')); ?>"
+                <a href="<?php echo e($u('/artificial-intelligence-ai-courses')); ?>"
                    role="menuitem"
                    class="block px-3 py-[14px] text-[13px] font-semibold whitespace-nowrap text-gray-700 hover:text-[#0B2F5E] transition-colors">
                     AI Courses
@@ -654,7 +668,7 @@
     
     <div class="px-4 pt-4 pb-3 border-b border-gray-100">
         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
-            <a href="<?php echo e(url('/dashboard')); ?>" class="block text-sm font-semibold text-[#0B2F5E] py-2">My Dashboard</a>
+            <a href="<?php echo e($u('/dashboard')); ?>" class="block text-sm font-semibold text-[#0B2F5E] py-2">My Dashboard</a>
             <form method="POST" action="<?php echo e(route('logout')); ?>">
                 <?php echo csrf_field(); ?>
                 <button class="text-sm text-gray-500">Logout</button>
@@ -669,11 +683,11 @@
 
     
     <div class="px-4 py-3 border-b border-gray-100 space-y-0.5">
-        <a href="<?php echo e(url('/')); ?>"                   class="block py-2 text-sm font-medium text-gray-700 hover:text-[#0B2F5E]">Home</a>
-        <a href="<?php echo e(url('/about-us')); ?>"            class="block py-2 text-sm font-medium text-gray-700 hover:text-[#0B2F5E]">About Us</a>
-        <a href="<?php echo e(url('/affiliate-partners')); ?>"  class="block py-2 text-sm font-medium text-gray-700 hover:text-[#0B2F5E]">Affiliate Partners</a>
-        <a href="<?php echo e(url('/us-charters')); ?>"         class="block py-2 text-sm font-medium text-gray-700 hover:text-[#0B2F5E]">USA Chapters</a>
-        <a href="<?php echo e(url('/aapscm-training')); ?>"     class="block py-2 text-sm font-medium text-gray-700 hover:text-[#0B2F5E]">AAPSCM® Training</a>
+        <a href="<?php echo e($u('/')); ?>"                   class="block py-2 text-sm font-medium text-gray-700 hover:text-[#0B2F5E]">Home</a>
+        <a href="<?php echo e($u('/about-us')); ?>"            class="block py-2 text-sm font-medium text-gray-700 hover:text-[#0B2F5E]">About Us</a>
+        <a href="<?php echo e($u('/affiliate-partners')); ?>"  class="block py-2 text-sm font-medium text-gray-700 hover:text-[#0B2F5E]">Affiliate Partners</a>
+        <a href="<?php echo e($u('/us-charters')); ?>"         class="block py-2 text-sm font-medium text-gray-700 hover:text-[#0B2F5E]">USA Chapters</a>
+        <a href="<?php echo e($u('/aapscm-training')); ?>"     class="block py-2 text-sm font-medium text-gray-700 hover:text-[#0B2F5E]">AAPSCM® Training</a>
     </div>
 
     <?php
@@ -718,7 +732,7 @@
             ['corporate', 'Corporate Solutions', [
                 ['Corporate Membership',          '/corporate-membership'],
                 ['Become Authorized Training Partner', '/become-a-authorized-training-partner'],
-                ['USA Chapters',                  '/our-usa-chapters'],
+                ['USA Chapters',                  '/us-charters'],
                 ['Benefits and Resources',        '/benefits-and-resources'],
                 ['Affiliate Partners',            '/affiliate-partners'],
             ]],
@@ -756,7 +770,7 @@
              class="bg-gray-50 px-4 pb-3"
              style="display:none">
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $links; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l, $h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-            <a href="<?php echo e(url($h)); ?>" class="flex items-center gap-2 py-2 text-sm text-gray-700 hover:text-[#0B2F5E] border-b border-gray-200 last:border-0">
+            <a href="<?php echo e($u($h)); ?>" class="flex items-center gap-2 py-2 text-sm text-gray-700 hover:text-[#0B2F5E] border-b border-gray-200 last:border-0">
                 <svg class="w-2.5 h-2.5 text-[#0B2F5E] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 18l6-6-6-6"/>
                 </svg>
@@ -770,7 +784,7 @@
 
     
     <div class="px-4 py-4">
-        <a href="<?php echo e(url('/artificial-intelligence-ai-courses')); ?>"
+        <a href="<?php echo e($u('/artificial-intelligence-ai-courses')); ?>"
            class="block text-sm font-bold text-gray-800 hover:text-[#0B2F5E]">
             Artificial Intelligence (AI) Courses
         </a>

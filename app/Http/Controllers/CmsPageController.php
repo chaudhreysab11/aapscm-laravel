@@ -24,6 +24,39 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CmsPageController extends Controller
 {
+    /**
+     * Maps page slug → dedicated view (Tier B: unique layout that doesn't fit
+     * a shared template family). Takes precedence over the template-family map below.
+     */
+    private const SLUG_VIEWS = [
+        'home'        => 'cms.page.home',
+        'about-us'    => 'cms.page.about-us',
+        'contact-us'  => 'cms.page.contact-us',
+        'us-charters' => 'cms.page.us-charters',
+        'donations'      => 'cms.page.donations',
+        'aapscm-hotline' => 'cms.page.aapscm-hotline',
+        'trademark'           => 'cms.page.trademark',
+        'privacy-policy-legal' => 'cms.page.privacy-policy-legal',
+        'become-a-partner'     => 'cms.page.become-a-partner',
+        'how-to-apply'         => 'cms.page.how-to-apply',
+        'certifications-faq'   => 'cms.page.certifications-faq',
+        'which-certification-is-right-for-you' => 'cms.page.which-certification-is-right-for-you',
+        'request-pdes-for-certificate' => 'cms.page.request-pdes-for-certificate',
+        'professional-member-criteria' => 'cms.page.professional-member-criteria',
+        'why-join-aapscm'              => 'cms.page.why-join-aapscm',
+        'benefits-and-resources'       => 'cms.page.benefits-and-resources',
+        'digital-badges'               => 'cms.page.digital-badges',
+        'training-and-credentialing'   => 'cms.page.training-and-credentialing',
+        'training-school-affiliated'   => 'cms.page.training-school-affiliated',
+        'become-a-authorized-training-partner' => 'cms.page.become-a-authorized-training-partner',
+        'affiliate-partners'                   => 'cms.page.affiliate-partners',
+        'member-services'                      => 'cms.page.member-services',
+        'professional-development'             => 'cms.page.professional-development',
+        'non-profit-activities-donation'       => 'cms.page.non-profit-activities-donation',
+        'influencing-suppliers'                => 'cms.page.influencing-suppliers',
+        'board-of-directors'                   => 'cms.page.board-of-directors',
+    ];
+
     /** Maps template key → view file (relative to resources/views) */
     private const TEMPLATE_VIEWS = [
         // New template families (TF-01 through TF-07)
@@ -59,13 +92,20 @@ class CmsPageController extends Controller
             return redirect()->guest(route('login'));
         }
 
-        // Check for a slug-specific WordPress content partial that overrides the blocks system.
-        $wpPartial = 'cms.pages.' . $slug;
-        if (view()->exists($wpPartial)) {
-            return view('cms.page.wp-content', [
-                'page'          => $page,
-                'wpContentView' => $wpPartial,
-            ]);
+        return $this->renderPage($slug, $page);
+    }
+
+    /**
+     * Resolves which view to render for the given page, in priority order:
+     *   1. Slug-specific dedicated template (Tier B)
+     *   2. Template-family view, falling back to the default template view
+     *
+     * Bodies are stored in pages.content and structured fields in pages.page_data.
+     */
+    private function renderPage(string $slug, Page $page): View
+    {
+        if (isset(self::SLUG_VIEWS[$slug])) {
+            return view(self::SLUG_VIEWS[$slug], ['page' => $page]);
         }
 
         $viewName = self::TEMPLATE_VIEWS[$page->template] ?? 'cms.page.default';

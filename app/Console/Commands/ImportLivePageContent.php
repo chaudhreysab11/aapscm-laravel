@@ -11,24 +11,29 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
 /**
- * Fetches page body content from the live aapscm.org WordPress site and
- * imports it into the local pages.content column.
+ * Fetches page HTML from live aapscm.org and saves it locally.
  *
- * Idempotent by default: skips pages that already have content.
- * Use --force to overwrite existing content.
+ * Two outputs per page:
+ *   1. Raw HTML file saved to ../Live Pages HTML/<slug>.html (always,
+ *      unless already present and --force not given). This is the
+ *      reference file used when rebuilding templates.
+ *   2. Extracted/cleaned body content written to pages.content (only
+ *      when --save-to-db is passed).
  *
  * Usage:
  *   php artisan cms:import-live-content
  *   php artisan cms:import-live-content --force
  *   php artisan cms:import-live-content --slug=about-us
+ *   php artisan cms:import-live-content --save-to-db
  */
 class ImportLivePageContent extends Command
 {
     protected $signature = 'cms:import-live-content
-                            {--force : Overwrite pages that already have content}
-                            {--slug= : Only import a single page by slug}';
+                            {--force : Re-download HTML files that already exist locally}
+                            {--slug= : Only import a single page by slug}
+                            {--save-to-db : Also extract & store cleaned content in pages.content}';
 
-    protected $description = 'Fetch page content from live aapscm.org and store in the pages table';
+    protected $description = 'Download live aapscm.org page HTML into Live Pages HTML/ folder';
 
     /** XPath selectors tried in order to locate main content */
     private const CONTENT_SELECTORS = [
@@ -57,39 +62,59 @@ class ImportLivePageContent extends Command
     {
         $force    = (bool) $this->option('force');
         $onlySlug = $this->option('slug');
+        $saveToDb = (bool) $this->option('save-to-db');
 
-        $query = Page::query()->whereNotNull('seo_canonical');
+        $htmlDir = $this->htmlDir();
+        if (! is_dir($htmlDir) && ! mkdir($htmlDir, 0755, true) && ! is_dir($htmlDir)) {
+            $this->error("Could not create HTML directory: {$htmlDir}");
 
-        if ($onlySlug !== null && $onlySlug !== '') {
-            $query->where('slug', $onlySlug);
-        } elseif (! $force) {
-            $query->where(function ($q): void {
-                $q->whereNull('content')->orWhere('content', '');
-            });
+            return self::FAILURE;
         }
 
+        $query = Page::query()->whereNotNull('seo_canonical');
+        if ($onlySlug !== null && $onlySlug !== '') {
+            $query->where('slug', $onlySlug);
+        }
         $pages = $query->orderBy('slug')->get();
 
         if ($pages->isEmpty()) {
-            $this->info('No pages to import (all already have content). Use --force to re-import.');
+            $this->info('No pages found with a seo_canonical URL.');
 
             return self::SUCCESS;
         }
 
-        $this->info("Importing content for {$pages->count()} page(s)…");
+        $this->info("Target folder: {$htmlDir}");
+        $this->info("Processing {$pages->count()} page(s)…");
 
-        $updated = 0;
-        $failed  = 0;
+        $downloaded = 0;
+        $skipped    = 0;
+        $failed     = 0;
+        $dbUpdated  = 0;
 
         foreach ($pages as $page) {
-            $url = rtrim((string) $page->seo_canonical, '/') . '/';
+            $url      = rtrim((string) $page->seo_canonical, '/') . '/';
+            $htmlPath = $htmlDir . DIRECTORY_SEPARATOR . $page->slug . '.html';
+
+            if (! $force && is_file($htmlPath)) {
+                $this->line("  <info>•</info> {$page->slug}.html already exists — skipped.");
+                $skipped++;
+
+                if ($saveToDb && ($page->content === null || $page->content === '')) {
+                    $dbUpdated += $this->saveExtractedContent($page, (string) file_get_contents($htmlPath));
+                }
+
+                continue;
+            }
 
             $this->line("  Fetching: <comment>{$url}</comment>");
 
             try {
-                $response = Http::timeout(15)
-                    ->withoutVerifying() // local dev: PHP CA bundle not configured
-                    ->withHeaders(['Accept' => 'text/html'])
+                $response = Http::timeout(30)
+                    ->withoutVerifying()
+                    ->withHeaders([
+                        'Accept'     => 'text/html',
+                        'User-Agent' => 'Mozilla/5.0 (compatible; AAPSCM-Migrator/1.0)',
+                    ])
                     ->get($url);
 
                 if (! $response->successful()) {
@@ -99,21 +124,16 @@ class ImportLivePageContent extends Command
                     continue;
                 }
 
-                $content = $this->extractContent($response->body());
+                $rawHtml = $response->body();
+                file_put_contents($htmlPath, $rawHtml);
+                $downloaded++;
 
-                if ($content === '') {
-                    $this->warn('    Could not extract content — skipped.');
-                    $failed++;
+                $size = number_format(strlen($rawHtml) / 1024, 1);
+                $this->line("    <info>✓ Saved</info> {$page->slug}.html ({$size} KB)");
 
-                    continue;
+                if ($saveToDb) {
+                    $dbUpdated += $this->saveExtractedContent($page, $rawHtml);
                 }
-
-                $page->content = $content;
-                $page->save();
-                $updated++;
-
-                $this->line('    <info>✓ Saved</info> (' . strlen($content) . ' bytes)');
-
             } catch (\Throwable $e) {
                 $this->error("    Error: {$e->getMessage()}");
                 $failed++;
@@ -123,9 +143,36 @@ class ImportLivePageContent extends Command
         }
 
         $this->newLine();
-        $this->info("Done. Updated: {$updated} | Failed/skipped: {$failed}");
+        $this->info("Done. Downloaded: {$downloaded} | Already existed: {$skipped} | Failed: {$failed}");
+        if ($saveToDb) {
+            $this->info("pages.content updated: {$dbUpdated}");
+        }
 
         return self::SUCCESS;
+    }
+
+    /**
+     * Resolve the target folder as a sibling of the Laravel project root,
+     * e.g. D:/Personal Work/AAPSCM-LARAVEL → D:/Personal Work/Live Pages HTML.
+     */
+    private function htmlDir(): string
+    {
+        return dirname(base_path()) . DIRECTORY_SEPARATOR . 'Live Pages HTML';
+    }
+
+    private function saveExtractedContent(Page $page, string $rawHtml): int
+    {
+        $content = $this->extractContent($rawHtml);
+        if ($content === '') {
+            $this->warn("    Could not extract content for {$page->slug}.");
+
+            return 0;
+        }
+
+        $page->content = $content;
+        $page->save();
+
+        return 1;
     }
 
     private function extractContent(string $html): string
@@ -149,7 +196,6 @@ class ImportLivePageContent extends Command
             }
         }
 
-        // Strip data-* attributes (WP JSON blobs — not needed for display)
         foreach (iterator_to_array($xpath->query('//*[@*]') ?: []) as $el) {
             $toRemove = [];
             foreach ($el->attributes as $attr) {
@@ -185,17 +231,10 @@ class ImportLivePageContent extends Command
 
     private function cleanHtml(string $html): string
     {
-        // Strip WP block comments
         $html = preg_replace('/<!--.*?-->/s', '', $html) ?? $html;
-
-        // Rewrite internal URLs to relative paths so images + links work locally
         $html = str_replace('https://aapscm.org', '', $html);
-
-        // Collapse excessive blank lines
         $html = preg_replace('/(\n\s*){3,}/', "\n\n", $html) ?? $html;
 
         return trim($html);
-        // NOTE: class=, style=, id= are intentionally preserved for anchor navigation.
-        //       data-* attributes are stripped earlier via DOM in extractContent().
     }
 }

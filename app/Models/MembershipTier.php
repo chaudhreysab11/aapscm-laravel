@@ -15,9 +15,8 @@ class MembershipTier extends Model
         'slug',
         'code',
         'description',
-        'annual_price',
-        'monthly_price',
         'benefits',
+        'permissions',
         'is_active',
         'sort_order',
         'source_id',
@@ -26,10 +25,9 @@ class MembershipTier extends Model
     protected function casts(): array
     {
         return [
-            'benefits' => 'array',
-            'annual_price' => 'decimal:2',
-            'monthly_price' => 'decimal:2',
-            'is_active' => 'boolean',
+            'benefits'    => 'array',
+            'permissions' => 'array',
+            'is_active'   => 'boolean',
         ];
     }
 

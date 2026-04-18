@@ -2,12 +2,11 @@
 
 use App\Http\Controllers\Admin\PageBuilderController;
 use App\Http\Controllers\CertificationController;
+use App\Http\Controllers\CmsPageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', fn () => app(CmsPageController::class)('home'))->name('home');
 
 // ── Certification Catalog (Module 2) ─────────────────────────────────────────
 // Both routes are fully public. The {certification} parameter is resolved via

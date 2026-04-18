@@ -1,8 +1,0 @@
-{{-- WordPress page content: board-of-directors-jonathan-akisanmi --}}
-<div class="wp-content">
-<h3>Jonathan Akisanmi</h3>		
-															<img width="206" height="206" src="https://aapscm.org/wp-content/uploads/2023/10/33.jpg" alt="" srcset="https://aapscm.org/wp-content/uploads/2023/10/33.jpg 206w, https://aapscm.org/wp-content/uploads/2023/10/33-150x150.jpg 150w, https://aapscm.org/wp-content/uploads/2023/10/33-100x100.jpg 100w" sizes="(max-width: 206px) 100vw, 206px" />															
-			<h2>Jonathan Akisanmi</h2>		
-			<h5>Director of Finance & Chief Financial Officer (CFO)</h5>		
-		<p>Jonathan Akisanmi is a seasoned professional with extensive experience in finance, auditing, and real estate. He serves as the Director of Finance and Chief Financial Officer (CFO) at the American Association of Procurement and Supply Chain Management (AAPSCM), where he oversees financial operations and strategic planning. In the realm of real estate, Akisanmi is affiliated with TDRealty in Texas, operating as a licensed realtor. His practice focuses on assisting clients in buying, selling, and renting properties, leveraging his financial expertise to provide comprehensive services.</p><p>Akisanmi's background also includes a role as a Senior Internal Auditor for the University of North Texas System Administration (UNT), where he was responsible for ensuring compliance and financial integrity within the institution. His multifaceted career reflects a commitment to excellence across various sectors, including finance, auditing, and real estate, underscoring his versatility and dedication to professional growth.</p>
-</div>

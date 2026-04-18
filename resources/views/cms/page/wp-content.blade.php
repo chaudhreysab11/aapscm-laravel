@@ -2,11 +2,7 @@
 
     <x-cms.seo-head :page="$page" />
 
-    {{-- ----------------------------------------------------------------
-         WP Content Shell — wraps real WordPress HTML extracted from
-         the WP database. $wpContentView is a Blade partial path that
-         contains the raw page content (cms.pages.{slug}).
-    ---------------------------------------------------------------- --}}
+    {{-- WP Content Shell — wraps a caller-supplied Blade partial ($wpContentView). --}}
     <div class="bg-[#0B2F5E] text-white py-12">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 

@@ -17,8 +17,8 @@ class RedirectsSeeder extends Seeder
         // ── Confirmed duplicates (7) ─────────────────────────────────────
         ['/home',                                    '/',                        301, 'WP default home alias'],
         ['/index.php',                               '/',                        301, 'WP index.php root'],
-        ['/about-us',                                '/about/',                  301, 'Slug normalisation'],
-        ['/contact-us',                              '/contact/',                301, 'Slug normalisation'],
+        ['/about',                                '/about-us/',                  301, 'Slug normalisation'],
+        ['/contact',                              '/contact-us/',                301, 'Slug normalisation'],
         ['/membership',                              '/membership/',             301, 'Trailing slash'],
         ['/certification',                           '/certification/',          301, 'Trailing slash (catalog root)'],
         ['/blog',                                    '/blog/',                   301, 'Trailing slash'],

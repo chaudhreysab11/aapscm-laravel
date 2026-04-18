@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\Page;
+use Database\Seeders\Support\UrlRewriter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -31,7 +32,7 @@ class PageFactory extends Factory
             'meta_description' => fake()->sentence(15),
             'seo_title' => $title . ' | AAPSCM',
             'seo_description' => fake()->sentence(15),
-            'seo_canonical' => 'https://aapscm.org/' . $slug . '/',
+            'seo_canonical' => UrlRewriter::canonical($slug),
             'show_in_nav' => false,
             'source_id' => null,
             'is_published' => true,

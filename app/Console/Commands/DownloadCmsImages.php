@@ -10,9 +10,15 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Downloads all WordPress images referenced in CMS page content and stores
- * them in storage/app/public/cms-images/ (web-accessible at /storage/cms-images/).
- * Updates the pages.content column so all image URLs point to local copies.
+ * Downloads all WordPress images referenced in CMS sources and stores them
+ * in storage/app/public/cms-images/ (web-accessible at /storage/cms-images/).
+ *
+ * Sources scanned (in order):
+ *   1. Raw HTML files in ../Live Pages HTML/*.html
+ *   2. pages.content column in the database
+ *
+ * Updates pages.content to swap WP URLs for /storage/cms-images/ URLs
+ * (only for URLs actually present in DB rows).
  *
  * Safe to re-run — already-downloaded files are skipped.
  *
@@ -20,76 +26,90 @@ use Illuminate\Support\Facades\Storage;
  *   php artisan cms:download-images
  *   php artisan cms:download-images --dry-run
  *   php artisan cms:download-images --slug=about-us
+ *   php artisan cms:download-images --skip-html-folder
+ *   php artisan cms:download-images --skip-db
  */
 class DownloadCmsImages extends Command
 {
     protected $signature = 'cms:download-images
                             {--dry-run : List images that would be downloaded without saving}
-                            {--slug= : Only process a single page by slug}';
+                            {--slug= : Only process a single page by slug (DB only)}
+                            {--skip-html-folder : Do not scan the Live Pages HTML/ folder}
+                            {--skip-db : Do not scan the pages.content column}';
 
-    protected $description = 'Download WP images from aapscm.org into local storage and update page content URLs';
+    protected $description = 'Download WP images from aapscm.org into local storage';
 
+    private const WP_HOST        = 'aapscm.org';
     private const WP_BASE_URL    = 'https://aapscm.org';
     private const WP_UPLOADS_DIR = '/wp-content/uploads/';
     private const STORAGE_DISK   = 'public';
-    private const STORAGE_DIR    = 'cms-images';     // storage/app/public/cms-images/
-    private const PUBLIC_URL_DIR = '/storage/cms-images'; // web-visible path
+    private const STORAGE_DIR    = 'cms-images';
+    private const PUBLIC_URL_DIR = '/storage/cms-images';
 
     public function handle(): int
     {
-        $dryRun   = (bool) $this->option('dry-run');
-        $onlySlug = $this->option('slug');
+        $dryRun          = (bool) $this->option('dry-run');
+        $onlySlug        = $this->option('slug');
+        $skipHtmlFolder  = (bool) $this->option('skip-html-folder');
+        $skipDb          = (bool) $this->option('skip-db');
 
-        // Ensure Laravel's public storage symlink is in place
         if (! is_link(public_path('storage'))) {
             $this->warn('Storage symlink missing — running storage:link…');
             $this->call('storage:link');
         }
 
-        $query = Page::whereNotNull('content')->where('content', '!=', '');
-        if ($onlySlug !== null && $onlySlug !== '') {
-            $query->where('slug', $onlySlug);
-        }
-        $pages = $query->orderBy('slug')->get(['id', 'slug', 'content']);
-
-        if ($pages->isEmpty()) {
-            $this->info('No pages with content. Run cms:import-live-content first.');
-
-            return self::SUCCESS;
+        $pages = collect();
+        if (! $skipDb) {
+            $query = Page::whereNotNull('content')->where('content', '!=', '');
+            if ($onlySlug !== null && $onlySlug !== '') {
+                $query->where('slug', $onlySlug);
+            }
+            $pages = $query->orderBy('slug')->get(['id', 'slug', 'content']);
         }
 
-        // Collect every unique WP uploads URL mentioned across all pages
-        $allRelUrls = $this->collectAllImageUrls($pages);
-        $total      = count($allRelUrls);
+        $relativeUrls = [];
+
+        if (! $skipHtmlFolder) {
+            $fromHtml = $this->collectFromHtmlFolder();
+            $this->info(count($fromHtml) . ' URL(s) found in Live Pages HTML/ folder.');
+            $relativeUrls += $fromHtml;
+        }
+
+        if (! $skipDb) {
+            $fromDb = $this->collectFromPages($pages);
+            $this->info(count($fromDb) . ' URL(s) found in pages.content.');
+            $relativeUrls += $fromDb;
+        }
+
+        $relativeUrls = array_keys($relativeUrls);
+        $total        = count($relativeUrls);
 
         if ($total === 0) {
-            $this->info('No WP upload images found in page content. Nothing to download.');
+            $this->info('No WP upload images found. Nothing to download.');
 
             return self::SUCCESS;
         }
 
-        $this->info("{$total} unique image(s) found across {$pages->count()} page(s).");
+        $this->info("{$total} unique image(s) to process.");
 
         if ($dryRun) {
-            foreach ($allRelUrls as $url) {
+            foreach ($relativeUrls as $url) {
                 $this->line("  Would download: <comment>{$url}</comment>");
             }
 
             return self::SUCCESS;
         }
 
-        // Download each image, building an old→new URL map
         ['urlMap' => $urlMap, 'downloaded' => $downloaded, 'skipped' => $skipped, 'failed' => $failed]
-            = $this->downloadImages($allRelUrls);
+            = $this->downloadImages($relativeUrls);
 
-        // Update DB content to replace WP URLs with local storage URLs
-        if (! empty($urlMap)) {
+        if (! $skipDb && ! empty($urlMap) && $pages->isNotEmpty()) {
             $this->newLine();
             $this->info('Updating page content URLs…');
             $updatedPages = 0;
 
             foreach ($pages as $page) {
-                $updated = strtr($page->content, $urlMap);
+                $updated = strtr((string) $page->content, $urlMap);
                 if ($updated !== $page->content) {
                     $page->content = $updated;
                     $page->save();
@@ -106,14 +126,39 @@ class DownloadCmsImages extends Command
         return self::SUCCESS;
     }
 
+    private function htmlDir(): string
+    {
+        return dirname(base_path()) . DIRECTORY_SEPARATOR . 'Live Pages HTML';
+    }
+
     /**
-     * Collect all unique relative WP uploads URLs from all pages.
-     * Returns a de-duplicated array of paths like /wp-content/uploads/2024/12/img.png
+     * Scan all .html files in the Live Pages HTML/ folder.
      *
-     * @param  \Illuminate\Database\Eloquent\Collection<int, Page>  $pages
-     * @return array<int, string>
+     * @return array<string, true>  keyed by relative URL for dedup
      */
-    private function collectAllImageUrls(iterable $pages): array
+    private function collectFromHtmlFolder(): array
+    {
+        $dir = $this->htmlDir();
+        if (! is_dir($dir)) {
+            return [];
+        }
+
+        $seen = [];
+        foreach ((array) glob($dir . DIRECTORY_SEPARATOR . '*.html') as $file) {
+            $html = (string) file_get_contents($file);
+            foreach ($this->extractImageUrls($html) as $url) {
+                $seen[$url] = true;
+            }
+        }
+
+        return $seen;
+    }
+
+    /**
+     * @param  \Illuminate\Support\Collection<int, Page>  $pages
+     * @return array<string, true>
+     */
+    private function collectFromPages(iterable $pages): array
     {
         $seen = [];
         foreach ($pages as $page) {
@@ -122,12 +167,14 @@ class DownloadCmsImages extends Command
             }
         }
 
-        return array_keys($seen);
+        return $seen;
     }
 
     /**
      * Extract /wp-content/uploads/... image paths from HTML.
-     * Handles src=, srcset=, inline style url(), and any other occurrence.
+     * Normalizes absolute aapscm.org URLs down to relative paths, so the
+     * same URL appearing as both absolute (raw HTML) and relative (DB
+     * content rewritten by the importer) dedups to one entry.
      *
      * @return array<int, string>
      */
@@ -135,15 +182,23 @@ class DownloadCmsImages extends Command
     {
         $found = [];
 
-        // Catch-all: any /wp-content/uploads/ path that looks like an image file.
-        // This covers src=, srcset=, style="background-image: url(...)", data-src=, etc.
+        // Absolute URLs on aapscm.org
         preg_match_all(
-            '/(\/wp-content\/uploads\/[^\s"\')\]\?]+\.(?:png|jpe?g|gif|webp|svg|ico|avif|bmp))(?:\?[^\s"\')\]\?]*)?/i',
+            '#https?://(?:www\.)?' . preg_quote(self::WP_HOST, '#') . '(/wp-content/uploads/[^\s"\')\]\?]+\.(?:png|jpe?g|gif|webp|svg|ico|avif|bmp))(?:\?[^\s"\')\]\?]*)?#i',
             $html,
-            $matches
+            $absMatches
         );
+        foreach ($absMatches[1] as $u) {
+            $found[$u] = true;
+        }
 
-        foreach ($matches[1] as $u) {
+        // Relative /wp-content/uploads/ paths
+        preg_match_all(
+            '#(?<![a-zA-Z0-9])(/wp-content/uploads/[^\s"\')\]\?]+\.(?:png|jpe?g|gif|webp|svg|ico|avif|bmp))(?:\?[^\s"\')\]\?]*)?#i',
+            $html,
+            $relMatches
+        );
+        foreach ($relMatches[1] as $u) {
             $found[$u] = true;
         }
 
@@ -151,11 +206,8 @@ class DownloadCmsImages extends Command
     }
 
     /**
-     * Download each image, skipping ones already stored.
-     * Returns statistics and a URL replacement map.
-     *
      * @param  array<int, string>  $relativeUrls
-     * @return array{map: array<string, string>, downloaded: int, skipped: int, failed: int}
+     * @return array{urlMap: array<string, string>, downloaded: int, skipped: int, failed: int}
      */
     private function downloadImages(array $relativeUrls): array
     {
@@ -165,14 +217,15 @@ class DownloadCmsImages extends Command
         $failed     = 0;
 
         foreach ($relativeUrls as $relUrl) {
-            // Strip /wp-content/uploads/ prefix → e.g. 2024/12/img.png
             $subPath     = ltrim(str_replace(self::WP_UPLOADS_DIR, '', $relUrl), '/');
             $storagePath = self::STORAGE_DIR . '/' . $subPath;
             $localUrl    = self::PUBLIC_URL_DIR . '/' . $subPath;
 
-            // Already present on disk — just update the map
             if (Storage::disk(self::STORAGE_DISK)->exists($storagePath)) {
-                $urlMap[$relUrl] = $localUrl;
+                // Map both the relative and the absolute variants so strtr
+                // on DB content handles either form.
+                $urlMap[$relUrl]                      = $localUrl;
+                $urlMap[self::WP_BASE_URL . $relUrl]  = $localUrl;
                 $skipped++;
 
                 continue;
@@ -183,7 +236,8 @@ class DownloadCmsImages extends Command
 
             try {
                 $response = Http::timeout(30)
-                    ->withoutVerifying() // local dev: PHP CA bundle not configured
+                    ->withoutVerifying()
+                    ->withHeaders(['User-Agent' => 'Mozilla/5.0 (compatible; AAPSCM-Migrator/1.0)'])
                     ->get($remoteUrl);
 
                 if (! $response->successful()) {
@@ -194,12 +248,12 @@ class DownloadCmsImages extends Command
                 }
 
                 Storage::disk(self::STORAGE_DISK)->put($storagePath, $response->body());
-                $urlMap[$relUrl] = $localUrl;
+                $urlMap[$relUrl]                      = $localUrl;
+                $urlMap[self::WP_BASE_URL . $relUrl]  = $localUrl;
                 $downloaded++;
 
                 $size = number_format(strlen($response->body()) / 1024, 1);
                 $this->line("    <info>✓ Saved</info> ({$size} KB)");
-
             } catch (\Throwable $e) {
                 $this->error("    Error: {$e->getMessage()}");
                 $failed++;
