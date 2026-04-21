@@ -115,6 +115,7 @@ class DatabaseSeeder extends Seeder
             CertAmericanCertifiedSustainableAndCircularSupplyChainProfessionalAcCscspPageSeeder::class,
             CertAmericanCertifiedSupplyChainDigitalTransformationManagerAcScdtmPageSeeder::class,
             CertAmericanCertifiedSupplyChainArtificialIntelligenceAiProfessionalAcScaiPageSeeder::class,
+            CertCharteredSupplyChainArtificialIntelligenceManagerCsaiMPageSeeder::class,
             HomePageSeeder::class,
             WpRedirectsSeeder::class,
         ]);

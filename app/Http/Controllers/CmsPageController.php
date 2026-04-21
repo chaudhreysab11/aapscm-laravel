@@ -108,6 +108,7 @@ class CmsPageController extends Controller
         'american-certified-sustainable-and-circular-supply-chain-professional-ac-cscsp' => 'cms.page.cert-american-certified-sustainable-and-circular-supply-chain-professional-ac-cscsp',
         'american-certified-supply-chain-digital-transformation-manager-ac-scdtm' => 'cms.page.cert-american-certified-supply-chain-digital-transformation-manager-ac-scdtm',
         'american-certified-supply-chain-artificial-intelligence-ai-professional-ac-scai' => 'cms.page.cert-american-certified-supply-chain-artificial-intelligence-ai-professional-ac-scai',
+        'chartered-supply-chain-artificial-intelligence-manager-csai-m' => 'cms.page.cert-chartered-supply-chain-artificial-intelligence-manager-csai-m',
     ];
 
     /** Maps template key → view file (relative to resources/views) */
