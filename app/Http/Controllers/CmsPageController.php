@@ -96,6 +96,7 @@ class CmsPageController extends Controller
         'chartered-advanced-supply-chain-cybersecurity-manager-ca-sccm' => 'cms.page.cert-chartered-advanced-supply-chain-cybersecurity-manager-ca-sccm',
         'chartered-ai-driven-sustainable-procurement-manager-ca-ispm' => 'cms.page.cert-chartered-ai-driven-sustainable-procurement-manager-ca-ispm',
         'american-certified-blockchain-for-supply-chain-professional-ac-bscp' => 'cms.page.cert-american-certified-blockchain-for-supply-chain-professional-ac-bscp',
+        'chartered-sustainable-supply-chain-manager-csscm' => 'cms.page.cert-chartered-sustainable-supply-chain-manager-csscm',
     ];
 
     /** Maps template key → view file (relative to resources/views) */
