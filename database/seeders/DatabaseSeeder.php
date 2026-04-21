@@ -119,6 +119,7 @@ class DatabaseSeeder extends Seeder
             CertCharteredAiProcurementStrategistCaipsPageSeeder::class,
             CertCharteredAiSupplyChainAnalystCaiscaPageSeeder::class,
             CertCertifiedAiAmpRpaProcurementProfessionalCairppPageSeeder::class,
+            CertCharteredSustainableProcurementEsgAiManagerCspeaiPageSeeder::class,
             HomePageSeeder::class,
             WpRedirectsSeeder::class,
         ]);
