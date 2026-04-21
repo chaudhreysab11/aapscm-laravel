@@ -101,6 +101,7 @@ class CmsPageController extends Controller
         'american-certified-global-supply-chain-risk-and-resilience-professionalac-gsrp' => 'cms.page.cert-american-certified-global-supply-chain-risk-and-resilience-professionalac-gsrp',
         'chartered-sustainable-culinary-tourism-manager-csctm' => 'cms.page.cert-chartered-sustainable-culinary-tourism-manager-csctm',
         'american-certified-e-commerce-strategy-and-growth-professional-ac-esgp' => 'cms.page.cert-american-certified-e-commerce-strategy-and-growth-professional-ac-esgp',
+        'american-certified-ethical-practices-sustainable-e-commerce-professional-ac-seep' => 'cms.page.cert-american-certified-ethical-practices-sustainable-e-commerce-professional-ac-seep',
     ];
 
     /** Maps template key → view file (relative to resources/views) */

@@ -108,6 +108,7 @@ class DatabaseSeeder extends Seeder
             CertAmericanCertifiedGlobalSupplyChainRiskAndResilienceProfessionalacGsrpPageSeeder::class,
             CertCharteredSustainableCulinaryTourismManagerCsctmPageSeeder::class,
             CertAmericanCertifiedECommerceStrategyAndGrowthProfessionalAcEsgpPageSeeder::class,
+            CertAmericanCertifiedEthicalPracticesSustainableECommerceProfessionalAcSeepPageSeeder::class,
             HomePageSeeder::class,
             WpRedirectsSeeder::class,
         ]);
