@@ -102,6 +102,7 @@ class DatabaseSeeder extends Seeder
             CertAmericanCertifiedSupplyChainCybersecurityProfessionalAcSccpPageSeeder::class,
             CertCharteredAdvancedSupplyChainCybersecurityManagerCaSccmPageSeeder::class,
             CertCharteredAiDrivenSustainableProcurementManagerCaIspmPageSeeder::class,
+            CertAmericanCertifiedBlockchainForSupplyChainProfessionalAcBscpPageSeeder::class,
             HomePageSeeder::class,
             WpRedirectsSeeder::class,
         ]);
