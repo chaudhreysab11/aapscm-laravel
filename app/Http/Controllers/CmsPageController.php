@@ -98,6 +98,7 @@ class CmsPageController extends Controller
         'american-certified-blockchain-for-supply-chain-professional-ac-bscp' => 'cms.page.cert-american-certified-blockchain-for-supply-chain-professional-ac-bscp',
         'chartered-sustainable-supply-chain-manager-csscm' => 'cms.page.cert-chartered-sustainable-supply-chain-manager-csscm',
         'american-certified-digital-supply-chain-integration-professional-ac-dscip' => 'cms.page.cert-american-certified-digital-supply-chain-integration-professional-ac-dscip',
+        'american-certified-global-supply-chain-risk-and-resilience-professionalac-gsrp' => 'cms.page.cert-american-certified-global-supply-chain-risk-and-resilience-professionalac-gsrp',
     ];
 
     /** Maps template key → view file (relative to resources/views) */
