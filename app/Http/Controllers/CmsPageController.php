@@ -113,6 +113,7 @@ class CmsPageController extends Controller
         'chartered-ai-supply-chain-analyst-caisca' => 'cms.page.cert-chartered-ai-supply-chain-analyst-caisca',
         'certified-ai-amp-rpa-procurement-professional-cairpp' => 'cms.page.cert-certified-ai-amp-rpa-procurement-professional-cairpp',
         'chartered-sustainable-procurement-esg-ai-manager-cspeai' => 'cms.page.cert-chartered-sustainable-procurement-esg-ai-manager-cspeai',
+        'chartered-ai-supplier-negotiation-risk-manager-caisnrm' => 'cms.page.cert-chartered-ai-supplier-negotiation-risk-manager-caisnrm',
     ];
 
     /** Maps template key → view file (relative to resources/views) */
