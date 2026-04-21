@@ -123,6 +123,7 @@ class DatabaseSeeder extends Seeder
             CertCharteredAiSupplierNegotiationRiskManagerCaisnrmPageSeeder::class,
             CertAmericanCertifiedAiProcurementFraudAmpCybersecurityManagerCaipfcmPageSeeder::class,
             CertCharteredSupplyChainArtificialIntelligenceCsaiPageSeeder::class,
+            CertAmericanCertifiedAiSupplyChainResilienceAmpCrisisManagerAcAiscrcPageSeeder::class,
             HomePageSeeder::class,
             WpRedirectsSeeder::class,
         ]);
