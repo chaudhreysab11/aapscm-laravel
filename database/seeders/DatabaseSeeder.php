@@ -111,6 +111,7 @@ class DatabaseSeeder extends Seeder
             CertAmericanCertifiedEthicalPracticesSustainableECommerceProfessionalAcSeepPageSeeder::class,
             CertAmericanCertifiedDigitalMerchandisingAndUserExperienceProfessionalAcDmuxPageSeeder::class,
             CertCharteredECommerceDataAnalyticsAndAiProfessionalCedAiPageSeeder::class,
+            CertCharteredGlobalCrossBorderECommerceManagerCgcbePageSeeder::class,
             HomePageSeeder::class,
             WpRedirectsSeeder::class,
         ]);
