@@ -102,6 +102,7 @@ class CmsPageController extends Controller
         'chartered-sustainable-culinary-tourism-manager-csctm' => 'cms.page.cert-chartered-sustainable-culinary-tourism-manager-csctm',
         'american-certified-e-commerce-strategy-and-growth-professional-ac-esgp' => 'cms.page.cert-american-certified-e-commerce-strategy-and-growth-professional-ac-esgp',
         'american-certified-ethical-practices-sustainable-e-commerce-professional-ac-seep' => 'cms.page.cert-american-certified-ethical-practices-sustainable-e-commerce-professional-ac-seep',
+        'american-certified-digital-merchandising-and-user-experience-professional-ac-dmux' => 'cms.page.cert-american-certified-digital-merchandising-and-user-experience-professional-ac-dmux',
     ];
 
     /** Maps template key → view file (relative to resources/views) */
