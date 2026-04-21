@@ -105,6 +105,7 @@ class CmsPageController extends Controller
         'american-certified-digital-merchandising-and-user-experience-professional-ac-dmux' => 'cms.page.cert-american-certified-digital-merchandising-and-user-experience-professional-ac-dmux',
         'chartered-e-commerce-data-analytics-and-ai-professional-ced-ai' => 'cms.page.cert-chartered-e-commerce-data-analytics-and-ai-professional-ced-ai',
         'chartered-global-cross-border-e-commerce-manager-cgcbe' => 'cms.page.cert-chartered-global-cross-border-e-commerce-manager-cgcbe',
+        'american-certified-sustainable-and-circular-supply-chain-professional-ac-cscsp' => 'cms.page.cert-american-certified-sustainable-and-circular-supply-chain-professional-ac-cscsp',
     ];
 
     /** Maps template key → view file (relative to resources/views) */
