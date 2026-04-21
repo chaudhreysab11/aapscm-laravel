@@ -114,6 +114,7 @@ class CmsPageController extends Controller
         'certified-ai-amp-rpa-procurement-professional-cairpp' => 'cms.page.cert-certified-ai-amp-rpa-procurement-professional-cairpp',
         'chartered-sustainable-procurement-esg-ai-manager-cspeai' => 'cms.page.cert-chartered-sustainable-procurement-esg-ai-manager-cspeai',
         'chartered-ai-supplier-negotiation-risk-manager-caisnrm' => 'cms.page.cert-chartered-ai-supplier-negotiation-risk-manager-caisnrm',
+        'american-certified-ai-procurement-fraud-amp-cybersecurity-manager-caipfcm' => 'cms.page.cert-american-certified-ai-procurement-fraud-amp-cybersecurity-manager-caipfcm',
     ];
 
     /** Maps template key → view file (relative to resources/views) */
