@@ -5,7 +5,23 @@
     @php
         $pageHeading    = $page->page_data['page_heading']    ?? $page->title;
         $sectionHeading = $page->page_data['section_heading'] ?? '';
-        $members        = $page->page_data['members']         ?? [];
+        // Architect directive (2026-04-20): board members come from the
+        // board_members table (single source of truth) via CmsPageController.
+        // Fallback to legacy page_data shape only if controller didn't inject.
+        $members = collect($boardMembers ?? $page->page_data['members'] ?? [])
+            ->map(function ($m) {
+                if (is_array($m)) {
+                    return $m;
+                }
+
+                return [
+                    'name'        => $m->name,
+                    'role'        => $m->role,
+                    'affiliation' => $m->affiliation,
+                    'image'       => $m->avatar_image,
+                    'href'        => $m->profile_page_slug ? '/'.trim($m->profile_page_slug, '/').'/' : '#',
+                ];
+            });
     @endphp
 
     <x-cms.eltdf-title-bar

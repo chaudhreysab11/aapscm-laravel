@@ -6,9 +6,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\BoardMemberResource\Pages;
 use App\Models\BoardMember;
+use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
@@ -40,6 +43,12 @@ class BoardMemberResource extends Resource
                         ->label('Title / Role')
                         ->maxLength(255),
 
+                    Textarea::make('affiliation')
+                        ->label('Affiliation')
+                        ->rows(3)
+                        ->maxLength(500)
+                        ->helperText('Two-line text shown under the role on the public page (e.g. company / city). Newlines preserved.'),
+
                     TextInput::make('linkedin_url')
                         ->label('LinkedIn URL')
                         ->url()
@@ -50,6 +59,11 @@ class BoardMemberResource extends Resource
                         ->url()
                         ->maxLength(500)
                         ->helperText('Paste a /storage/... URL.'),
+
+                    TextInput::make('profile_page_slug')
+                        ->label('Profile page slug')
+                        ->maxLength(255)
+                        ->helperText('Slug of the standalone CMS profile page, e.g. board-of-directors-dr-sandra-grouse. Leave blank if none.'),
 
                     TextInput::make('sort_order')
                         ->label('Display order')
@@ -101,8 +115,8 @@ class BoardMemberResource extends Resource
                 DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -110,9 +124,9 @@ class BoardMemberResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListBoardMembers::route('/'),
+            'index' => Pages\ListBoardMembers::route('/'),
             'create' => Pages\CreateBoardMember::route('/create'),
-            'edit'   => Pages\EditBoardMember::route('/{record}/edit'),
+            'edit' => Pages\EditBoardMember::route('/{record}/edit'),
         ];
     }
 }

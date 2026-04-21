@@ -8,4 +8,22 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+
+    server: {
+        // Allow cross-origin requests so ngrok (and any tunnel) can load assets.
+        cors: true,
+        // Bind to all interfaces so the Vite dev server is reachable outside localhost.
+        host: '0.0.0.0',
+        hmr: {
+            // When VITE_DEV_SERVER_URL is set (e.g. your ngrok URL), HMR and asset
+            // URLs will point there instead of localhost:5173.
+            // Set in .env: VITE_DEV_SERVER_URL=https://xxxx.ngrok-free.app
+            host: process.env.VITE_DEV_SERVER_URL
+                ? new URL(process.env.VITE_DEV_SERVER_URL).hostname
+                : 'localhost',
+            ...(process.env.VITE_DEV_SERVER_URL
+                ? { protocol: 'wss', clientPort: 443 }
+                : {}),
+        },
+    },
 });

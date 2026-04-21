@@ -6,7 +6,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CommunityResource\Pages;
 use App\Models\Community;
+use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -14,6 +16,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -38,7 +41,7 @@ class CommunityResource extends Resource
                         ->required()
                         ->maxLength(255)
                         ->live(onBlur: true)
-                        ->afterStateUpdated(function (\Filament\Schemas\Components\Utilities\Set $set, ?string $state, ?Community $record): void {
+                        ->afterStateUpdated(function (Set $set, ?string $state, ?Community $record): void {
                             if ($record !== null) {
                                 return;
                             }
@@ -55,10 +58,10 @@ class CommunityResource extends Resource
                     Select::make('community_type')
                         ->label('Community type')
                         ->options([
-                            'regional'         => 'Regional',
+                            'regional' => 'Regional',
                             'special_interest' => 'Special Interest',
-                            'industry'         => 'Industry',
-                            'chapter'          => 'Chapter',
+                            'industry' => 'Industry',
+                            'chapter' => 'Chapter',
                         ])
                         ->default('regional')
                         ->required(),
@@ -116,10 +119,10 @@ class CommunityResource extends Resource
                 Tables\Filters\SelectFilter::make('community_type')
                     ->label('Type')
                     ->options([
-                        'regional'         => 'Regional',
+                        'regional' => 'Regional',
                         'special_interest' => 'Special Interest',
-                        'industry'         => 'Industry',
-                        'chapter'          => 'Chapter',
+                        'industry' => 'Industry',
+                        'chapter' => 'Chapter',
                     ]),
 
                 Tables\Filters\TrashedFilter::make(),
@@ -129,8 +132,8 @@ class CommunityResource extends Resource
                 DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -138,9 +141,9 @@ class CommunityResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListCommunities::route('/'),
+            'index' => Pages\ListCommunities::route('/'),
             'create' => Pages\CreateCommunity::route('/create'),
-            'edit'   => Pages\EditCommunity::route('/{record}/edit'),
+            'edit' => Pages\EditCommunity::route('/{record}/edit'),
         ];
     }
 }

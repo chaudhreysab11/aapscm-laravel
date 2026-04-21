@@ -17,9 +17,11 @@ class BoardMember extends Model
     protected $fillable = [
         'name',
         'role',
+        'affiliation',
         'bio',
         'avatar_image',
         'linkedin_url',
+        'profile_page_slug',
         'is_active',
         'sort_order',
         'source_id',

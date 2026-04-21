@@ -5,14 +5,19 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Contracts\PaymentGatewayContract;
+use App\Events\OrderPaid;
 use App\Events\PagePublished;
 use App\Events\PageUnpublished;
+use App\Listeners\ActivateMembershipOnOrderPaid;
+use App\Listeners\EnrollUserInCourseOnOrderPaid;
 use App\Listeners\LogPagePublished;
 use App\Listeners\LogPageUnpublished;
-use App\Models\CertificationCatalog;
+use App\Models\Order;
 use App\Models\Page;
+use App\Models\User;
 use App\Observers\PageObserver;
-use Illuminate\Support\Facades\Route;
+use App\Observers\UserObserver;
+use App\Policies\OrderPolicy;
 use App\Policies\PagePolicy;
 use App\Repositories\Contracts\PageRepositoryInterface;
 use App\Repositories\Contracts\ProductRepositoryInterface;
@@ -49,16 +54,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Page::observe(PageObserver::class);
+        User::observe(UserObserver::class);
 
         Gate::policy(Page::class, PagePolicy::class);
-
-        // Resolve {certification} route parameter by slug (not id).
-        // Active scope is applied so inactive/soft-deleted certs return 404.
-        Route::bind('certification', fn (string $slug) =>
-            CertificationCatalog::active()->where('slug', $slug)->firstOrFail()
-        );
+        Gate::policy(Order::class, OrderPolicy::class);
 
         Event::listen(PagePublished::class, [LogPagePublished::class, 'handle']);
         Event::listen(PageUnpublished::class, [LogPageUnpublished::class, 'handle']);
+
+        Event::listen(OrderPaid::class, [ActivateMembershipOnOrderPaid::class, 'handle']);
+        Event::listen(OrderPaid::class, [EnrollUserInCourseOnOrderPaid::class, 'handle']);
     }
 }

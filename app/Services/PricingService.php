@@ -3,10 +3,83 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Models\ProductPrice;
 use App\Models\User;
+use App\Models\UserMembership;
 
 class PricingService
 {
+    /**
+     * Resolve the price a given user should pay for a product.
+     *
+     * Looks up `product_prices` rows for the product. If the user is an
+     * active member, a tier-specific price is preferred when present;
+     * otherwise (or for guests / non-members) the public/non-member price
+     * (membership_tier_id IS NULL) is used.
+     *
+     * @return array{price: string, currency: string, membership_tier_id: int|null}
+     */
+    public function resolvePrice(Product $product, ?User $user): array
+    {
+        $tierId = $this->activeTierId($user);
+
+        if ($tierId !== null) {
+            /** @var ProductPrice|null $memberPrice */
+            $memberPrice = $product->prices()
+                ->where('is_active', true)
+                ->where('membership_tier_id', $tierId)
+                ->first();
+
+            if ($memberPrice !== null) {
+                return [
+                    'price' => number_format((float) $memberPrice->price, 2, '.', ''),
+                    'currency' => $memberPrice->currency,
+                    'membership_tier_id' => $tierId,
+                ];
+            }
+        }
+
+        /** @var ProductPrice|null $publicPrice */
+        $publicPrice = $product->prices()
+            ->where('is_active', true)
+            ->whereNull('membership_tier_id')
+            ->first();
+
+        if ($publicPrice === null) {
+            // Hard fail rather than silently selling for $0.00. A product with no
+            // active price row is a data/seed error and must be surfaced.
+            throw new \RuntimeException(
+                "Product #{$product->id} ({$product->slug}) has no active price configured."
+            );
+        }
+
+        return [
+            'price' => number_format((float) $publicPrice->price, 2, '.', ''),
+            'currency' => $publicPrice->currency,
+            'membership_tier_id' => null,
+        ];
+    }
+
+    /**
+     * Return the membership_tier_id of the user's currently-active membership,
+     * or null if the user is a guest or has no active membership.
+     */
+    public function activeTierId(?User $user): ?int
+    {
+        if ($user === null) {
+            return null;
+        }
+
+        /** @var UserMembership|null $active */
+        $active = $user->memberships()
+            ->where('status', 'active')
+            ->where('expires_at', '>', now())
+            ->latest('starts_at')
+            ->first();
+
+        return $active?->membership_tier_id;
+    }
+
     /**
      * Resolve the correct price of a product for a given user.
      * Members get member_price; non-members get non_member_price (or the base price).

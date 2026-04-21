@@ -13,6 +13,8 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
+        'billing_email',
+        'billing_name',
         'order_number',
         'status',
         'payment_method',
@@ -54,5 +56,14 @@ class Order extends Model
     public function isPaid(): bool
     {
         return $this->payment_status === 'paid';
+    }
+
+    /**
+     * Scope: orders matching a billing email (e.g. for guest order lookup
+     * or attaching orphan orders when a user later registers).
+     */
+    public function scopeForEmail($query, string $email)
+    {
+        return $query->where('billing_email', $email);
     }
 }

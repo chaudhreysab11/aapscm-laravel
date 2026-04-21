@@ -17,9 +17,21 @@
         mobileOpen: false,
         mobileSection: null,
         _t: null,
-        on(m)  { clearTimeout(this._t); this.openMenu = m; },
-        off()  { this._t = setTimeout(() => { this.openMenu = null; }, 280); },
-        keep(m){ clearTimeout(this._t); this.openMenu = m; },
+        _pending: null,
+        on(m)  {
+            clearTimeout(this._t);
+            clearTimeout(this._pending);
+            if (this.openMenu === null || this.openMenu === m) {
+                this.openMenu = m;
+            } else {
+                this._pending = setTimeout(() => { this.openMenu = m; }, 150);
+            }
+        },
+        off()  {
+            clearTimeout(this._pending);
+            this._t = setTimeout(() => { this.openMenu = null; }, 280);
+        },
+        keep(m){ clearTimeout(this._t); clearTimeout(this._pending); this.openMenu = m; },
         mob(s) { this.mobileSection = this.mobileSection === s ? null : s; }
     }"
     class="bg-white border-b border-gray-200 shadow-sm [&_a]:no-underline"
@@ -136,8 +148,9 @@
                 </button>
                 <div x-show="openMenu==='membership'" @mouseenter="keep('membership')" @mouseleave="off()"
                      x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
-                     class="absolute left-0 right-0 top-full bg-white border border-gray-200 rounded-b-xl shadow-2xl z-50"
-                     style="display:none" role="menu">
+                     class="absolute left-0 right-0 top-full pt-1 z-50"
+                     style="display:none">
+                  <div class="bg-white border border-gray-200 rounded-b-xl shadow-2xl" role="menu">
                     <div class="grid grid-cols-3 divide-x divide-gray-100 p-6 gap-0">
                         <div class="pr-5">
                             <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Membership Types</p>
@@ -178,6 +191,7 @@
                             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                         </div>
                     </div>
+                  </div>
                 </div>
             </li>
 
@@ -194,8 +208,9 @@
                 </button>
                 <div x-show="openMenu==='certifications'" @mouseenter="keep('certifications')" @mouseleave="off()"
                      x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
-                     class="absolute left-0 right-0 top-full bg-white border border-gray-200 rounded-b-xl shadow-2xl z-50 overflow-y-auto"
-                     style="display:none; max-height: 75vh;" role="menu">
+                     class="absolute left-0 right-0 top-full pt-1 z-50"
+                     style="display:none">
+                  <div class="bg-white border border-gray-200 rounded-b-xl shadow-2xl overflow-y-auto" style="max-height: 75vh;" role="menu">
                     <?php
                         $ob = '<svg class="w-3.5 h-3.5 flex-shrink-0 mt-px" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#e85d04"/><path d="M5.5 4.5 9 7 5.5 9.5V4.5z" fill="white"/></svg>';
                     ?>
@@ -210,7 +225,7 @@
                                     ['Benefits and Resources',    '/benefits-and-resources'],
                                     ['Resources',                 '/benefits-and-resources'],
                                     ['4 Steps to Certification',  '/4-steps-to-verification'],
-                                    ['Workshop/Training',          '/aapscm-training'],
+                                    ['Workshop/Training',          '/workshop-trainings'],
                                 ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l,$h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
                                 <a href="<?php echo e($u($h)); ?>" class="block py-1.5 text-[13px] text-[#0B2F5E] hover:underline leading-snug" role="menuitem"><?php echo e($l); ?></a>
                                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
@@ -374,6 +389,7 @@
                             </div>
                         </div>
                     </div>
+                  </div>
                 </div>
             </li>
 
@@ -389,8 +405,9 @@
                 </button>
                 <div x-show="openMenu==='testing'" @mouseenter="keep('testing')" @mouseleave="off()"
                      x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
-                     class="absolute left-0 right-0 top-full bg-white border border-gray-200 rounded-b-xl shadow-2xl z-50"
-                     style="display:none" role="menu">
+                     class="absolute left-0 right-0 top-full pt-1 z-50"
+                     style="display:none">
+                  <div class="bg-white border border-gray-200 rounded-b-xl shadow-2xl" role="menu">
                     <div class="grid grid-cols-2 divide-x divide-gray-100 p-6">
                         <div class="pr-5">
                             <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Testing Overview</p>
@@ -421,6 +438,7 @@
                             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                         </div>
                     </div>
+                  </div>
                 </div>
             </li>
 
@@ -436,8 +454,9 @@
                 </button>
                 <div x-show="openMenu==='resources'" @mouseenter="keep('resources')" @mouseleave="off()"
                      x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
-                     class="absolute left-0 right-0 top-full bg-white border border-gray-200 rounded-b-xl shadow-2xl z-50"
-                     style="display:none" role="menu">
+                     class="absolute left-0 right-0 top-full pt-1 z-50"
+                     style="display:none">
+                  <div class="bg-white border border-gray-200 rounded-b-xl shadow-2xl" role="menu">
                     <div class="grid grid-cols-3 divide-x divide-gray-100 p-6 gap-0">
                         <div class="pr-5">
                             <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Quick Links</p>
@@ -483,6 +502,7 @@
                             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                         </div>
                     </div>
+                  </div>
                 </div>
             </li>
 
@@ -498,8 +518,9 @@
                 </button>
                 <div x-show="openMenu==='corporate'" @mouseenter="keep('corporate')" @mouseleave="off()"
                      x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
-                     class="absolute left-0 right-0 top-full bg-white border border-gray-200 rounded-b-xl shadow-2xl z-50"
-                     style="display:none" role="menu">
+                     class="absolute left-0 right-0 top-full pt-1 z-50"
+                     style="display:none">
+                  <div class="bg-white border border-gray-200 rounded-b-xl shadow-2xl" role="menu">
                     <div class="grid grid-cols-2 divide-x divide-gray-100 p-6">
                         <div class="pr-5">
                             <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Corporate Programs</p>
@@ -529,6 +550,7 @@
                             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                         </div>
                     </div>
+                  </div>
                 </div>
             </li>
 
@@ -544,8 +566,9 @@
                 </button>
                 <div x-show="openMenu==='credentialing'" @mouseenter="keep('credentialing')" @mouseleave="off()"
                      x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
-                     class="absolute left-0 right-0 top-full bg-white border border-gray-200 rounded-b-xl shadow-2xl z-50"
-                     style="display:none" role="menu">
+                     class="absolute left-0 right-0 top-full pt-1 z-50"
+                     style="display:none">
+                  <div class="bg-white border border-gray-200 rounded-b-xl shadow-2xl" role="menu">
                     <div class="grid grid-cols-2 divide-x divide-gray-100 p-6">
                         <div class="pr-5">
                             <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Manage Your Credential</p>
@@ -576,6 +599,7 @@
                             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                         </div>
                     </div>
+                  </div>
                 </div>
             </li>
 
@@ -591,8 +615,9 @@
                 </button>
                 <div x-show="openMenu==='diploma'" @mouseenter="keep('diploma')" @mouseleave="off()"
                      x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
-                     class="absolute left-0 right-0 top-full bg-white border border-gray-200 rounded-b-xl shadow-2xl z-50"
-                     style="display:none" role="menu">
+                     class="absolute left-0 right-0 top-full pt-1 z-50"
+                     style="display:none">
+                  <div class="bg-white border border-gray-200 rounded-b-xl shadow-2xl" role="menu">
                     <div class="grid grid-cols-2 divide-x divide-gray-100 p-6">
                         <div class="pr-5">
                             <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Executive Diplomas</p>
@@ -620,6 +645,7 @@
                             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
                         </div>
                     </div>
+                  </div>
                 </div>
             </li>
 

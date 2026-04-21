@@ -18,6 +18,12 @@ class EnforceTrailingSlash
         '/livewire',
         // Visual page builder — admin-only tool, no SEO trailing-slash needed
         '/cms-builder',
+        // Checkout & payment flow — POST endpoints, no SEO trailing-slash needed
+        '/checkout',
+        '/payment',
+        // Cart & guest order receipt — internal flow, not SEO indexed
+        '/cart',
+        '/order',
         // Auth & member portal routes — no trailing slash needed
         '/login',
         '/logout',

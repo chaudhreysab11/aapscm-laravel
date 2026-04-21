@@ -22,6 +22,11 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleRedirects::class,
             EnforceTrailingSlash::class,
         ]);
+
+        // Payment-provider webhooks are external POSTs and cannot supply a CSRF token.
+        $middleware->validateCsrfTokens(except: [
+            'webhooks/*',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -76,7 +76,7 @@ class HomePageSeeder extends Seeder
                         'icon'  => '/storage/cms-images/2023/10/1.png',
                         'title' => 'Our Certifications',
                         'text'  => "We offer various certifications that recognize knowledge and competency for our Management Professionals in 3 distinct areas representing both professional and managerial skills for..",
-                        'href'  => '/certifications/',
+                        'href'  => '/certifications-for-professionals/',
                     ],
                     [
                         'icon'  => '/storage/cms-images/2023/10/2.png',
