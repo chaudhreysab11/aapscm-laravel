@@ -106,6 +106,7 @@ class DatabaseSeeder extends Seeder
             CertCharteredSustainableSupplyChainManagerCsscmPageSeeder::class,
             CertAmericanCertifiedDigitalSupplyChainIntegrationProfessionalAcDscipPageSeeder::class,
             CertAmericanCertifiedGlobalSupplyChainRiskAndResilienceProfessionalacGsrpPageSeeder::class,
+            CertCharteredSustainableCulinaryTourismManagerCsctmPageSeeder::class,
             HomePageSeeder::class,
             WpRedirectsSeeder::class,
         ]);

@@ -99,6 +99,7 @@ class CmsPageController extends Controller
         'chartered-sustainable-supply-chain-manager-csscm' => 'cms.page.cert-chartered-sustainable-supply-chain-manager-csscm',
         'american-certified-digital-supply-chain-integration-professional-ac-dscip' => 'cms.page.cert-american-certified-digital-supply-chain-integration-professional-ac-dscip',
         'american-certified-global-supply-chain-risk-and-resilience-professionalac-gsrp' => 'cms.page.cert-american-certified-global-supply-chain-risk-and-resilience-professionalac-gsrp',
+        'chartered-sustainable-culinary-tourism-manager-csctm' => 'cms.page.cert-chartered-sustainable-culinary-tourism-manager-csctm',
     ];
 
     /** Maps template key → view file (relative to resources/views) */
