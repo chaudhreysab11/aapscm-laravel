@@ -107,6 +107,7 @@ class CmsPageController extends Controller
         'chartered-global-cross-border-e-commerce-manager-cgcbe' => 'cms.page.cert-chartered-global-cross-border-e-commerce-manager-cgcbe',
         'american-certified-sustainable-and-circular-supply-chain-professional-ac-cscsp' => 'cms.page.cert-american-certified-sustainable-and-circular-supply-chain-professional-ac-cscsp',
         'american-certified-supply-chain-digital-transformation-manager-ac-scdtm' => 'cms.page.cert-american-certified-supply-chain-digital-transformation-manager-ac-scdtm',
+        'american-certified-supply-chain-artificial-intelligence-ai-professional-ac-scai' => 'cms.page.cert-american-certified-supply-chain-artificial-intelligence-ai-professional-ac-scai',
     ];
 
     /** Maps template key → view file (relative to resources/views) */
