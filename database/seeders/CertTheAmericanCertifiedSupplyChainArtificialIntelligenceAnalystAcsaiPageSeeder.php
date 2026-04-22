@@ -167,10 +167,11 @@ class CertTheAmericanCertifiedSupplyChainArtificialIntelligenceAnalystAcsaiPageS
                         'label' => 'Purchase Exam',
                         'href'  => UrlRewriter::local('https://aapscm.org/checkout/?add-to-cart=7769'),
                     ],
-                    [
-                        'label' => 'Purchase course materials',
-                        'href'  => UrlRewriter::local('https://aapscm.org/course/american-certified-supply-chain-artificial-intelligence-analyst/'),
-                    ],
+                    // Button hidden: links to legacy /course/ URL (commented out for review).
+                    // [
+                    //     'label' => 'Purchase course materials',
+                    //     'href'  => UrlRewriter::local('https://aapscm.org/course/american-certified-supply-chain-artificial-intelligence-analyst/'),
+                    // ],
                     [
                         'label' => 'Purchase virtual instructor-led Training',
                         'href'  => UrlRewriter::local('https://aapscm.org/aapscm-training-virtual-chartered-supply-chain-arti%ef%ac%81cial-intelligence-analyst-csai/'),

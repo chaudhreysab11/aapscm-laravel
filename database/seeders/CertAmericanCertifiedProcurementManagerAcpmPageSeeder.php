@@ -45,8 +45,9 @@ class CertAmericanCertifiedProcurementManagerAcpmPageSeeder extends Seeder
                 'paragraphs' => [
                     "The American Certified Procurement Manager (ACPM) certification is designed to empower managers and experienced procurement specialists with the advanced managerial skills needed to excel in procurement operations. It bridges the gap between operational expertise and strategic leadership, equipping professionals to navigate complex procurement challenges effectively. The ACPM\u{00ae} certification exam assumes candidates have a close working relationship with procurement processes, making it the ideal choice for those seeking to enhance their ability to manage procurement teams, optimize supply chain efficiency, and drive organizational success. This certification not only validates your expertise but also positions you as a leader in the procurement industry.",
                 ],
-                'cta_label' => 'Buy Exam Now',
-                'cta_href'  => UrlRewriter::local('https://aapscm.org/course/the-american-certified-professional-in-procurement-management-acpp/'),
+                // CTA hidden: links to legacy /course/ URL (commented out for review).
+                // 'cta_label' => 'Buy Exam Now',
+                // 'cta_href'  => UrlRewriter::local('https://aapscm.org/course/the-american-certified-professional-in-procurement-management-acpp/'),
             ],
             'about_exam' => [
                 'image_top'    => UrlRewriter::image('https://aapscm.org/wp-content/uploads/2023/10/XcOM0CQxK2Qsd-7-1.jpg'),

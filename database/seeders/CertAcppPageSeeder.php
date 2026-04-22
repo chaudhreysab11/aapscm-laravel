@@ -46,8 +46,9 @@ class CertAcppPageSeeder extends Seeder
                     "The American Certified Procurement Professional (ACPP\u{00ae}) certification is the perfect starting point for professionals looking to build a solid foundation in procurement management. This certification equips you with the essential knowledge and skills required to succeed as a procurement specialist. The ACPP\u{00ae} certification exam assumes candidates have hands-on experience or a close working relationship with procurement processes, ensuring practical relevance.",
                     "The exam evaluates your understanding of critical concepts such as the formal process of obtaining goods and services, creating a Procurement Management Plan, developing a Procurement Statement of Work (SOW), preparing procurement documents, and managing change requests. Additionally, the assessment covers essential outputs like procurement documentation, lessons learned, and the overall procurement management lifecycle. By earning the ACPP\u{00ae}, you demonstrate your expertise and readiness to navigate the complexities of modern procurement with confidence and professionalism.",
                 ],
-                'cta_label' => 'Buy Exam Now',
-                'cta_href'  => UrlRewriter::local('https://aapscm.org/course/the-american-certified-professional-in-procurement-management-acpp/'),
+                // CTA hidden: links to legacy /course/ URL (commented out for review).
+                // 'cta_label' => 'Buy Exam Now',
+                // 'cta_href'  => UrlRewriter::local('https://aapscm.org/course/the-american-certified-professional-in-procurement-management-acpp/'),
             ],
             'about_exam' => [
                 'image'   => UrlRewriter::image('https://aapscm.org/wp-content/uploads/2024/12/home-banner-top.png'),

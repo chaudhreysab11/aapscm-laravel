@@ -23,7 +23,7 @@ class UsChartersPageSeeder extends Seeder
             'hero_heading' => 'US Chapters',
             'join_chapter_cta' => [
                 'label' => 'Join A Chapter',
-                'url'   => '/course/join-a-charter/',
+                'url'   => '/checkout/?add-to-cart=38096',
             ],
             'intro_heading' => 'American Association of Procurement, Supply Chain & Tourism Management (AAPSCM®) Chapter Descriptions, Objectives, and Functionalities',
             'chapters'           => $extracted['chapters'],

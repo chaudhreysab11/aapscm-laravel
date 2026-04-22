@@ -217,7 +217,7 @@ return array (
   array (
     'title' => 'American Certified Global Supply Chain Risk and Resilience Professional(AC- GSRP)®',
     'desc' => 'The Global Supply Chain Risk and Resilience Professional….',
-    'href' => 'https://aapscm.org/american-certified-global-supply-chain-risk-and-resilience-professionalac-gsrp',
+    'href' => 'https://aapscm.org/american-certified-global-supply-chain-risk-and-resilience-professionalac-gsrp/',
     'top_image' => 'https://aapscm.org/wp-content/uploads/2024/11/new-cousres7.png',
     'badge_image' => 'https://aapscm.org/wp-content/uploads/2024/11/7-3.png',
   ),
@@ -401,7 +401,7 @@ return array (
   array (
     'title' => 'Chartered Supply Chain Artificial Intelligence Manager (CSAI-M®)',
     'desc' => 'The Chartered Supply Chain Artificial Intelligence Manager (CSAI-M®) is AAPSCM’s flagship advanced credential for professionals who lead digital transformation in supply-chain intelligence. This program………',
-    'href' => 'https://aapscm.org/chartered-ai-procurement-strategist-caips-2/',
+    'href' => 'https://aapscm.org/chartered-supply-chain-artificial-intelligence-manager-csai-m/',
     'top_image' => 'https://aapscm.org/wp-content/uploads/2025/10/logo-Chartered-Supply-Chain-Artificial-Intelligence-Manager-CSAI-M®.png',
     'badge_image' => 'https://aapscm.org/wp-content/uploads/2025/10/chartered-badge.jpg',
   ),

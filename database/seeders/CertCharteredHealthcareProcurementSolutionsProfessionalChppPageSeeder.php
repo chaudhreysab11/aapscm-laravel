@@ -186,8 +186,9 @@ class CertCharteredHealthcareProcurementSolutionsProfessionalChppPageSeeder exte
                     'Moreover, CHPP® certification prepares professionals to reduce over-reliance on supplier representatives by strengthening internal collaboration between clinicians and health system leadership. By creating a unified framework for communication and decision-making, CHPP® holders ensure that supply chain strategies align with both clinical priorities and cost-efficiency goals.',
                     'This certification is essential for those looking to lead transformative changes in healthcare procurement, delivering value-based care while optimizing resource allocation and patient outcomes.',
                 ],
-                'cta_label' => 'Buy Exam Now',
-                'cta_href' => UrlRewriter::local('https://aapscm.org/course/chartered-healthcare-procurement-solutions-professional-chpp/'),
+                // CTA hidden: links to legacy /course/ URL (commented out for review).
+                // 'cta_label' => 'Buy Exam Now',
+                // 'cta_href' => UrlRewriter::local('https://aapscm.org/course/chartered-healthcare-procurement-solutions-professional-chpp/'),
             ],
             'about_exam' => [
                 'image' => UrlRewriter::image('https://aapscm.org/wp-content/uploads/2023/10/Untitled-2-2.jpg'),

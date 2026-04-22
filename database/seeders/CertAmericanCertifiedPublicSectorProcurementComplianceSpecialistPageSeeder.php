@@ -146,8 +146,9 @@ class CertAmericanCertifiedPublicSectorProcurementComplianceSpecialistPageSeeder
                     'Contract Manager for Public Organizations',
                     'Public Sector Procurement Consultant',
                 ],
-                'cta_label' => 'Enroll Now',
-                'cta_href'  => UrlRewriter::local('https://aapscm.org/course/american-certified-public-sector-procurement-compliance-specialist/'),
+                // CTA hidden: links to legacy /course/ URL (commented out for review).
+                // 'cta_label' => 'Enroll Now',
+                // 'cta_href'  => UrlRewriter::local('https://aapscm.org/course/american-certified-public-sector-procurement-compliance-specialist/'),
             ],
             'exam_details' => [
                 'rows' => [

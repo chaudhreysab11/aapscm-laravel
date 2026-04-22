@@ -152,8 +152,9 @@ class CertAmericanCertifiedDigitalProcurementAnalyticsSpecialistPageSeeder exten
                     'Procurement Technology Specialist',
                     'Digital Transformation Lead in Supply Chain',
                 ],
-                'cta_label' => 'Enroll Now',
-                'cta_href'  => UrlRewriter::local('https://aapscm.org/course/american-certified-digital-procurement-analytics-specialist/'),
+                // CTA hidden: links to legacy /course/ URL (commented out for review).
+                // 'cta_label' => 'Enroll Now',
+                // 'cta_href'  => UrlRewriter::local('https://aapscm.org/course/american-certified-digital-procurement-analytics-specialist/'),
             ],
             'exam_details' => [
                 'rows' => [

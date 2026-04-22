@@ -141,8 +141,9 @@ class CertAmericanCertifiedSustainableProcurementEthicalSourcingProfessionalPage
                     'Social Responsibility (CSR) Officer',
                     'Supply Chain Sustainability Specialist',
                 ],
-                'cta_label' => 'Enroll Now',
-                'cta_href'  => UrlRewriter::local('https://aapscm.org/course/american-certified-sustainable-procurement-ethical-sourcing-professional-ac-spesp/'),
+                // CTA hidden: links to legacy /course/ URL (commented out for review).
+                // 'cta_label' => 'Enroll Now',
+                // 'cta_href'  => UrlRewriter::local('https://aapscm.org/course/american-certified-sustainable-procurement-ethical-sourcing-professional-ac-spesp/'),
             ],
             'exam_details' => [
                 'rows' => [

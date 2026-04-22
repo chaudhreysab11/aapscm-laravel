@@ -148,8 +148,9 @@ class CertAmericanCertifiedProcurementRiskManagementSpecialistPageSeeder extends
                     'Compliance and Regulatory Officer',
                     'Procurement Strategy Consultant',
                 ],
-                'cta_label' => 'Enroll Now',
-                'cta_href'  => UrlRewriter::local('https://aapscm.org/course/american-certified-procurement-risk-management-specialist/'),
+                // CTA hidden: links to legacy /course/ URL (commented out for review).
+                // 'cta_label' => 'Enroll Now',
+                // 'cta_href'  => UrlRewriter::local('https://aapscm.org/course/american-certified-procurement-risk-management-specialist/'),
             ],
             'exam_details' => [
                 'rows' => [

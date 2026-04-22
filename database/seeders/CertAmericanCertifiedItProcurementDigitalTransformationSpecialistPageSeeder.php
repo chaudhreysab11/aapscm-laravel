@@ -139,8 +139,9 @@ class CertAmericanCertifiedItProcurementDigitalTransformationSpecialistPageSeede
                     'IT Vendor Manager',
                     'Technology Sourcing Specialist',
                 ],
-                'cta_label' => 'Enroll Now',
-                'cta_href'  => UrlRewriter::local('https://aapscm.org/course/american-certified-it-procurement-digital-transformation-specialist-ac-ipdts/'),
+                // CTA hidden: links to legacy /course/ URL (commented out for review).
+                // 'cta_label' => 'Enroll Now',
+                // 'cta_href'  => UrlRewriter::local('https://aapscm.org/course/american-certified-it-procurement-digital-transformation-specialist-ac-ipdts/'),
             ],
             'exam_details' => [
                 'rows' => [

@@ -146,8 +146,9 @@ class CertAmericanCertifiedGlobalProcurementCrossBorderSupplySpecialistAcGpcssPa
                     'Cross-Border Sourcing Specialist',
                     'Import/Export Compliance Officer',
                 ],
-                'cta_label' => 'Enroll Now',
-                'cta_href'  => UrlRewriter::local('https://aapscm.org/course/american-certified-global-procurement-cross-border-supply-specialist/'),
+                // CTA hidden: links to legacy /course/ URL (commented out for review).
+                // 'cta_label' => 'Enroll Now',
+                // 'cta_href'  => UrlRewriter::local('https://aapscm.org/course/american-certified-global-procurement-cross-border-supply-specialist/'),
             ],
             'exam_details' => [
                 'rows' => [

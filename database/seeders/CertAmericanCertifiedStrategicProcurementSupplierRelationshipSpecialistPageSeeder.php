@@ -146,8 +146,9 @@ class CertAmericanCertifiedStrategicProcurementSupplierRelationshipSpecialistPag
                     'Procurement Innovation Lead',
                     'Vendor Relationship Officer',
                 ],
-                'cta_label' => 'Enroll Now',
-                'cta_href'  => UrlRewriter::local('https://aapscm.org/course/american-certified-strategic-procurement-supplier-relationship-specialist/'),
+                // CTA hidden: links to legacy /course/ URL (commented out for review).
+                // 'cta_label' => 'Enroll Now',
+                // 'cta_href'  => UrlRewriter::local('https://aapscm.org/course/american-certified-strategic-procurement-supplier-relationship-specialist/'),
             ],
             'exam_details' => [
                 'rows' => [
