@@ -117,6 +117,7 @@ class CmsPageController extends Controller
         'american-certified-ai-procurement-fraud-amp-cybersecurity-manager-caipfcm' => 'cms.page.cert-american-certified-ai-procurement-fraud-amp-cybersecurity-manager-caipfcm',
         'chartered-supply-chain-artificial-intelligence-csai' => 'cms.page.cert-chartered-supply-chain-artificial-intelligence-csai',
         'american-certified-ai-supply-chain-resilience-amp-crisis-manager-ac-aiscrc' => 'cms.page.cert-american-certified-ai-supply-chain-resilience-amp-crisis-manager-ac-aiscrc',
+        'american-certified-ai-amp-blockchain-procurement-professional-ac-aibpp' => 'cms.page.cert-american-certified-ai-amp-blockchain-procurement-professional-ac-aibpp',
     ];
 
     /** Maps template key → view file (relative to resources/views) */
