@@ -118,6 +118,7 @@ class CmsPageController extends Controller
         'chartered-supply-chain-artificial-intelligence-csai' => 'cms.page.cert-chartered-supply-chain-artificial-intelligence-csai',
         'american-certified-ai-supply-chain-resilience-amp-crisis-manager-ac-aiscrc' => 'cms.page.cert-american-certified-ai-supply-chain-resilience-amp-crisis-manager-ac-aiscrc',
         'american-certified-ai-amp-blockchain-procurement-professional-ac-aibpp' => 'cms.page.cert-american-certified-ai-amp-blockchain-procurement-professional-ac-aibpp',
+        'american-certified-ai-procurement-demand-amp-forecasting-analyst-ac-aipdfa' => 'cms.page.cert-american-certified-ai-procurement-demand-amp-forecasting-analyst-ac-aipdfa',
     ];
 
     /** Maps template key → view file (relative to resources/views) */
