@@ -69,6 +69,7 @@ class CmsPageController extends Controller
         'influencing-suppliers' => 'cms.page.influencing-suppliers',
         'board-of-directors' => 'cms.page.board-of-directors',
         'certifications-for-professionals' => 'cms.page.certifications-for-professionals',
+        'certifications' => 'cms.page.certifications',
         'all-courses' => 'cms.page.all-courses',
         'aapscm-training' => 'cms.page.aapscm-training',
         'workshop-trainings' => 'cms.page.workshop-trainings',

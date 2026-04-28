@@ -18,11 +18,107 @@ use Illuminate\Database\Seeder;
  */
 class HomePageSeeder extends Seeder
 {
+    private const READ_MORE_LABEL = 'Read More';
+
+    private const CERTIFICATIONS_URL = 'https://aapscm.org/certifications/';
+
     public function run(): void
     {
         $certs = $this->loadCerts();
+        $pageData = $this->buildPageData($certs);
 
-        $pageData = [
+        Page::updateOrCreate(
+            ['slug' => 'home'],
+            [
+                'title'            => 'Home',
+                'content'          => null,
+                'excerpt'          => "AAPSCM\u{00ae} \u{2014} certifications, training, and global networking in procurement, supply chain, and tourism management.",
+                'status'           => 'published',
+                'is_published'     => true,
+                'template'         => 'standard_content',
+                'page_data'        => $pageData,
+                'meta_title'       => "AAPSCM\u{00ae} | American Association of Procurement, Supply Chain & Tourism Management",
+                'meta_description' => "AAPSCM\u{00ae} empowers procurement, supply chain, and tourism professionals with internationally recognized certifications, training, and global networking.",
+                'show_in_nav'      => false,
+            ],
+        );
+    }
+
+    /**
+     * Loads the 49-entry certification catalog from database/seeders/data/
+     * and rewrites all remote URLs to their local equivalents.
+     */
+    private function loadCerts(): array
+    {
+        $path = database_path('seeders/data/home_certs.json');
+        $raw  = json_decode((string) file_get_contents($path), true) ?? [];
+        $out  = [];
+
+        foreach ($raw as $c) {
+            $out[] = [
+                'title' => $c['title'] ?? '',
+                'desc'  => $c['desc']  ?? '',
+                'href'  => UrlRewriter::local($c['href'] ?? '#'),
+                'image' => UrlRewriter::image($c['image'] ?? ''),
+                'badge' => UrlRewriter::image($c['badge'] ?? ''),
+            ];
+        }
+
+        return $out;
+    }
+
+    private function sliderSlides(): array
+    {
+        return [
+            [
+                'title' => 'Become an AAPSCM® Member Today',
+                'body_html' => 'Strategy, innovation, and implementation @ AAPSCM® <span aria-hidden="true">—</span> these are building blocks of success - Be part of the future!!!',
+                'cta_label' => 'JOIN NOW',
+                'cta_href' => UrlRewriter::local('https://aapscm.org/membership/'),
+                'image' => UrlRewriter::image('https://aapscm.org/wp-content/uploads/2023/12/S2.jpg'),
+            ],
+            [
+                'title' => 'Upgrade Your Future with AAPSCM®',
+                'body_html' => '1st Internationally Recognized Certification Body in Procurement, Supply Chain Management and Tourism Management <strong>Get a Govt-Recognized Certification!!</strong>',
+                'cta_label' => self::READ_MORE_LABEL,
+                'cta_href' => UrlRewriter::local(self::CERTIFICATIONS_URL),
+                'image' => UrlRewriter::image('https://aapscm.org/wp-content/uploads/2023/12/S1-1.jpg'),
+            ],
+            [
+                'title' => 'Improve Your Skills',
+                'body_html' => 'Be Chartered!! We are Vendor-Neutral. We are Chartered in USA! Join our “Spartanburg, South Carolina Charter today”!!',
+                'cta_label' => self::READ_MORE_LABEL,
+                'cta_href' => UrlRewriter::local('https://aapscm.org/us-charters/#aapscm-spartanburg-sc-chapter'),
+                'image' => UrlRewriter::image('https://aapscm.org/wp-content/uploads/2023/12/s3.jpg'),
+            ],
+            [
+                'title' => 'New Knowledge',
+                'body_html' => 'Ready to Learn and become an Expert? Find a Perfect Certification and join us today @ AAPSCM®',
+                'cta_label' => self::READ_MORE_LABEL,
+                'cta_href' => UrlRewriter::local(self::CERTIFICATIONS_URL),
+                'image' => UrlRewriter::image('https://aapscm.org/wp-content/uploads/2023/12/s44.jpg'),
+            ],
+            [
+                'title' => 'Transform Your Organization With AAPSCM® Certification',
+                'body_html' => 'Upskill and Reskilling are Keys to Internal Mobility Be part of Your Organizational Transformation',
+                'cta_label' => self::READ_MORE_LABEL,
+                'cta_href' => UrlRewriter::local(self::CERTIFICATIONS_URL),
+                'image' => UrlRewriter::image('https://aapscm.org/wp-content/uploads/2023/12/s5.jpg'),
+            ],
+            [
+                'title' => 'Insights Learning Expertise.',
+                'body_html' => 'Strategy, innovation, and implementation @ AAPSCM® <span aria-hidden="true">—</span> these are building blocks of success - Be part of the future!!!',
+                'cta_label' => self::READ_MORE_LABEL,
+                'cta_href' => UrlRewriter::local(self::CERTIFICATIONS_URL),
+                'image' => UrlRewriter::image('https://aapscm.org/wp-content/uploads/2023/12/Untitled-2.jpg'),
+            ],
+        ];
+    }
+
+    private function buildPageData(array $certs): array
+    {
+        return [
+            'slider' => $this->sliderSlides(),
             'hero' => [
                 'heading' => "Welcome to AAPSCM\u{00ae} \u{2013} Your Gateway to Excellence in Procurement, Supply Chain, and Tourism Management",
                 'paragraphs' => [
@@ -59,7 +155,7 @@ class HomePageSeeder extends Seeder
                     ],
                 ],
                 'cta_href'  => '/aapscm-training/',
-                'cta_label' => 'Read More',
+                'cta_label' => self::READ_MORE_LABEL,
             ],
             'test_cta' => [
                 'icon'        => '/storage/cms-images/2023/10/cta_2_shape3.png',
@@ -152,44 +248,5 @@ class HomePageSeeder extends Seeder
                 ],
             ],
         ];
-
-        Page::updateOrCreate(
-            ['slug' => 'home'],
-            [
-                'title'            => 'Home',
-                'content'          => null,
-                'excerpt'          => "AAPSCM\u{00ae} \u{2014} certifications, training, and global networking in procurement, supply chain, and tourism management.",
-                'status'           => 'published',
-                'is_published'     => true,
-                'template'         => 'standard_content',
-                'page_data'        => $pageData,
-                'meta_title'       => "AAPSCM\u{00ae} | American Association of Procurement, Supply Chain & Tourism Management",
-                'meta_description' => "AAPSCM\u{00ae} empowers procurement, supply chain, and tourism professionals with internationally recognized certifications, training, and global networking.",
-                'show_in_nav'      => false,
-            ],
-        );
-    }
-
-    /**
-     * Loads the 49-entry certification catalog from database/seeders/data/
-     * and rewrites all remote URLs to their local equivalents.
-     */
-    private function loadCerts(): array
-    {
-        $path = database_path('seeders/data/home_certs.json');
-        $raw  = json_decode((string) file_get_contents($path), true) ?? [];
-        $out  = [];
-
-        foreach ($raw as $c) {
-            $out[] = [
-                'title' => $c['title'] ?? '',
-                'desc'  => $c['desc']  ?? '',
-                'href'  => UrlRewriter::local($c['href'] ?? '#'),
-                'image' => UrlRewriter::image($c['image'] ?? ''),
-                'badge' => UrlRewriter::image($c['badge'] ?? ''),
-            ];
-        }
-
-        return $out;
     }
 }

@@ -3,6 +3,7 @@
     <x-cms.seo-head :page="$page" />
 
     @php
+        $sliderSlides   = $page->page_data['slider']         ?? [];
         $hero           = $page->page_data['hero']           ?? [];
         $intro          = $page->page_data['intro']          ?? [];
         $certifications = $page->page_data['certifications'] ?? [];
@@ -13,19 +14,131 @@
         $partners       = $page->page_data['partners']       ?? [];
     @endphp
 
-    {{-- Hero / Welcome --}}
-    <section class="bg-white text-white py-20 md:py-28 flex items-center justify-center">
-        <div class="bg-[#F8F8F8] max-w-[1140px] px-10 py-10 ">
-            <h1 class="text-[25px] md:text-[25px] lg:text-[32px] font-bold leading-tight mb-8 text-center text-black">
-                {{ $hero['heading'] ?? $page->title }}
-            </h1>
-            <div class="max-w-[1000px] mx-auto space-y-5 text-[15px] md:text-[17px] leading-relaxed text-black text-center">
-                @foreach (($hero['paragraphs'] ?? []) as $p)
-                    <p>{{ $p }}</p>
+    {{-- Live homepage slider parity --}}
+    @if (! empty($sliderSlides))
+        <section
+            class="relative isolate overflow-hidden bg-[#101010]"
+            x-data="{
+                slides: @js($sliderSlides),
+                active: 0,
+                timer: null,
+                start() {
+                    this.stop();
+                    if (this.slides.length < 2) return;
+                    this.timer = window.setInterval(() => this.next(), 5600);
+                },
+                stop() {
+                    if (this.timer !== null) {
+                        window.clearInterval(this.timer);
+                        this.timer = null;
+                    }
+                },
+                next() {
+                    this.active = (this.active + 1) % this.slides.length;
+                },
+                prev() {
+                    this.active = (this.active - 1 + this.slides.length) % this.slides.length;
+                },
+                go(index) {
+                    this.active = index;
+                },
+                init() {
+                    this.start();
+                }
+            }"
+            @mouseenter="stop()"
+            @mouseleave="start()">
+            <div class="relative h-[640px] md:h-[700px] xl:h-[848px]">
+                @foreach ($sliderSlides as $slide)
+                    <article
+                        class="absolute inset-0 transition-opacity duration-[1100ms] ease-[cubic-bezier(0.45,0,0.2,1)]"
+                        :class="active === {{ $loop->index }} ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
+                        aria-hidden="{{ $loop->first ? 'false' : 'true' }}">
+                        <img
+                            src="{{ $slide['image'] }}"
+                            alt="{{ $slide['title'] }}"
+                            class="absolute inset-0 h-full w-full object-cover"
+                        >
+                        <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.56)_0%,rgba(0,0,0,0.28)_42%,rgba(0,0,0,0.1)_100%)]"></div>
+
+                        <div class="relative z-10 flex h-full items-center">
+                            <div class="mx-auto w-full max-w-[1240px] px-5 sm:px-8 lg:px-10">
+                                <div class="max-w-[920px] text-white">
+                                    <h1
+                                        class="max-w-[1000px] font-['Poppins'] text-[56px] font-bold leading-[0.98] tracking-[-0.03em] text-white drop-shadow-[0_6px_30px_rgba(0,0,0,0.35)] transition-all duration-[1000ms] ease-[cubic-bezier(0.45,0,0.2,1)] sm:text-[72px] lg:text-[92px]"
+                                        :class="active === {{ $loop->index }} ? 'translate-x-0 opacity-100' : 'translate-x-24 opacity-0'"
+                                    >
+                                        {{ $slide['title'] }}
+                                    </h1>
+
+                                    <div
+                                        class="mt-8 max-w-[470px] font-['Poppins'] text-[18px] font-light leading-[1.58] text-white/95 transition-all duration-[900ms] ease-[cubic-bezier(0.45,0,0.2,1)] delay-[220ms] sm:text-[19px]"
+                                        :class="active === {{ $loop->index }} ? 'translate-x-0 opacity-100' : 'translate-x-16 opacity-0'"
+                                    >
+                                        {!! $slide['body_html'] !!}
+                                    </div>
+
+                                    <div
+                                        class="mt-8 transition-all duration-[900ms] ease-[cubic-bezier(0.45,0,0.2,1)] delay-[380ms]"
+                                        :class="active === {{ $loop->index }} ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'"
+                                    >
+                                        <a
+                                            href="{{ $slide['cta_href'] }}"
+                                            class="home-hero-cta inline-flex items-center gap-3 rounded-sm bg-[#ff1949] px-8 py-4 font-['Poppins'] text-[15px] font-semibold uppercase tracking-[0.08em] text-black shadow-[0_18px_45px_rgba(0,0,0,0.22)] transition-colors duration-300"
+                                        >
+                                            <span class="text-white">{{ $slide['cta_label'] }}</span>
+                                            {{-- <span aria-hidden="true" class="text-lg leading-none">$</span> --}}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
                 @endforeach
             </div>
-        </div>
-    </section>
+
+            <button
+                type="button"
+                class="home-hero-arrow absolute left-5 top-1/2 z-20 hidden h-16 w-16 -translate-y-1/2 items-center justify-center bg-black/38 text-white transition-colors duration-300 hover:bg-black/54 lg:inline-flex"
+                @click="prev(); start()"
+                aria-label="Previous slide">
+                <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m15 18-6-6 6-6" /></svg>
+            </button>
+
+            <button
+                type="button"
+                class="home-hero-arrow absolute right-5 top-1/2 z-20 hidden h-16 w-16 -translate-y-1/2 items-center justify-center bg-black/38 text-white transition-colors duration-300 hover:bg-black/54 lg:inline-flex"
+                @click="next(); start()"
+                aria-label="Next slide">
+                <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m9 6 6 6-6 6" /></svg>
+            </button>
+
+            <div class="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 lg:hidden">
+                @foreach ($sliderSlides as $slide)
+                    <button
+                        type="button"
+                        class="h-2.5 rounded-full bg-white/35 transition-all duration-300"
+                        :class="active === {{ $loop->index }} ? 'w-9 bg-white' : 'w-2.5'"
+                        @click="go({{ $loop->index }}); start()"
+                        aria-label="Go to slide {{ $loop->iteration }}"></button>
+                @endforeach
+            </div>
+        </section>
+    @else
+        {{-- Hero / Welcome fallback --}}
+        <section class="bg-white text-white py-20 md:py-28 flex items-center justify-center">
+            <div class="bg-[#F8F8F8] max-w-[1140px] px-10 py-10 ">
+                <h1 class="text-[25px] md:text-[25px] lg:text-[32px] font-bold leading-tight mb-8 text-center text-black">
+                    {{ $hero['heading'] ?? $page->title }}
+                </h1>
+                <div class="max-w-[1000px] mx-auto space-y-5 text-[15px] md:text-[17px] leading-relaxed text-black text-center">
+                    @foreach (($hero['paragraphs'] ?? []) as $p)
+                        <p>{{ $p }}</p>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
 
     {{-- Advancing Excellence intro --}}
     @if (! empty($intro))
@@ -252,5 +365,25 @@
             </style>
         @endpush
     @endif
+
+    @push('head')
+        <style>
+            .home-hero-arrow {
+                backdrop-filter: blur(2px);
+            }
+
+            .home-hero-cta {
+                min-width: 178px;
+                justify-content: center;
+            }
+
+            @media (max-width: 1023px) {
+                .home-hero-cta {
+                    min-width: 0;
+                    padding-inline: 1.4rem;
+                }
+            }
+        </style>
+    @endpush
 
 </x-layouts.cms>

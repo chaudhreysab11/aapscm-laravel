@@ -104,6 +104,7 @@ class DatabaseSeeder extends Seeder
             EmergingLeaderFellowMembershipPageSeeder::class,
             InternationalFellowMembershipPageSeeder::class,
             FellowMembershipFormPageSeeder::class,
+            CertificationsPageSeeder::class,
             // Certification detail pages (WP parity) — must run BEFORE HomePageSeeder
             // so the home cert-card grid links resolve to existing pages.
             CertAcppPageSeeder::class,
