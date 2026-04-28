@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Database\Seeders\Support;
 
 /**
- * Normalises legacy aapscm.org URLs into local paths.
+ * Normalises legacy aapscm.org / aapscm.com URLs into local paths.
  *
  * Used during seeding to ensure nothing in the DB still points at the live
  * WordPress origin. Two shapes:
  *
  *  - image()     → /wp-content/uploads/YYYY/MM/file.ext  → /storage/cms-images/…
- *  - local()     → any other aapscm.org URL             → relative path with trailing slash
+ *  - local()     → any other aapscm origin URL           → relative path with trailing slash
  *  - canonical() → builds SEO canonical from app URL + slug (trailing slash)
  *
  * Pure functions — no DB / container dependencies.
@@ -29,7 +29,7 @@ final class UrlRewriter
         }
 
         return (string) preg_replace(
-            '#^https?://(?:www\.)?aapscm\.org/wp-content/uploads/#',
+            '#^https?://(?:www\.)?aapscm\.(?:org|com)/wp-content/uploads/#',
             '/storage/cms-images/',
             $url,
         );
@@ -58,7 +58,7 @@ final class UrlRewriter
             return self::image($url);
         }
 
-        if (! preg_match('#^https?://(?:www\.)?aapscm\.org#i', $url)) {
+        if (! preg_match('#^https?://(?:www\.)?aapscm\.(?:org|com)#i', $url)) {
             return $url;
         }
 
@@ -100,14 +100,14 @@ final class UrlRewriter
 
         // Images first (more specific).
         $html = (string) preg_replace(
-            '#https?://(?:www\.)?aapscm\.org/wp-content/uploads/#',
+            '#https?://(?:www\.)?aapscm\.(?:org|com)/wp-content/uploads/#',
             '/storage/cms-images/',
             $html,
         );
 
         // Internal page URLs. Capture full absolute URL and rewrite to path.
         $html = (string) preg_replace_callback(
-            '#https?://(?:www\.)?aapscm\.org([^\s"\'<>)]*)#i',
+            '#https?://(?:www\.)?aapscm\.(?:org|com)([^\s"\'<>)]*)#i',
             static function (array $m): string {
                 $tail = $m[1] === '' ? '/' : $m[1];
 
@@ -131,7 +131,7 @@ final class UrlRewriter
         }
 
         return (string) preg_replace(
-            '#^https?://(?:www\.)?aapscm\.org/wp-content/uploads/#',
+            '#^https?://(?:www\.)?aapscm\.(?:org|com)/wp-content/uploads/#',
             '/storage/cms-pdfs/',
             $url,
         );

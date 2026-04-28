@@ -234,7 +234,12 @@
                                     ['Certification Process',    '/certification-process'],
                                     ['Certification FAQs',        '/certifications-faq'],
                                     ['Benefits and Resources',    '/benefits-and-resources'],
-                                    ['Resources',                 '/benefits-and-resources'],
+                                ] as [$l,$h])
+                                <a href="{{ $u($h) }}" class="block py-1.5 text-[13px] text-[#0B2F5E] hover:underline leading-snug" role="menuitem">{{ $l }}</a>
+                                @endforeach
+
+                                <p class="font-bold text-[#0B2F5E] text-sm mb-3 mt-4 leading-snug">Resources</p>
+                                @foreach([
                                     ['4 Steps to Certification',  '/4-steps-to-verification'],
                                     ['Workshop/Training',          '/workshop-trainings'],
                                 ] as [$l,$h])
@@ -299,6 +304,9 @@
                                         ['CIPWIM®',     '/certified-international-professional-in-warehouse-inventory-management-cipwim'],
                                         ['CIMWIM®',     '/certified-international-manager-in-warehouse-inventory-management-cimwim'],
                                         ['CHSTE®',      '/chartered-healthcare-supply-chain-transformation-executive-chste'],
+                                        ['CCP®',        '/certified-contract-professional-ccp'],
+                                        ['CCM®',        '/certified-contract-manager-ccm'],
+                                        ['CCMC®',       '/certified-contract-management-consultant-ccmc'],
                                     ] as [$l,$h])
                                     <a href="{{ $u($h) }}" class="flex items-center gap-1.5 py-0.5 text-[12px] text-gray-700 hover:text-[#0B2F5E] transition-colors" role="menuitem">{!! $ob !!} {{ $l }}</a>
                                     @endforeach
@@ -438,8 +446,6 @@
                             @foreach([
                                 ['About Exam Policies',   '/certificate-exam-policies'],
                                 ['Exam Support Hotline',  '/aapscm-hotline'],
-                                ['Online Courses',        '/online-courses'],
-                                ['Workshop / Training',   '/workshop-trainings'],
                             ] as [$l,$h])
                             <a href="{{ $u($h) }}" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
                                 {!! $chevron !!} {{ $l }}
@@ -579,7 +585,9 @@
                             @foreach([
                                 ['Which Certification Is Right For You?', '/which-certification-is-right-for-you'],
                                 ['Renew a Certification',                  '/request-pdes-for-certificate'],
+                                ['Renew Professional Membership',        '/professional-membership-renewal'],
                                 ['Verify a Certification',                 '/verify-a-certificate'],
+                                ['Obtain Professional Certification',       '/certification-for-professionals'],
                                 ['Digital Badges',                         '/digital-badges'],
                             ] as [$l,$h])
                             <a href="{{ $u($h) }}" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
@@ -588,12 +596,10 @@
                             @endforeach
                         </div>
                         <div class="pl-5">
-                            <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Certification Resources</p>
+                            <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Which Exam Prep is Right For you?</p>
                             @foreach([
-                                ['Certification Process',      '/certification-process'],
-                                ['4 Steps to Certification',   '/4-steps-to-verification'],
-                                ['Certification FAQs',         '/certifications-faq'],
-                                ['Benefits and Resources',     '/benefits-and-resources'],
+                                ['Train Your Way With Official AAPSCM Exam Prep',      '/certification-process/#certificate-categories'],
+                                ['Build Your Team\'s Performance With Customized Training',   '/training-and-credentialing'],
                             ] as [$l,$h])
                             <a href="{{ $u($h) }}" class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">
                                 {!! $chevron !!} {{ $l }}

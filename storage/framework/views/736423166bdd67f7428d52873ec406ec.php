@@ -48,7 +48,6 @@ $socialLinks = [
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = [
                         ['AAPSCM® Leadership',          '/board-of-directors'],
                         ['Affiliates/Partners',          '/affiliate-partners'],
-                        ['Jobseeker',                    '/career-center'],
                         ['Career Center/Job Seeker',     '/career-center'],
                         ['Privacy Policy/Legal Terms',   '/privacy-policy-legal'],
                     ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$l, $h]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>

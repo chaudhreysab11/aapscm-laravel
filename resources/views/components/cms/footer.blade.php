@@ -56,7 +56,6 @@ $socialLinks = [
                     @foreach([
                         ['AAPSCM® Leadership',          '/board-of-directors'],
                         ['Affiliates/Partners',          '/affiliate-partners'],
-                        ['Jobseeker',                    '/career-center'],
                         ['Career Center/Job Seeker',     '/career-center'],
                         ['Privacy Policy/Legal Terms',   '/privacy-policy-legal'],
                     ] as [$l, $h])

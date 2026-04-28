@@ -14,9 +14,11 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
-    public function create(): View
+    public function create(Request $request): View
     {
-        return view('auth.login');
+        return view('auth.login', [
+            'redirectTo' => $this->resolveRedirectTarget($request->string('redirect_to')->toString()),
+        ]);
     }
 
     /**
@@ -27,6 +29,12 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        $redirectTarget = $this->resolveRedirectTarget($request->string('redirect_to')->toString());
+
+        if ($redirectTarget !== null) {
+            return redirect()->to($redirectTarget);
+        }
 
         return redirect()->intended(route('dashboard', absolute: false));
     }
@@ -43,5 +51,14 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    private function resolveRedirectTarget(string $target): ?string
+    {
+        if ($target === '' || ! str_starts_with($target, '/')) {
+            return null;
+        }
+
+        return $target;
     }
 }

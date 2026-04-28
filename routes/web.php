@@ -9,6 +9,7 @@ use App\Http\Controllers\FreeTrainingApplicationController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResumeSubmissionController;
 use App\Http\Controllers\WebhookController;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,15 @@ Route::get('/fellow-membership-form/', [FellowMembershipApplicationController::c
     ->name('fellow-membership-form.form');
 Route::post('/fellow-membership-form/', [FellowMembershipApplicationController::class, 'store'])
     ->name('fellow-membership-form.submit');
+
+// ── Post Resume (auth-gated submission; GET handled by CmsPageController) ───
+Route::post('/post-resume/', [ResumeSubmissionController::class, 'store'])
+    ->middleware('auth')
+    ->name('post-resume.submit');
+
+// ── Verify a Certificate (form POST handler; GET handled by CmsPageController) ─
+Route::post('/verify-a-certificate/', [\App\Http\Controllers\VerifyCertificateController::class, 'lookup'])
+    ->name('verify-a-certificate.lookup');
 
 // ── Checkout & Payments ──────────────────────────────────────────────────────
 // ── Checkout & Payments ───────────────────────────────────────────────────────────────────────

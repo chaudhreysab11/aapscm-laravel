@@ -32,6 +32,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         'avatar',
         'is_active',
         'source_id',
+        'profile_payload',
     ];
 
     protected $hidden = [
@@ -45,6 +46,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_active' => 'boolean',
+            'profile_payload' => 'array',
         ];
     }
 

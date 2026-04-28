@@ -14,13 +14,22 @@ class CvSubmission extends Model
         'user_id',
         'full_name',
         'email',
+        'headline',
         'phone',
         'linkedin_url',
         'cv_file_path',
         'cover_letter',
+        'form_payload',
         'job_listing_id',
         'status',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'form_payload' => 'array',
+        ];
+    }
 
     public function user(): BelongsTo
     {

@@ -5,6 +5,10 @@
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
+        @if (! empty($redirectTo ?? null))
+            <input type="hidden" name="redirect_to" value="{{ $redirectTo }}">
+        @endif
+
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
