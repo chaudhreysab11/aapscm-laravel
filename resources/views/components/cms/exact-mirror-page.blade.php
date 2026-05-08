@@ -410,6 +410,72 @@
         return $output !== '' ? $output : $html;
     };
 
+    $stripEmbeddedMirrorFooters = static function (string $html): string {
+        if (
+            $html === ''
+            || ! str_contains($html, 'elementor-location-footer')
+        ) {
+            return $html;
+        }
+
+        $stripped = preg_replace(
+            '~<footer\b[^>]*elementor-location-footer[^>]*>.*?</footer>~is',
+            '',
+            $html,
+        );
+
+        if (is_string($stripped) && $stripped !== $html) {
+            return $stripped;
+        }
+
+        if (! str_contains($html, '<footer')) {
+            return $html;
+        }
+
+        $document = new \DOMDocument('1.0', 'UTF-8');
+        $previous = libxml_use_internal_errors(true);
+        $loaded = $document->loadHTML(
+            '<?xml encoding="utf-8" ?><div id="exact-mirror-footer-root">' . $html . '</div>',
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD,
+        );
+        libxml_clear_errors();
+        libxml_use_internal_errors($previous);
+
+        if (! $loaded) {
+            return $html;
+        }
+
+        $xpath = new \DOMXPath($document);
+        $root = $xpath->query('//*[@id="exact-mirror-footer-root"]')->item(0);
+
+        if (! $root instanceof \DOMElement) {
+            return $html;
+        }
+
+        $removedAny = false;
+
+        foreach ($xpath->query('.//footer[contains(concat(" ", normalize-space(@class), " "), " elementor-location-footer ")]', $root) ?: [] as $footer) {
+            if (! $footer instanceof \DOMElement || ! $footer->parentNode instanceof \DOMNode) {
+                continue;
+            }
+
+            $footer->parentNode->removeChild($footer);
+            $removedAny = true;
+        }
+
+        if (! $removedAny) {
+            return $html;
+        }
+
+        $output = '';
+
+        foreach ($root->childNodes as $childNode) {
+            $output .= $document->saveHTML($childNode) ?: '';
+        }
+
+        return $output !== '' ? $output : $html;
+    };
+
     if (is_string($bodyHtml) && $bodyHtml !== '') {
         foreach ($shortcodeReplacements as $shortcode => $replacement) {
             if (! is_string($shortcode) || $shortcode === '' || ! is_string($replacement)) {
@@ -418,6 +484,8 @@
 
             $bodyHtml = str_replace($shortcode, $replacement, $bodyHtml);
         }
+
+        $bodyHtml = $stripEmbeddedMirrorFooters($bodyHtml);
 
         if (str_starts_with($page->slug, 'aapscm-training-virtual-')) {
             $bodyHtml = $repairMisnestedTrainingSections($bodyHtml);

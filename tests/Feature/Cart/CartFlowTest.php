@@ -53,6 +53,19 @@ it('adds a product to the cart by WordPress source id', function (): void {
         ->assertSee('USD 49.99');
 });
 
+it('adds a product to the cart via legacy GET /cart/add/{product}', function (): void {
+    $product = seedPricedProduct();
+    $product->update(['source_id' => 101367]);
+
+    $this->get('/cart/add/101367')
+        ->assertRedirect(route('cart.show'));
+
+    $this->get('/cart/')
+        ->assertOk()
+        ->assertSee($product->name)
+        ->assertSee('USD 49.99');
+});
+
 it('adds a product to the cart from a WooCommerce checkout add-to-cart query', function (): void {
     $product = seedPricedProduct();
     $product->update(['source_id' => 4234]);

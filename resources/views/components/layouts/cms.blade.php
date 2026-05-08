@@ -25,9 +25,7 @@
         {{ $slot }}
     </main>
 
-    <footer>
-        <x-cms.footer />
-    </footer>
+    <x-cms.footer />
 
     @stack('scripts')
 </body>
