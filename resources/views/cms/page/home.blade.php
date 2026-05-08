@@ -51,9 +51,10 @@
             <div class="relative h-[640px] md:h-[700px] xl:h-[848px]">
                 @foreach ($sliderSlides as $slide)
                     <article
-                        class="absolute inset-0 transition-opacity duration-[1100ms] ease-[cubic-bezier(0.45,0,0.2,1)]"
-                        :class="active === {{ $loop->index }} ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
-                        aria-hidden="{{ $loop->first ? 'false' : 'true' }}">
+                        class="absolute inset-0"
+                        style="display: {{ $loop->first ? 'block' : 'none' }};"
+                        x-show="active === {{ $loop->index }}"
+                        :aria-hidden="active === {{ $loop->index }} ? 'false' : 'true'">
                         <img
                             src="{{ $slide['image'] }}"
                             alt="{{ $slide['title'] }}"
@@ -66,21 +67,24 @@
                                 <div class="max-w-[920px] text-white">
                                     <h1
                                         class="max-w-[1000px] font-['Poppins'] text-[56px] font-bold leading-[0.98] tracking-[-0.03em] text-white drop-shadow-[0_6px_30px_rgba(0,0,0,0.35)] transition-all duration-[1000ms] ease-[cubic-bezier(0.45,0,0.2,1)] sm:text-[72px] lg:text-[92px]"
-                                        :class="active === {{ $loop->index }} ? 'translate-x-0 opacity-100' : 'translate-x-24 opacity-0'"
+                                        style="opacity: {{ $loop->first ? '1' : '0' }}; transform: translateX({{ $loop->first ? '0' : '6rem' }});"
+                                        :style="active === {{ $loop->index }} ? 'opacity: 1; transform: translateX(0);' : 'opacity: 0; transform: translateX(6rem);'"
                                     >
                                         {{ $slide['title'] }}
                                     </h1>
 
                                     <div
                                         class="mt-8 max-w-[470px] font-['Poppins'] text-[18px] font-light leading-[1.58] text-white/95 transition-all duration-[900ms] ease-[cubic-bezier(0.45,0,0.2,1)] delay-[220ms] sm:text-[19px]"
-                                        :class="active === {{ $loop->index }} ? 'translate-x-0 opacity-100' : 'translate-x-16 opacity-0'"
+                                        style="opacity: {{ $loop->first ? '1' : '0' }}; transform: translateX({{ $loop->first ? '0' : '4rem' }});"
+                                        :style="active === {{ $loop->index }} ? 'opacity: 1; transform: translateX(0);' : 'opacity: 0; transform: translateX(4rem);'"
                                     >
                                         {!! $slide['body_html'] !!}
                                     </div>
 
                                     <div
                                         class="mt-8 transition-all duration-[900ms] ease-[cubic-bezier(0.45,0,0.2,1)] delay-[380ms]"
-                                        :class="active === {{ $loop->index }} ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'"
+                                        style="opacity: {{ $loop->first ? '1' : '0' }}; transform: translateX({{ $loop->first ? '0' : '2.5rem' }});"
+                                        :style="active === {{ $loop->index }} ? 'opacity: 1; transform: translateX(0);' : 'opacity: 0; transform: translateX(2.5rem);'"
                                     >
                                         <a
                                             href="{{ $slide['cta_href'] }}"
@@ -124,21 +128,21 @@
                 @endforeach
             </div>
         </section>
-    @else
-        {{-- Hero / Welcome fallback --}}
-        <section class="bg-white text-white py-20 md:py-28 flex items-center justify-center">
-            <div class="bg-[#F8F8F8] max-w-[1140px] px-10 py-10 ">
-                <h1 class="text-[25px] md:text-[25px] lg:text-[32px] font-bold leading-tight mb-8 text-center text-black">
-                    {{ $hero['heading'] ?? $page->title }}
-                </h1>
-                <div class="max-w-[1000px] mx-auto space-y-5 text-[15px] md:text-[17px] leading-relaxed text-black text-center">
-                    @foreach (($hero['paragraphs'] ?? []) as $p)
-                        <p>{{ $p }}</p>
-                    @endforeach
-                </div>
-            </div>
-        </section>
     @endif
+
+    {{-- Hero / Welcome fallback --}}
+    <section class="bg-white text-white py-20 md:py-28 flex items-center justify-center">
+        <div class="bg-[#F8F8F8] max-w-[1140px] px-10 py-10 ">
+            <h1 class="text-[25px] md:text-[25px] lg:text-[32px] font-bold leading-tight mb-8 text-center text-black">
+                {{ $hero['heading'] ?? $page->title }}
+            </h1>
+            <div class="max-w-[1000px] mx-auto space-y-5 text-[15px] md:text-[17px] leading-relaxed text-black text-center">
+                @foreach (($hero['paragraphs'] ?? []) as $p)
+                    <p>{{ $p }}</p>
+                @endforeach
+            </div>
+        </div>
+    </section>
 
     {{-- Advancing Excellence intro --}}
     @if (! empty($intro))
@@ -177,7 +181,7 @@
                         <h2 class="text-[35px] font-semibold text-[#14166e] leading-snug mb-3 min-h-[56px]">
                             {{ $cert['title'] }}
                         </h2>
-                        <p class="text-[14px] text-gray-600 leading-relaxed flex-grow mb-5">
+                        <p class="text-[18px] text-gray-600 leading-relaxed flex-grow mb-5">
                             {{ $cert['desc'] }}
                         </p>
                         @if (! empty($cert['badge']))

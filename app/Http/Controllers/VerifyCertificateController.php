@@ -38,7 +38,7 @@ class VerifyCertificateController extends Controller
 
         $awarded = $query->first();
 
-        return view('cms.page.verify-a-certificate', [
+        return view('cms.page.verify-a-certificate-live', [
             'page' => $page,
             'ctaProduct' => null,
             'submitted' => true,

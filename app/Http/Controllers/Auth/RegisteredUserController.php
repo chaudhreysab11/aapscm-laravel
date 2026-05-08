@@ -139,11 +139,13 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $name,
             'email' => $validated['email'],
+            'email_verified_at' => now(),
             'phone' => $validated['phone'] ?? null,
             'job_title' => $validated['job_title'] ?? null,
             'company' => $validated['company'] ?? ($request->input('company') ?: null),
             'country' => $validated['country'] ?? null,
             'password' => Hash::make($validated['password']),
+            'password_initialized_at' => now(),
             'profile_payload' => $this->buildProfilePayload($request, $isLegacyRegistration),
         ]);
 

@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
 <head>
+    <?php ($documentTitle = trim($__env->yieldPushContent('title'))); ?>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-    <title><?php echo $__env->yieldPushContent('title'); ?><?php echo e(config('app.name', 'AAPSCM')); ?></title>
+    <title><?php echo e($documentTitle !== '' ? $documentTitle : config('app.name', 'AAPSCM')); ?></title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700|poppins:300,400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=poppins:400,500,600,700&display=swap" rel="stylesheet" />
 
     <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 
     <?php echo $__env->yieldPushContent('head'); ?>
 </head>
-<body class="font-sans antialiased bg-white text-gray-800">
+<?php ($bodyClass = trim('font-sans antialiased bg-white text-gray-800 ' . $__env->yieldPushContent('body-class'))); ?>
+<body class="<?php echo e($bodyClass); ?>">
 
-    
     <?php if (isset($component)) { $__componentOriginal87f80cf932c7b197496c80015d9ece55 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal87f80cf932c7b197496c80015d9ece55 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.cms.header','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -40,13 +42,11 @@
 <?php unset($__componentOriginal87f80cf932c7b197496c80015d9ece55); ?>
 <?php endif; ?>
 
-    
     <main id="main-content">
         <?php echo e($slot); ?>
 
     </main>
 
-    
     <footer>
         <?php if (isset($component)) { $__componentOriginal9514080823ce99c4c350e6554a577721 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal9514080823ce99c4c350e6554a577721 = $attributes; } ?>
@@ -72,6 +72,7 @@
 <?php endif; ?>
     </footer>
 
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 </html>
 <?php /**PATH D:\Personal Work\AAPSCM-LARAVEL\resources\views/components/layouts/cms.blade.php ENDPATH**/ ?>

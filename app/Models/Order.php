@@ -24,6 +24,10 @@ class Order extends Model
         'subtotal',
         'tax',
         'discount',
+        'coupon_id',
+        'coupon_code',
+        'coupon_type',
+        'coupon_value',
         'total',
         'notes',
         'source_id',
@@ -35,6 +39,7 @@ class Order extends Model
             'subtotal' => 'decimal:2',
             'tax' => 'decimal:2',
             'discount' => 'decimal:2',
+            'coupon_value' => 'decimal:2',
             'total' => 'decimal:2',
         ];
     }
@@ -44,6 +49,11 @@ class Order extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function coupon(): BelongsTo
+    {
+        return $this->belongsTo(Coupon::class);
     }
 
     public function items(): HasMany

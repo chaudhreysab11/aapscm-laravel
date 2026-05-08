@@ -83,9 +83,10 @@
             <div class="relative h-[640px] md:h-[700px] xl:h-[848px]">
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $sliderSlides; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $slide): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
                     <article
-                        class="absolute inset-0 transition-opacity duration-[1100ms] ease-[cubic-bezier(0.45,0,0.2,1)]"
-                        :class="active === <?php echo e($loop->index); ?> ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
-                        aria-hidden="<?php echo e($loop->first ? 'false' : 'true'); ?>">
+                        class="absolute inset-0"
+                        style="display: <?php echo e($loop->first ? 'block' : 'none'); ?>;"
+                        x-show="active === <?php echo e($loop->index); ?>"
+                        :aria-hidden="active === <?php echo e($loop->index); ?> ? 'false' : 'true'">
                         <img
                             src="<?php echo e($slide['image']); ?>"
                             alt="<?php echo e($slide['title']); ?>"
@@ -98,7 +99,8 @@
                                 <div class="max-w-[920px] text-white">
                                     <h1
                                         class="max-w-[1000px] font-['Poppins'] text-[56px] font-bold leading-[0.98] tracking-[-0.03em] text-white drop-shadow-[0_6px_30px_rgba(0,0,0,0.35)] transition-all duration-[1000ms] ease-[cubic-bezier(0.45,0,0.2,1)] sm:text-[72px] lg:text-[92px]"
-                                        :class="active === <?php echo e($loop->index); ?> ? 'translate-x-0 opacity-100' : 'translate-x-24 opacity-0'"
+                                        style="opacity: <?php echo e($loop->first ? '1' : '0'); ?>; transform: translateX(<?php echo e($loop->first ? '0' : '6rem'); ?>);"
+                                        :style="active === <?php echo e($loop->index); ?> ? 'opacity: 1; transform: translateX(0);' : 'opacity: 0; transform: translateX(6rem);'"
                                     >
                                         <?php echo e($slide['title']); ?>
 
@@ -106,7 +108,8 @@
 
                                     <div
                                         class="mt-8 max-w-[470px] font-['Poppins'] text-[18px] font-light leading-[1.58] text-white/95 transition-all duration-[900ms] ease-[cubic-bezier(0.45,0,0.2,1)] delay-[220ms] sm:text-[19px]"
-                                        :class="active === <?php echo e($loop->index); ?> ? 'translate-x-0 opacity-100' : 'translate-x-16 opacity-0'"
+                                        style="opacity: <?php echo e($loop->first ? '1' : '0'); ?>; transform: translateX(<?php echo e($loop->first ? '0' : '4rem'); ?>);"
+                                        :style="active === <?php echo e($loop->index); ?> ? 'opacity: 1; transform: translateX(0);' : 'opacity: 0; transform: translateX(4rem);'"
                                     >
                                         <?php echo $slide['body_html']; ?>
 
@@ -114,7 +117,8 @@
 
                                     <div
                                         class="mt-8 transition-all duration-[900ms] ease-[cubic-bezier(0.45,0,0.2,1)] delay-[380ms]"
-                                        :class="active === <?php echo e($loop->index); ?> ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'"
+                                        style="opacity: <?php echo e($loop->first ? '1' : '0'); ?>; transform: translateX(<?php echo e($loop->first ? '0' : '2.5rem'); ?>);"
+                                        :style="active === <?php echo e($loop->index); ?> ? 'opacity: 1; transform: translateX(0);' : 'opacity: 0; transform: translateX(2.5rem);'"
                                     >
                                         <a
                                             href="<?php echo e($slide['cta_href']); ?>"
@@ -158,22 +162,22 @@
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
             </div>
         </section>
-    <?php else: ?>
-        
-        <section class="bg-white text-white py-20 md:py-28 flex items-center justify-center">
-            <div class="bg-[#F8F8F8] max-w-[1140px] px-10 py-10 ">
-                <h1 class="text-[25px] md:text-[25px] lg:text-[32px] font-bold leading-tight mb-8 text-center text-black">
-                    <?php echo e($hero['heading'] ?? $page->title); ?>
-
-                </h1>
-                <div class="max-w-[1000px] mx-auto space-y-5 text-[15px] md:text-[17px] leading-relaxed text-black text-center">
-                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = ($hero['paragraphs'] ?? []); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
-                        <p><?php echo e($p); ?></p>
-                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
-                </div>
-            </div>
-        </section>
     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+    
+    <section class="bg-white text-white py-20 md:py-28 flex items-center justify-center">
+        <div class="bg-[#F8F8F8] max-w-[1140px] px-10 py-10 ">
+            <h1 class="text-[25px] md:text-[25px] lg:text-[32px] font-bold leading-tight mb-8 text-center text-black">
+                <?php echo e($hero['heading'] ?? $page->title); ?>
+
+            </h1>
+            <div class="max-w-[1000px] mx-auto space-y-5 text-[15px] md:text-[17px] leading-relaxed text-black text-center">
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = ($hero['paragraphs'] ?? []); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoopIteration(); ?><?php endif; ?>
+                    <p><?php echo e($p); ?></p>
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
+            </div>
+        </div>
+    </section>
 
     
     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(! empty($intro)): ?>
@@ -214,7 +218,7 @@
                             <?php echo e($cert['title']); ?>
 
                         </h2>
-                        <p class="text-[14px] text-gray-600 leading-relaxed flex-grow mb-5">
+                        <p class="text-[18px] text-gray-600 leading-relaxed flex-grow mb-5">
                             <?php echo e($cert['desc']); ?>
 
                         </p>

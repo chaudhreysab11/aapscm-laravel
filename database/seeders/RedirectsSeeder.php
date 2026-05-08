@@ -21,6 +21,8 @@ class RedirectsSeeder extends Seeder
         ['/contact',                              '/contact-us/',                301, 'Slug normalisation'],
         ['/membership',                              '/membership/',             301, 'Trailing slash'],
         ['/certification',                           '/certification/',          301, 'Trailing slash (catalog root)'],
+        ['/certificate-video-old',                  '/certificate-video/',       301, 'Legacy video page slug'],
+        ['/certificate-video-old/',                 '/certificate-video/',       301, 'Legacy video page slug'],
         ['/blog',                                    '/blog/',                   301, 'Trailing slash'],
         // ── Under review (9) — flagged; will be updated post-audit ───────
         ['/no-access',                               '/',                        301, 'Out-of-scope WP page'],
@@ -30,6 +32,10 @@ class RedirectsSeeder extends Seeder
 
     public function run(): void
     {
+        Redirect::query()
+            ->whereIn('from_path', ['/certificate-video', '/certificate-video/'])
+            ->delete();
+
         foreach ($this->redirects as [$from, $to, $code, $notes]) {
             Redirect::updateOrCreate(
                 ['from_path' => $from],

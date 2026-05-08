@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Listeners;
 
 use App\Events\OrderPaid;
+use App\Actions\Membership\FulfillPaidMembershipOrderAction;
 
 /**
  * Activate (or extend) a user membership when an order containing a
@@ -15,9 +16,10 @@ use App\Events\OrderPaid;
  */
 class ActivateMembershipOnOrderPaid
 {
+    public function __construct(private FulfillPaidMembershipOrderAction $fulfillMembershipOrder) {}
+
     public function handle(OrderPaid $event): void
     {
-        // TODO: inspect $event->order->items where item_type = 'membership'
-        // and create/extend a UserMembership row via MembershipService.
+        ($this->fulfillMembershipOrder)($event->order);
     }
 }

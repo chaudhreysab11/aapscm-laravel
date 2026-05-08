@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -21,15 +22,20 @@ class Product extends Model
         'category',
         'type',
         'certification_catalog_id',
+        'membership_tier_id',
         'is_active',
         'image',
         'source_id',
+        'migration_review_status',
+        'migration_notes',
+        'migration_payload',
     ];
 
     protected function casts(): array
     {
         return [
             'is_active' => 'boolean',
+            'migration_payload' => 'array',
         ];
     }
 
@@ -45,8 +51,36 @@ class Product extends Model
         return $this->belongsTo(CertificationCatalog::class);
     }
 
+    public function membershipTier(): BelongsTo
+    {
+        return $this->belongsTo(MembershipTier::class);
+    }
+
     public function prices(): HasMany
     {
         return $this->hasMany(ProductPrice::class);
+    }
+
+    public function publicPrice(): HasOne
+    {
+        return $this->hasOne(ProductPrice::class)
+            ->whereNull('membership_tier_id')
+            ->latestOfMany();
+    }
+
+    public function isMembershipRenewalProduct(): bool
+    {
+        return $this->type === 'membership'
+            && str_contains($this->slug, 'renewal');
+    }
+
+    public function isTrainingProduct(): bool
+    {
+        return $this->type === 'training';
+    }
+
+    public function requiresAuthenticatedCheckout(): bool
+    {
+        return $this->isTrainingProduct() || $this->type === 'membership';
     }
 }

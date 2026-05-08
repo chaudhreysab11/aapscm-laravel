@@ -29,6 +29,7 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'password_initialized_at' => now(),
             'remember_token' => Str::random(10),
         ];
     }
@@ -40,6 +41,20 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+        ]);
+    }
+
+    public function passwordSetupRequired(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'password' => Hash::make(Str::password(32)),
+            'password_initialized_at' => null,
+            'profile_payload' => [
+                'auth' => [
+                    'password_setup_required' => true,
+                    'password_setup_origin' => 'factory',
+                ],
+            ],
         ]);
     }
 }

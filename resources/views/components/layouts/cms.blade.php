@@ -1,39 +1,34 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    @php($documentTitle = trim($__env->yieldPushContent('title')))
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@stack('title'){{ config('app.name', 'AAPSCM') }}</title>
+    <title>{{ $documentTitle !== '' ? $documentTitle : config('app.name', 'AAPSCM') }}</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700|poppins:300,400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=poppins:400,500,600,700&display=swap" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @stack('head')
 </head>
-<body class="font-sans antialiased bg-white text-gray-800">
+@php($bodyClass = trim('font-sans antialiased bg-white text-gray-800 ' . $__env->yieldPushContent('body-class')))
+<body class="{{ $bodyClass }}">
 
-    {{-- ----------------------------------------------------------------
-         Site Header  (see resources/views/components/cms/header.blade.php)
-    ---------------------------------------------------------------- --}}
     <x-cms.header />
 
-    {{-- ----------------------------------------------------------------
-         Main content slot
-    ---------------------------------------------------------------- --}}
     <main id="main-content">
         {{ $slot }}
     </main>
 
-    {{-- ----------------------------------------------------------------
-         Site Footer  (see resources/views/components/cms/footer.blade.php)
-    ---------------------------------------------------------------- --}}
     <footer>
         <x-cms.footer />
     </footer>
 
+    @stack('scripts')
 </body>
 </html>

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
-use App\Models\Order;
+use App\Actions\User\AttachGuestOrdersToUserAction;
 use App\Models\User;
 
 /**
@@ -23,9 +23,6 @@ class UserObserver
             return;
         }
 
-        Order::query()
-            ->whereNull('user_id')
-            ->where('billing_email', $user->email)
-            ->update(['user_id' => $user->id]);
+        app(AttachGuestOrdersToUserAction::class)($user);
     }
 }

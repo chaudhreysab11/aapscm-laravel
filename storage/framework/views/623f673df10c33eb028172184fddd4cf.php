@@ -30,7 +30,7 @@ unset($__defined_vars, $__key, $__value); ?>
 
 
 
-<?php $__env->startPush('title'); ?><?php echo e($page->effective_seo_title); ?> | <?php $__env->stopPush(); ?>
+<?php $__env->startPush('title'); ?><?php echo e($page->effective_seo_title); ?><?php $__env->stopPush(); ?>
 
 <?php $__env->startPush('head'); ?>
     

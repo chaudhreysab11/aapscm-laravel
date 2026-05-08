@@ -5,7 +5,7 @@
     Receives $page (App\Models\Page) — seoMeta relation must already be loaded.
 --}}
 
-@push('title'){{ $page->effective_seo_title }} | @endpush
+@push('title'){{ $page->effective_seo_title }}@endpush
 
 @push('head')
     {{-- Primary meta --}}

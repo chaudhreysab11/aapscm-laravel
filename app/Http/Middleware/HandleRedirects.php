@@ -35,7 +35,9 @@ class HandleRedirects
             // Bust the cache so the incremented hit_count is fresh next time
             Cache::forget('redirect_map');
 
-            return redirect($redirect['to_path'], (int) $redirect['http_code']);
+            return new Response('', (int) $redirect['http_code'], [
+                'Location' => $redirect['to_path'],
+            ]);
         }
 
         return $next($request);

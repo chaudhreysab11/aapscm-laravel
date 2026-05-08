@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Models\Product;
+use App\Models\MembershipTier;
 use Illuminate\Database\Seeder;
 
 /**
@@ -26,7 +27,7 @@ class CommerceConfirmedProductsSeeder extends Seeder
     /**
      * The 3 confirmed product rows.
      *
-     * @var list<array{slug: string, name: string, source_id: int, description: string}>
+     * @var list<array{slug: string, name: string, source_id: int, description: string, membership_tier_code: string}>
      */
     private array $products = [
         [
@@ -34,30 +35,38 @@ class CommerceConfirmedProductsSeeder extends Seeder
             'name' => 'Professional Membership Fee',
             'source_id' => 4234, // WP post id, slug professional-membership-fee-2
             'description' => 'Annual AAPSCM Professional Membership ($150/yr plus $10 application fee).',
+            'membership_tier_code' => 'CM',
         ],
         [
             'slug' => 'corporate-membership',
             'name' => 'Corporate Membership Fee',
             'source_id' => 4233, // WP post id
             'description' => 'Annual AAPSCM Corporate Membership ($3,000/yr).',
+            'membership_tier_code' => 'CORP',
         ],
         [
             'slug' => 'professional-membership-renewal',
             'name' => 'Annual Membership Renewal Fee',
             'source_id' => 37207, // WP post id, slug annual-membership-renewal-fee
             'description' => 'Annual renewal of an existing AAPSCM Professional Membership ($160/yr).',
+            'membership_tier_code' => 'CM',
         ],
     ];
 
     public function run(): void
     {
         foreach ($this->products as $row) {
+            $tierId = MembershipTier::query()
+                ->where('code', $row['membership_tier_code'])
+                ->value('id');
+
             Product::updateOrCreate(
                 ['slug' => $row['slug']],
                 [
                     'name' => $row['name'],
                     'description' => $row['description'],
                     'type' => 'membership',
+                    'membership_tier_id' => $tierId,
                     'is_active' => true,
                     'source_id' => $row['source_id'],
                 ],

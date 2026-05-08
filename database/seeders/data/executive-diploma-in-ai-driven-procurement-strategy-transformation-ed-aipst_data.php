@@ -2,364 +2,1400 @@
 
 declare(strict_types=1);
 
-/**
- * Page data for /executive-diploma-in-ai-driven-procurement-strategy-transformation-ed-aipst/
- *
- * Extracted verbatim from the live WordPress page on 2026-04-27. Source typos
- * preserved (e.g. "transforAI risk controls and mitigAI risk controls and
- * mitigation strategiesation strategiesmation roadmaps with KPIs and milestones",
- * "xecutive Diploma + Certification") per the mirror brief.
- *
- * URLs are passed through Database\Seeders\Support\UrlRewriter at seed time.
- */
+return array (
+  'title' => 'Executive Diploma in AI-Driven Procurement Strategy & Transformation (ED-AIPST) - AAPSCM®',
+  'meta_description' => '',
+  'root' => 
+  array (
+    'tag' => 'div',
+    'class' => 'elementor elementor-45999',
+    'data_elementor_type' => 'wp-page',
+    'data_elementor_id' => '45999',
+  ),
+  'counts' => 
+  array (
+    'sections' => 74,
+    'tables' => 1,
+    'cards' => 5,
+    'images' => 34,
+    'pdfs' => 0,
+    'icon_lists' => 25,
+    'internal_links' => 2,
+  ),
+  'css_files' => 
+  array (
+    0 => 'mirrors/shared/wp-content/themes/academist/assets/css/modules.min.css',
+    1 => 'mirrors/shared/wp-content/plugins/academist-lms/assets/css/lms.min.css',
+    2 => 'mirrors/shared/wp-content/themes/academist/assets/css/modules-responsive.min.css',
+    3 => 'mirrors/shared/wp-content/plugins/academist-lms/assets/css/lms-responsive.min.css',
+    4 => 'mirrors/shared/wp-content/plugins/academist-membership/assets/css/membership.min.css',
+    5 => 'mirrors/shared/wp-content/plugins/academist-membership/assets/css/membership-responsive.min.css',
+    6 => 'mirrors/shared/wp-content/plugins/contact-form-7/includes/css/styles.css',
+    7 => 'mirrors/shared/wp-content/plugins/user-registration/assets/css/user-registration.css',
+    8 => 'mirrors/shared/wp-content/themes/academist/style.css',
+    9 => 'mirrors/shared/wp-content/themes/academist-child/style.css',
+    10 => 'mirrors/shared/wp-content/themes/academist/framework/lib/icons-pack/dripicons/dripicons.css',
+    11 => 'mirrors/shared/wp-content/themes/academist/framework/lib/icons-pack/elegant-icons/style.min.css',
+    12 => 'mirrors/shared/wp-content/themes/academist/framework/lib/icons-pack/font-awesome/css/fontawesome-all.min.css',
+    13 => 'mirrors/shared/wp-content/themes/academist/framework/lib/icons-pack/ion-icons/css/ionicons.min.css',
+    14 => 'mirrors/shared/wp-content/themes/academist/framework/lib/icons-pack/linea-icons/style.css',
+    15 => 'mirrors/shared/wp-content/themes/academist/framework/lib/icons-pack/linear-icons/style.css',
+    16 => 'mirrors/shared/wp-content/themes/academist/framework/lib/icons-pack/simple-line-icons/simple-line-icons.css',
+    17 => 'mirrors/shared/wp-includes/js/mediaelement/mediaelementplayer-legacy.min.css',
+    18 => 'mirrors/shared/wp-includes/js/mediaelement/wp-mediaelement.min.css',
+    19 => 'mirrors/shared/wp-content/themes/academist/framework/modules/bbpress/assets/css/bbpress-map.css',
+    20 => 'mirrors/shared/wp-content/themes/academist/framework/modules/bbpress/assets/css/bbpress-responsive-map.css',
+    21 => 'mirrors/shared/wp-content/plugins/academist-core/core-dashboard/assets/css/core-dashboard.min.css',
+    22 => 'mirrors/shared/wp-content/plugins/elementor/assets/css/frontend.min.css',
+    23 => 'mirrors/shared/wp-content/plugins/elementor/assets/css/widget-image.min.css',
+    24 => 'mirrors/shared/wp-content/plugins/elementor-pro/assets/css/widget-nav-menu.min.css',
+    25 => 'mirrors/shared/wp-content/plugins/elementor/assets/css/widget-heading.min.css',
+    26 => 'mirrors/shared/wp-content/plugins/elementor/assets/css/widget-social-icons.min.css',
+    27 => 'mirrors/shared/wp-content/plugins/elementor/assets/css/conditionals/apple-webkit.min.css',
+    28 => 'mirrors/shared/wp-content/plugins/elementor/assets/css/widget-icon-list.min.css',
+    29 => 'mirrors/shared/wp-content/plugins/elementor/assets/lib/eicons/css/elementor-icons.min.css',
+    30 => 'mirrors/shared/wp-content/uploads/elementor/css/post-5007.css',
+    31 => 'mirrors/shared/wp-content/plugins/ultimate-elementor/assets/min-css/uael-frontend.min.css',
+    32 => 'mirrors/shared/wp-content/plugins/elementor/assets/css/widget-image-box.min.css',
+    33 => 'mirrors/executive-diploma-in-ai-driven-procurement-strategy-transformation-ed-aipst/wp-content/uploads/elementor/css/post-45999.css',
+    34 => 'mirrors/shared/wp-content/uploads/elementor/css/post-7733.css',
+    35 => 'mirrors/shared/wp-content/uploads/elementor/css/post-5444.css',
+    36 => 'mirrors/shared/wp-content/plugins/elementor/assets/lib/font-awesome/css/fontawesome.min.css',
+    37 => 'mirrors/shared/wp-content/plugins/elementor/assets/lib/font-awesome/css/solid.min.css',
+    38 => 'mirrors/shared/wp-content/plugins/elementor/assets/lib/font-awesome/css/regular.min.css',
+    39 => 'mirrors/shared/wp-content/plugins/elementor/assets/lib/font-awesome/css/brands.min.css',
+  ),
+  'external_css_files' => 
+  array (
+    0 => 'https://fonts.googleapis.com/css?family=Poppins%3A300%2C400%2C500%2C600%2C700%7COpen+Sans%3A300%2C400%2C500%2C600%2C700&subset=latin-ext&ver=1.0.0',
+    1 => 'https://fonts.googleapis.com/css?family=Roboto:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&display=auto',
+    2 => 'https://fonts.googleapis.com/css?family=Roboto+Slab:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&display=auto',
+    3 => 'https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&display=auto',
+    4 => 'https://fonts.googleapis.com/css?family=Roboto+Condensed:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&display=auto',
+    5 => 'https://fonts.googleapis.com/css?family=ABeeZee:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&display=auto',
+  ),
+  'body_html' => '
+				<div class="elementor-element elementor-element-3137b8d e-flex e-con-boxed e-con e-parent" data-id="3137b8d" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+					<div class="e-con-inner">
+		<div class="elementor-element elementor-element-a1d65eb e-con-full e-flex e-con e-child" data-id="a1d65eb" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-bc1866a elementor-widget elementor-widget-heading" data-id="bc1866a" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default"><span style="font-weight:200">Executive Diploma</span> in AI-Driven Procurement Strategy &amp; Transformation (ED-AIPST)®</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-394359f elementor-widget elementor-widget-text-editor" data-id="394359f" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p>The Executive Diploma in AI-Driven Procurement Strategy &amp; Transformation (ED-AIPST)<span data-teams="true">®</span> is an advanced, practitioner-focused program designed for senior procurement leaders seeking to modernize, digitize, and strategically transform procurement functions using Artificial Intelligence (AI), automation, predictive analytics, and digital operating models.<br><br>Developed by AAPSCM® and aligned with global standards such as ISO 20400 (Sustainable Procurement), ISO 28000 (Supply Chain Security), ISO 9001 (Quality Management), and ISO/IEC 42001 (AI Management Systems), this diploma delivers deep insight into the strategic, technical, and organizational dimensions of AI-enabled procurement transformation.<br><br>Participants gain mastery of the frameworks required to shift procurement from a transactional function into a high-performing, predictive, intelligent, and value-driven strategic powerhouse. Through hands-on AI labs, strategic simulations, analytics exercises, and a final transformation capstone, learners develop both the technical and leadership competencies demanded by modern procurement transformation roles.</p>								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-fea0e25 e-con-full e-flex e-con e-child" data-id="fea0e25" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-6b9ac73 elementor-widget elementor-widget-image" data-id="6b9ac73" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img fetchpriority="high" decoding="async" width="717" height="955" src="https://aapscm.org/wp-content/uploads/2026/01/1-13.png" class="attachment-large size-large wp-image-46007" alt="" srcset="https://aapscm.org/wp-content/uploads/2026/01/1-13.png 717w, https://aapscm.org/wp-content/uploads/2026/01/1-13-225x300.png 225w, https://aapscm.org/wp-content/uploads/2026/01/1-13-600x799.png 600w" sizes="(max-width: 717px) 100vw, 717px">															</div>
+				</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-a307339 e-flex e-con-boxed e-con e-parent" data-id="a307339" data-element_type="container" data-e-type="container">
+					<div class="e-con-inner">
+				<div class="elementor-element elementor-element-0af7944 elementor-widget elementor-widget-heading" data-id="0af7944" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default"><span style="font-weight:200">Program Learning </span> Outcomes</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-ea7b75b elementor-widget elementor-widget-text-editor" data-id="ea7b75b" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									Upon successful completion of the ED-AIPST® diploma, participants will be able to:								</div>
+				</div>
+		<div class="elementor-element elementor-element-030d83a e-con-full e-flex e-con e-child" data-id="030d83a" data-element_type="container" data-e-type="container">
+		<div class="elementor-element elementor-element-c957c16 e-con-full excutive-bx e-flex e-con e-child" data-id="c957c16" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-8640e6b elementor-widget elementor-widget-image" data-id="8640e6b" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img decoding="async" width="64" height="64" src="https://aapscm.org/wp-content/uploads/2026/01/strategic.png" class="attachment-large size-large wp-image-46056" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-8e33f9f elementor-widget elementor-widget-heading" data-id="8e33f9f" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Strategic Transformation &amp; Leadership</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-7fec489 elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="7fec489" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Design and implement AI-enabled procurement transformation roadmaps aligned with enterprise strategy.</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">	Develop high-performance digital procurement operating models leveraging intelligent workflows and automation.</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-0970ef8 e-con-full excutive-bx e-flex e-con e-child" data-id="0970ef8" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-f70df02 elementor-widget elementor-widget-image" data-id="f70df02" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img decoding="async" width="64" height="64" src="https://aapscm.org/wp-content/uploads/2026/01/ai.png" class="attachment-large size-large wp-image-46057" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-b38205c elementor-widget elementor-widget-heading" data-id="b38205c" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">AI &amp; Analytics Integration</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-0921f5c elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="0921f5c" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Integrate advanced AI technologies—Machine Learning (ML), Natural Language Processing (NLP), Robotic Process Automation (RPA), and Computer Vision—into procurement systems.</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">	Conduct predictive analytics for forecasting, spend optimization, risk anticipation, and supplier performance intelligence.</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-5029f72 e-con-full excutive-bx e-flex e-con e-child" data-id="5029f72" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-3ef1d06 elementor-widget elementor-widget-image" data-id="3ef1d06" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="64" height="64" src="https://aapscm.org/wp-content/uploads/2026/01/risk-management.png" class="attachment-large size-large wp-image-46064" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-0c69161 elementor-widget elementor-widget-heading" data-id="0c69161" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Governance, Risk &amp; Compliance</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-db94bd7 elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="db94bd7" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Apply global ISO standards to build ethical, transparent, and secure AI procurement platforms.</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Establish governance structures for ethical AI use, risk management, cybersecurity, and data protection in procurement.</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-3f1e7cc e-con-full excutive-bx e-flex e-con e-child" data-id="3f1e7cc" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-1d30710 elementor-widget elementor-widget-image" data-id="1d30710" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="64" height="64" src="https://aapscm.org/wp-content/uploads/2026/01/organization.png" class="attachment-large size-large wp-image-46065" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-da05f01 elementor-widget elementor-widget-heading" data-id="da05f01" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Organizational Change Management</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-edb65d8 elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="edb65d8" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">	Lead digital transformation initiatives and cultivate a culture of innovation within procurement organizations.</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">	Drive stakeholder engagement, training, and enterprise-wide adoption of AI procurement tools and strategies.</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-0be89cc e-con-full excutive-bx e-flex e-con e-child" data-id="0be89cc" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-8768823 elementor-widget elementor-widget-image" data-id="8768823" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="64" height="64" src="https://aapscm.org/wp-content/uploads/2026/01/practice.png" class="attachment-large size-large wp-image-46066" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-f5c6e96 elementor-widget elementor-widget-heading" data-id="f5c6e96" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Practical Hands-On Expertise</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-b78b868 elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="b78b868" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Execute an end-to-end AI procurement transformation project through simulations and real-world case studies.</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Demonstrate applied competence through either a rigorous multiple-choice exam or a transformation capstone project.</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-67b2f13 e-flex e-con-boxed e-con e-parent" data-id="67b2f13" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+					<div class="e-con-inner">
+				<div class="elementor-element elementor-element-8907120 elementor-widget elementor-widget-heading" data-id="8907120" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default"><span style="font-weight:200">Program </span> Structure &amp; Modules</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-f235b0d elementor-widget elementor-widget-text-editor" data-id="f235b0d" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									8 Modules + Capstone Project								</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-f22d857 e-flex e-con-boxed e-con e-parent" data-id="f22d857" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+					<div class="e-con-inner">
+		<div class="elementor-element elementor-element-ff04c67 e-con-full e-flex e-con e-child" data-id="ff04c67" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-ef95029 elementor-widget elementor-widget-image" data-id="ef95029" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="206" height="252" src="https://aapscm.org/wp-content/uploads/2026/01/1-15.png" class="attachment-large size-large wp-image-46096" alt="">															</div>
+				</div>
+		<div class="elementor-element elementor-element-5684e5b e-con-full e-flex e-con e-child" data-id="5684e5b" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-efd5f1a elementor-widget elementor-widget-heading" data-id="efd5f1a" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Foundations of Procurement 4.0 &amp; Digital Transformation</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-9b344f0 elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="9b344f0" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Evolution from traditional procurement to Procurement 4.0</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">	Digital maturity models and transformation assessment</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Overview of AI technologies reshaping procurement</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">	Role of data, analytics, and intelligent automation</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-31c5f15 e-con-full e-flex e-con e-child" data-id="31c5f15" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-dd2d6e7 elementor-widget elementor-widget-image" data-id="dd2d6e7" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="206" height="252" src="https://aapscm.org/wp-content/uploads/2026/01/1-16.png" class="attachment-large size-large wp-image-46103" alt="">															</div>
+				</div>
+		<div class="elementor-element elementor-element-aa907fd e-con-full e-flex e-con e-child" data-id="aa907fd" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-319a248 elementor-widget elementor-widget-heading" data-id="319a248" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">AI Strategy Design &amp; Procurement Transformation Blueprint</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-9b9f843 elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="9b9f843" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Strategic alignment of procurement with enterprise digital vision</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Designing AI-driven procurement strategies</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">AI readiness assessments and capability modeling</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text"> Creating transformation roadmaps with KPIs and milestones</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-c67c475 e-con-full e-flex e-con e-child" data-id="c67c475" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-cec63a0 elementor-widget elementor-widget-image" data-id="cec63a0" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="206" height="252" src="https://aapscm.org/wp-content/uploads/2026/01/1-17.png" class="attachment-large size-large wp-image-46107" alt="">															</div>
+				</div>
+		<div class="elementor-element elementor-element-403c249 e-con-full e-flex e-con e-child" data-id="403c249" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-aaac044 elementor-widget elementor-widget-heading" data-id="aaac044" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Advanced Spend Analytics &amp; Predictive Intelligence</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-18657be elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="18657be" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Strategic alignment of procurement with enterprise digital vision</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Machine learning for forecasting, anomalies, and price prediction</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Building spend cubes and AI-driven dashboards</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Predictive analytics for category and sourcing decisions</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-a6321b1 e-flex e-con-boxed e-con e-parent" data-id="a6321b1" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+					<div class="e-con-inner">
+		<div class="elementor-element elementor-element-cab4aa7 e-con-full e-flex e-con e-child" data-id="cab4aa7" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-1ebc8ee elementor-widget elementor-widget-image" data-id="1ebc8ee" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="206" height="252" src="https://aapscm.org/wp-content/uploads/2026/01/1-18.png" class="attachment-large size-large wp-image-46117" alt="">															</div>
+				</div>
+		<div class="elementor-element elementor-element-ed43fe7 e-con-full e-flex e-con e-child" data-id="ed43fe7" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-756d1b0 elementor-widget elementor-widget-heading" data-id="756d1b0" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">AI Operating Models, Digital Twins &amp; Intelligent Workflows</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-7d33b5c elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="7d33b5c" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Intelligent procurement operating models</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Process automation frameworks</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Digital twins for procurement performance simulation</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">End-to-end lifecycle automation in sourcing and contracting</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-bfc56f6 e-con-full e-flex e-con e-child" data-id="bfc56f6" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-6b2c335 elementor-widget elementor-widget-image" data-id="6b2c335" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="206" height="252" src="https://aapscm.org/wp-content/uploads/2026/01/1-19.png" class="attachment-large size-large wp-image-46118" alt="">															</div>
+				</div>
+		<div class="elementor-element elementor-element-0ffee9b e-con-full e-flex e-con e-child" data-id="0ffee9b" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-f966413 elementor-widget elementor-widget-heading" data-id="f966413" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Governance, Responsible AI &amp; Ethical Procurement Frameworks</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-dc07d25 elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="dc07d25" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">ISO standards for AI governance and procurement compliance</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Ethical AI: fairness, transparency, accountability</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Cybersecurity, privacy, and data assurance in procurement systems</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text"> Creating transforAI risk controls and mitigAI risk controls and mitigation strategiesation strategiesmation roadmaps with KPIs and milestones</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-c92b29d e-con-full e-flex e-con e-child" data-id="c92b29d" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-e2ed77e elementor-widget elementor-widget-image" data-id="e2ed77e" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="206" height="252" src="https://aapscm.org/wp-content/uploads/2026/01/1-20.png" class="attachment-large size-large wp-image-46119" alt="">															</div>
+				</div>
+		<div class="elementor-element elementor-element-49e870c e-con-full e-flex e-con e-child" data-id="49e870c" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-6c268f8 elementor-widget elementor-widget-heading" data-id="6c268f8" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Organizational Change, Leadership &amp; Transformation Culture</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-c441f7c elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="c441f7c" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Leading enterprise-wide digital transformation</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Building cross-functional digital governance teams</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Stakeholder management and communication plans</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Upskilling procurement teams for AI fluency</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-d5f4584 e-flex e-con-boxed e-con e-parent" data-id="d5f4584" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+					<div class="e-con-inner">
+		<div class="elementor-element elementor-element-5c75433 e-con-full e-flex e-con e-child" data-id="5c75433" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				</div>
+		<div class="elementor-element elementor-element-5d9c755 e-con-full e-flex e-con e-child" data-id="5d9c755" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-bd6cd07 elementor-widget elementor-widget-image" data-id="bd6cd07" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="206" height="252" src="https://aapscm.org/wp-content/uploads/2026/01/1-21.png" class="attachment-large size-large wp-image-46126" alt="">															</div>
+				</div>
+		<div class="elementor-element elementor-element-b04d9aa e-con-full e-flex e-con e-child" data-id="b04d9aa" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-41fac07 elementor-widget elementor-widget-heading" data-id="41fac07" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">AI Procurement Tools, Technology Platforms &amp; Market Solutions</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-d95f927 elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="d95f927" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Review of leading AI procurement tools (SAP Ariba, Coupa, Jaggaer, Oracle, GEP Smart)</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">AI add-ons: contract intelligence, supplier risk, NLP bots, and automation tools</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Build-vs-buy decision frameworks</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Digital procurement implementation best practices</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-42bc75b e-con-full e-flex e-con e-child" data-id="42bc75b" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-142b151 elementor-widget elementor-widget-image" data-id="142b151" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="206" height="252" src="https://aapscm.org/wp-content/uploads/2026/01/1-22.png" class="attachment-large size-large wp-image-46127" alt="">															</div>
+				</div>
+		<div class="elementor-element elementor-element-24d244e e-con-full e-flex e-con e-child" data-id="24d244e" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-7234128 elementor-widget elementor-widget-heading" data-id="7234128" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Implementation, Performance Measurement &amp; Continuous Improvement</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-28c0a8f elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="28c0a8f" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">AI project lifecycle and implementation roadmap</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Performance metrics (KPIs, ROI, savings models, efficiency gains)</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Monitoring, feedback loops, and continuous digital improvement</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Sustaining transformation momentum</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-0a7a8b9 e-con-full e-flex e-con e-child" data-id="0a7a8b9" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-cc46563 e-flex e-con-boxed e-con e-parent" data-id="cc46563" data-element_type="container" data-e-type="container">
+					<div class="e-con-inner">
+		<div class="elementor-element elementor-element-3630f23 e-con-full e-flex e-con e-child" data-id="3630f23" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-19aadfd elementor-widget elementor-widget-image" data-id="19aadfd" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="594" height="550" src="https://aapscm.org/wp-content/uploads/2026/01/1-23.png" class="attachment-large size-large wp-image-46159" alt="" srcset="https://aapscm.org/wp-content/uploads/2026/01/1-23.png 594w, https://aapscm.org/wp-content/uploads/2026/01/1-23-300x278.png 300w" sizes="(max-width: 594px) 100vw, 594px">															</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-b4821b8 e-con-full e-flex e-con e-child" data-id="b4821b8" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-4f60b06 elementor-widget elementor-widget-heading" data-id="4f60b06" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default"><span style="font-weight:200">Capstone Project</span> : AI Procurement Transformation Case Study</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-3955aab elementor-widget elementor-widget-text-editor" data-id="3955aab" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									Learners will develop and present a comprehensive AI-enabled procurement transformation plan for an organization. This includes:								</div>
+				</div>
+				<div class="elementor-element elementor-element-d9c478a elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="d9c478a" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Digital maturity assessment</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Pain point identification</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">AI integration roadmap</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Technology selection</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Governance and change management plan</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Transformation KPIs and measurement framework</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				<div class="elementor-element elementor-element-f1b9814 elementor-widget elementor-widget-text-editor" data-id="f1b9814" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									This capstone serves as a practical demonstration of executive-level transformation capabilities.								</div>
+				</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-b456b4d e-flex e-con-boxed e-con e-parent" data-id="b456b4d" data-element_type="container" data-e-type="container">
+					<div class="e-con-inner">
+				<div class="elementor-element elementor-element-26dfe49 elementor-widget elementor-widget-heading" data-id="26dfe49" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default"><span style="font-weight:200">Program</span>  Duration &amp; Format</h2>				</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-4170cba e-flex e-con-boxed e-con e-parent" data-id="4170cba" data-element_type="container" data-e-type="container">
+					<div class="e-con-inner">
+		<div class="elementor-element elementor-element-adc3096 e-con-full e-flex e-con e-child" data-id="adc3096" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-4e53137 elementor-widget elementor-widget-image" data-id="4e53137" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="82" height="82" src="https://aapscm.org/wp-content/uploads/2026/01/1-25.png" class="attachment-large size-large wp-image-46178" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-e78bf41 elementor-widget elementor-widget-heading" data-id="e78bf41" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Three-Month Executive Weekend Training</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-26767b5 elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="26767b5" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text"><b>Total Duration</b>: 12 Weeks (3 Months)</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text"><b>Total Hours</b>: 72 training hours</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-0a752eb e-con-full e-flex e-con e-child" data-id="0a752eb" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-6d2785f elementor-widget elementor-widget-image" data-id="6d2785f" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="82" height="82" src="https://aapscm.org/wp-content/uploads/2026/01/1-26.png" class="attachment-large size-large wp-image-46179" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-a0110b3 elementor-widget elementor-widget-heading" data-id="a0110b3" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Schedule</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-c1c468d elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="c1c468d" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text"><b>Fridays</b>: 1 hour (Executive Lecture / Strategy Briefing)</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text"><b>Saturdays</b>: 5 hours (Workshops, AI Labs, Simulations)</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-deeb5ee e-con-full e-flex e-con e-child" data-id="deeb5ee" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-671d415 elementor-widget elementor-widget-image" data-id="671d415" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="82" height="82" src="https://aapscm.org/wp-content/uploads/2026/01/1-27.png" class="attachment-large size-large wp-image-46180" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-0bfec31 elementor-widget elementor-widget-heading" data-id="0bfec31" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Mode</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-5c3ecb1 elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="5c3ecb1" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Cohort-Based Learning (group-paced), or</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Individual Executive Track (custom schedule)</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-ca089b7 e-flex e-con-boxed e-con e-parent" data-id="ca089b7" data-element_type="container" data-e-type="container">
+					<div class="e-con-inner">
+		<div class="elementor-element elementor-element-fbfd5ea e-con-full e-flex e-con e-child" data-id="fbfd5ea" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-54d5b3c elementor-widget elementor-widget-heading" data-id="54d5b3c" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default"><span style="font-weight:200"> Assessment </span> Options</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-0706997 elementor-widget elementor-widget-text-editor" data-id="0706997" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									Learners can choose one of the two graduation pathways:								</div>
+				</div>
+		<div class="elementor-element elementor-element-4a5013b e-con-full e-flex e-con e-child" data-id="4a5013b" data-element_type="container" data-e-type="container">
+		<div class="elementor-element elementor-element-8da3734 e-con-full e-flex e-con e-child" data-id="8da3734" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-06ef14b elementor-widget elementor-widget-heading" data-id="06ef14b" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Option 1: Multiple-Choice Certification Examination</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-cfc8228 elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="cfc8228" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">	100 MCQs</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">90 minutes</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Passing score: 70%</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Online proctored</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Covers all 8 modules</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-04c8438 e-con-full e-flex e-con e-child" data-id="04c8438" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-c91b52e elementor-widget elementor-widget-heading" data-id="c91b52e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Option 2: Capstone Project Completion</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-54d3537 elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="54d3537" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Submission of AI Procurement Transformation Plan</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">	Oral defense before AAPSCM academic board</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">	Graded on strategy, accuracy, innovation, and practicality</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-1f24781 elementor-widget elementor-widget-text-editor" data-id="1f24781" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									Both assessment options lead to the same Executive Diploma and Certification.								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-3903d14 e-con-full e-flex e-con e-child" data-id="3903d14" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-ebbc9d8 elementor-widget elementor-widget-image" data-id="ebbc9d8" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="645" height="865" src="https://aapscm.org/wp-content/uploads/2026/01/img.png" class="attachment-large size-large wp-image-46187" alt="" srcset="https://aapscm.org/wp-content/uploads/2026/01/img.png 645w, https://aapscm.org/wp-content/uploads/2026/01/img-224x300.png 224w, https://aapscm.org/wp-content/uploads/2026/01/img-600x805.png 600w" sizes="(max-width: 645px) 100vw, 645px">															</div>
+				</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-046f677 e-flex e-con-boxed e-con e-parent" data-id="046f677" data-element_type="container" data-e-type="container">
+					<div class="e-con-inner">
+				<div class="elementor-element elementor-element-22fc7ea elementor-widget elementor-widget-heading" data-id="22fc7ea" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default"><span style="font-weight:200">  </span> Accreditation</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-4b89de7 elementor-widget elementor-widget-text-editor" data-id="4b89de7" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									This diploma aligns with major international standards:								</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-0563305 e-flex e-con-boxed e-con e-parent" data-id="0563305" data-element_type="container" data-e-type="container">
+					<div class="e-con-inner">
+		<div class="elementor-element elementor-element-9f1b464 e-con-full e-flex e-con e-child" data-id="9f1b464" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-646196f elementor-widget elementor-widget-image" data-id="646196f" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="64" height="64" src="https://aapscm.org/wp-content/uploads/2026/01/iso-symbol.png" class="attachment-large size-large wp-image-46207" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-cfb4951 elementor-widget elementor-widget-heading" data-id="cfb4951" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">ISO 20400 </h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-9691edb elementor-widget elementor-widget-text-editor" data-id="9691edb" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									Sustainable Procurement Guidelines								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-b20da19 e-con-full e-flex e-con e-child" data-id="b20da19" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-8db9932 elementor-widget elementor-widget-image" data-id="8db9932" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="64" height="64" src="https://aapscm.org/wp-content/uploads/2026/01/award.png" class="attachment-large size-large wp-image-46211" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-abbfc90 elementor-widget elementor-widget-heading" data-id="abbfc90" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">	ISO 28000 </h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-e791ede elementor-widget elementor-widget-text-editor" data-id="e791ede" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									Supply Chain Security Management								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-bb184ca e-con-full e-flex e-con e-child" data-id="bb184ca" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-158968a elementor-widget elementor-widget-image" data-id="158968a" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="64" height="64" src="https://aapscm.org/wp-content/uploads/2026/01/iso.png" class="attachment-large size-large wp-image-46212" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-b524fe0 elementor-widget elementor-widget-heading" data-id="b524fe0" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">ISO 9001 </h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-3a04162 elementor-widget elementor-widget-text-editor" data-id="3a04162" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									Quality Management Standards								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-d9f189d e-con-full e-flex e-con e-child" data-id="d9f189d" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-4ba6622 elementor-widget elementor-widget-image" data-id="4ba6622" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="64" height="64" src="https://aapscm.org/wp-content/uploads/2026/01/iso-1.png" class="attachment-large size-large wp-image-46213" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-5ee97b1 elementor-widget elementor-widget-heading" data-id="5ee97b1" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">ISO/IEC 42001 </h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-08ed422 elementor-widget elementor-widget-text-editor" data-id="08ed422" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									Artificial Intelligence Management Systems								</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-1d7929f e-con-full e-flex e-con e-child" data-id="1d7929f" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-2f5200a elementor-widget elementor-widget-image" data-id="2f5200a" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="64" height="64" src="https://aapscm.org/wp-content/uploads/2026/01/iso-symbol-1.png" class="attachment-large size-large wp-image-46214" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-d00ef97 elementor-widget elementor-widget-heading" data-id="d00ef97" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">ANSI/ISO 17024 </h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-f662889 elementor-widget elementor-widget-text-editor" data-id="f662889" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									Personnel Certification Compliance (for exam processes)								</div>
+				</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-42c3eab e-flex e-con-boxed e-con e-parent" data-id="42c3eab" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+					<div class="e-con-inner">
+				<div class="elementor-element elementor-element-24216a2 elementor-widget elementor-widget-heading" data-id="24216a2" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default"><span style="font-weight:200"> Diploma </span>  &amp; Certification Awarded</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-5b0f33d elementor-widget elementor-widget-text-editor" data-id="5b0f33d" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									Upon successful completion, participants receive:								</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-7022785 e-flex e-con-boxed e-con e-parent" data-id="7022785" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+					<div class="e-con-inner">
+		<div class="elementor-element elementor-element-2104321 e-con-full e-flex e-con e-child" data-id="2104321" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-dd81cdc elementor-position-left elementor-vertical-align-middle elementor-widget elementor-widget-image-box" data-id="dd81cdc" data-element_type="widget" data-e-type="widget" data-widget_type="image-box.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img loading="lazy" decoding="async" width="131" height="131" src="https://aapscm.org/wp-content/uploads/2026/01/1-28.png" class="attachment-full size-full wp-image-46229" alt="" srcset="https://aapscm.org/wp-content/uploads/2026/01/1-28.png 131w, https://aapscm.org/wp-content/uploads/2026/01/1-28-100x100.png 100w" sizes="(max-width: 131px) 100vw, 131px"></figure><div class="elementor-image-box-content"><h3 class="elementor-image-box-title">Executive Diploma Award</h3><p class="elementor-image-box-description">Executive Diploma in AI-Driven Procurement Strategy &amp; Transformation (ED-AIPST)®
+Issued by AAPSCM®, U.S. Chartered Professional Body
+</p></div></div>				</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-e2e59d9 e-con-full e-flex e-con e-child" data-id="e2e59d9" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-68aa2ec elementor-position-left elementor-vertical-align-middle elementor-widget elementor-widget-image-box" data-id="68aa2ec" data-element_type="widget" data-e-type="widget" data-widget_type="image-box.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img loading="lazy" decoding="async" width="131" height="131" src="https://aapscm.org/wp-content/uploads/2026/01/1-29.png" class="attachment-full size-full wp-image-46233" alt="" srcset="https://aapscm.org/wp-content/uploads/2026/01/1-29.png 131w, https://aapscm.org/wp-content/uploads/2026/01/1-29-100x100.png 100w" sizes="(max-width: 131px) 100vw, 131px"></figure><div class="elementor-image-box-content"><h3 class="elementor-image-box-title">Professional Certification Award</h3><p class="elementor-image-box-description">Certified AI Procurement Transformation Strategist (CAIPTS™)
+(Optional credential awarded to those who pass the exam or capstone)</p></div></div>				</div>
+				</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-8f54353 e-flex e-con-boxed e-con e-parent" data-id="8f54353" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+					<div class="e-con-inner">
+				<div class="elementor-element elementor-element-7314b66 elementor-widget elementor-widget-text-editor" data-id="7314b66" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									Participants receive								</div>
+				</div>
+				<div class="elementor-element elementor-element-7333366 elementor-mobile-align-start elementor-icon-list--layout-inline elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="7333366" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items elementor-inline-items">
+							<li class="elementor-icon-list-item elementor-inline-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Soft and hardcopy certificates</span>
+									</li>
+								<li class="elementor-icon-list-item elementor-inline-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Digital credential badge</span>
+									</li>
+								<li class="elementor-icon-list-item elementor-inline-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">	Verification registry entry</span>
+									</li>
+								<li class="elementor-icon-list-item elementor-inline-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Eligibility for higher chartered membership tiers</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-f8018c1 e-flex e-con-boxed e-con e-parent" data-id="f8018c1" data-element_type="container" data-e-type="container">
+					<div class="e-con-inner">
+		<div class="elementor-element elementor-element-03477b2 e-con-full e-flex e-con e-child" data-id="03477b2" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-4268617 elementor-widget elementor-widget-image" data-id="4268617" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="452" height="443" src="https://aapscm.org/wp-content/uploads/2026/01/1-31.png" class="attachment-large size-large wp-image-46248" alt="" srcset="https://aapscm.org/wp-content/uploads/2026/01/1-31.png 452w, https://aapscm.org/wp-content/uploads/2026/01/1-31-300x294.png 300w" sizes="(max-width: 452px) 100vw, 452px">															</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-d826433 e-con-full e-flex e-con e-child" data-id="d826433" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-2dd4216 elementor-widget elementor-widget-heading" data-id="2dd4216" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default"><span style="font-weight:200">Career</span> Pathways</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-b1bb808 elementor-widget elementor-widget-text-editor" data-id="b1bb808" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									Graduates of this program are prepared for senior roles, including:								</div>
+				</div>
+				<div class="elementor-element elementor-element-e1eb36f elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="e1eb36f" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Chief Procurement Officer (CPO)</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Head of Procurement Transformation</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">AI Procurement Strategist</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Vice President, Strategic Sourcing</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Director, Supply Chain Digitization</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Digital Procurement Manager</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Senior Procurement Consultant</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-37dfedb e-flex e-con-boxed e-con e-parent" data-id="37dfedb" data-element_type="container" data-e-type="container">
+					<div class="e-con-inner">
+		<div class="elementor-element elementor-element-7a6f90a e-con-full e-flex e-con e-child" data-id="7a6f90a" data-element_type="container" data-e-type="container">
+				<div class="elementor-element elementor-element-36eb42e elementor-widget elementor-widget-heading" data-id="36eb42e" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default"><span style="font-weight:200"> Program</span> Fee &amp; Payment Options</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-095f26c elementor-widget elementor-widget-text-editor" data-id="095f26c" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									The Executive Diploma Program is offered at a total program fee of $4,800, covering all instructional sessions, course materials, AI labs, assessments, and certification processing. Participants may choose from two flexible payment options designed to accommodate individual and organizational budgets.								</div>
+				</div>
+		<div class="elementor-element elementor-element-dfa5dcd e-con-full e-flex e-con e-child" data-id="dfa5dcd" data-element_type="container" data-e-type="container">
+		<div class="elementor-element elementor-element-5b8b039 e-con-full excutive-bx e-flex e-con e-child" data-id="5b8b039" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-32eb37c elementor-widget elementor-widget-image" data-id="32eb37c" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="83" height="84" src="https://aapscm.org/wp-content/uploads/2026/01/1-32.png" class="attachment-large size-large wp-image-46259" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-5ac2f86 elementor-widget elementor-widget-heading" data-id="5ac2f86" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Weekly Payment Plan — $1,500</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-bb954b9 elementor-widget elementor-widget-text-editor" data-id="bb954b9" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									Participants may enroll through a flexible weekly payment plan								</div>
+				</div>
+				<div class="elementor-element elementor-element-25cd1f6 elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="25cd1f6" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">	$1,500 per week</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">	Payments must be completed prior to receiving the diploma and certification</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Ideal for candidates seeking short-term installment flexibility</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-6b5fa66 e-con-full excutive-bx e-flex e-con e-child" data-id="6b5fa66" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-46c1536 elementor-widget elementor-widget-image" data-id="46c1536" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="83" height="84" src="https://aapscm.org/wp-content/uploads/2026/01/1-33.png" class="attachment-large size-large wp-image-46267" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-07a3965 elementor-widget elementor-widget-heading" data-id="07a3965" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Full Payment — $4,800</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-6859c85 elementor-widget elementor-widget-text-editor" data-id="6859c85" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									Participants may also pay the full tuition upfront								</div>
+				</div>
+				<div class="elementor-element elementor-element-101230f elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="101230f" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">$4,800 total program fee</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">One-time payment covering the full 12-week Executive Diploma</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Available for Virtual or In-Seat / In-Class training formats</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-3f09986 e-con-full excutive-bx e-flex e-con e-child" data-id="3f09986" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-bed921d elementor-widget elementor-widget-image" data-id="bed921d" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="83" height="84" src="https://aapscm.org/wp-content/uploads/2026/01/1-34.png" class="attachment-large size-large wp-image-46268" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-b7eaba6 elementor-widget elementor-widget-heading" data-id="b7eaba6" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Training Delivery Locations</h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-d87c67a elementor-widget elementor-widget-text-editor" data-id="d87c67a" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+									<p>Participants may choose either</p>								</div>
+				</div>
+				<div class="elementor-element elementor-element-a302519 elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="a302519" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">	Virtual Instructor-Led Training (Global Access)</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">	In-Seat / In-Class Training at the AAPSCM® Conference &amp; Training Center: 1901 Main Street, Floor 18, Columbia, SC 29201</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+		<div class="elementor-element elementor-element-f0c1cad e-con-full excutive-bx e-flex e-con e-child" data-id="f0c1cad" data-element_type="container" data-e-type="container" data-settings=\'{"background_background":"classic"}\'>
+				<div class="elementor-element elementor-element-783d042 elementor-widget elementor-widget-image" data-id="783d042" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+															<img loading="lazy" decoding="async" width="83" height="84" src="https://aapscm.org/wp-content/uploads/2026/01/1-35.png" class="attachment-large size-large wp-image-46269" alt="">															</div>
+				</div>
+				<div class="elementor-element elementor-element-b297907 elementor-widget elementor-widget-heading" data-id="b297907" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+					<h2 class="elementor-heading-title elementor-size-default">Both formats provide full access </h2>				</div>
+				</div>
+				<div class="elementor-element elementor-element-f4b1ed3 elementor-mobile-align-start elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="f4b1ed3" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
+				<div class="elementor-widget-container">
+							<ul class="elementor-icon-list-items">
+							<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">AI Labs</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Digital Learning Portals</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">Assessments (Exam or Capstone)</span>
+									</li>
+								<li class="elementor-icon-list-item">
+											<span class="elementor-icon-list-icon">
+							<i aria-hidden="true" class="fas fa-check-circle"></i>						</span>
+										<span class="elementor-icon-list-text">xecutive Diploma + Certification</span>
+									</li>
+						</ul>
+						</div>
+				</div>
+				</div>
+				</div>
+				</div>
+					</div>
+				</div>
+		<div class="elementor-element elementor-element-47c16c8 e-flex e-con-boxed e-con e-parent" data-id="47c16c8" data-element_type="container" data-e-type="container">
+					<div class="e-con-inner">
+				<div class="elementor-element elementor-element-435bb23 uael-header-sticky-no uael-border-yes elementor-widget elementor-widget-uael-table" data-id="435bb23" data-element_type="widget" data-e-type="widget" data-widget_type="uael-table.default">
+				<div class="elementor-widget-container">
+					<div itemscope class="uael-table-wrapper" itemtype="http://schema.org/Table">
+		<table id="uael-table-id-435bb23" class="uael-text-break uael-column-rules uael-table" data-sort-table="no" data-show-entry="no" data-searchable="no" data-responsive="no">
+				<thead>
+										<tr class="uael-table-row">
+													<th data-sort="0" class="sort-this elementor-repeater-item-e2221da uael-table-col uael-table-head-cell-text" scope="col">
+							<span class="sort-style">
+							<span class="uael-table__text">
+																																		<span class="uael-table__text-inner">Program Fee Structure</span>
 
-return [
-    'hero' => [
-        'heading'   => 'Executive Diploma in AI-Driven Procurement Strategy & Transformation (ED-AIPST)®',
-        'paragraphs' => [
-            'The Executive Diploma in AI-Driven Procurement Strategy & Transformation (ED-AIPST)® is an advanced, practitioner-focused program designed for senior procurement leaders seeking to modernize, digitize, and strategically transform procurement functions using Artificial Intelligence (AI), automation, predictive analytics, and digital operating models.',
-            'Developed by AAPSCM® and aligned with global standards such as ISO 20400 (Sustainable Procurement), ISO 28000 (Supply Chain Security), ISO 9001 (Quality Management), and ISO/IEC 42001 (AI Management Systems), this diploma delivers deep insight into the strategic, technical, and organizational dimensions of AI-enabled procurement transformation.',
-            'Participants gain mastery of the frameworks required to shift procurement from a transactional function into a high-performing, predictive, intelligent, and value-driven strategic powerhouse. Through hands-on AI labs, strategic simulations, analytics exercises, and a final transformation capstone, learners develop both the technical and leadership competencies demanded by modern procurement transformation roles.',
-        ],
-        'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-13.png',
-    ],
+																																	</span>
+														</span>
+						</th>
+												<th data-sort="1" class="sort-this elementor-repeater-item-60b469e uael-table-col uael-table-head-cell-text" scope="col">
+							<span class="sort-style">
+							<span class="uael-table__text">
+																																		<span class="uael-table__text-inner">Details</span>
 
-    'outcomes' => [
-        'heading' => 'Program Learning Outcomes',
-        'intro'   => 'Upon successful completion of the ED-AIPST® diploma, participants will be able to:',
-        'cards'   => [
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/strategic.png',
-                'title' => 'Strategic Transformation & Leadership',
-                'items' => [
-                    'Design and implement AI-enabled procurement transformation roadmaps aligned with enterprise strategy.',
-                    'Develop high-performance digital procurement operating models leveraging intelligent workflows and automation.',
-                ],
-            ],
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/ai.png',
-                'title' => 'AI & Analytics Integration',
-                'items' => [
-                    'Integrate advanced AI technologies—Machine Learning (ML), Natural Language Processing (NLP), Robotic Process Automation (RPA), and Computer Vision—into procurement systems.',
-                    'Conduct predictive analytics for forecasting, spend optimization, risk anticipation, and supplier performance intelligence.',
-                ],
-            ],
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/risk-management.png',
-                'title' => 'Governance, Risk & Compliance',
-                'items' => [
-                    'Apply global ISO standards to build ethical, transparent, and secure AI procurement platforms.',
-                    'Establish governance structures for ethical AI use, risk management, cybersecurity, and data protection in procurement.',
-                ],
-            ],
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/organization.png',
-                'title' => 'Organizational Change Management',
-                'items' => [
-                    'Lead digital transformation initiatives and cultivate a culture of innovation within procurement organizations.',
-                    'Drive stakeholder engagement, training, and enterprise-wide adoption of AI procurement tools and strategies.',
-                ],
-            ],
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/practice.png',
-                'title' => 'Practical Hands-On Expertise',
-                'items' => [
-                    'Execute an end-to-end AI procurement transformation project through simulations and real-world case studies.',
-                    'Demonstrate applied competence through either a rigorous multiple-choice exam or a transformation capstone project.',
-                ],
-            ],
-        ],
-    ],
+																																	</span>
+														</span>
+						</th>
+												<th data-sort="2" class="sort-this elementor-repeater-item-aa1e765 uael-table-col uael-table-head-cell-text" scope="col">
+							<span class="sort-style">
+							<span class="uael-table__text">
+																																		<span class="uael-table__text-inner">Amount</span>
 
-    'modules' => [
-        'heading'    => 'Program Structure & Modules',
-        'subheading' => '8 Modules + Capstone Project',
-        'cards' => [
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-15.png',
-                'title' => 'Foundations of Procurement 4.0 & Digital Transformation',
-                'items' => [
-                    'Evolution from traditional procurement to Procurement 4.0',
-                    'Digital maturity models and transformation assessment',
-                    'Overview of AI technologies reshaping procurement',
-                    'Role of data, analytics, and intelligent automation',
-                ],
-            ],
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-16.png',
-                'title' => 'AI Strategy Design & Procurement Transformation Blueprint',
-                'items' => [
-                    'Strategic alignment of procurement with enterprise digital vision',
-                    'Designing AI-driven procurement strategies',
-                    'AI readiness assessments and capability modeling',
-                    'Creating transformation roadmaps with KPIs and milestones',
-                ],
-            ],
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-17.png',
-                'title' => 'Advanced Spend Analytics & Predictive Intelligence',
-                'items' => [
-                    'Strategic alignment of procurement with enterprise digital vision',
-                    'Machine learning for forecasting, anomalies, and price prediction',
-                    'Building spend cubes and AI-driven dashboards',
-                    'Predictive analytics for category and sourcing decisions',
-                ],
-            ],
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-18.png',
-                'title' => 'AI Operating Models, Digital Twins & Intelligent Workflows',
-                'items' => [
-                    'Intelligent procurement operating models',
-                    'Process automation frameworks',
-                    'Digital twins for procurement performance simulation',
-                    'End-to-end lifecycle automation in sourcing and contracting',
-                ],
-            ],
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-19.png',
-                'title' => 'Governance, Responsible AI & Ethical Procurement Frameworks',
-                'items' => [
-                    'ISO standards for AI governance and procurement compliance',
-                    'Ethical AI: fairness, transparency, accountability',
-                    'Cybersecurity, privacy, and data assurance in procurement systems',
-                    'Creating transforAI risk controls and mitigAI risk controls and mitigation strategiesation strategiesmation roadmaps with KPIs and milestones',
-                ],
-            ],
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-20.png',
-                'title' => 'Organizational Change, Leadership & Transformation Culture',
-                'items' => [
-                    'Leading enterprise-wide digital transformation',
-                    'Building cross-functional digital governance teams',
-                    'Stakeholder management and communication plans',
-                    'Upskilling procurement teams for AI fluency',
-                ],
-            ],
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-21.png',
-                'title' => 'AI Procurement Tools, Technology Platforms & Market Solutions',
-                'items' => [
-                    'Review of leading AI procurement tools (SAP Ariba, Coupa, Jaggaer, Oracle, GEP Smart)',
-                    'AI add-ons: contract intelligence, supplier risk, NLP bots, and automation tools',
-                    'Build-vs-buy decision frameworks',
-                    'Digital procurement implementation best practices',
-                ],
-            ],
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-22.png',
-                'title' => 'Implementation, Performance Measurement & Continuous Improvement',
-                'items' => [
-                    'AI project lifecycle and implementation roadmap',
-                    'Performance metrics (KPIs, ROI, savings models, efficiency gains)',
-                    'Monitoring, feedback loops, and continuous digital improvement',
-                    'Sustaining transformation momentum',
-                ],
-            ],
-        ],
-        'capstone' => [
-            'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-23.png',
-            'title' => 'Capstone Project : AI Procurement Transformation Case Study',
-            'intro' => 'Learners will develop and present a comprehensive AI-enabled procurement transformation plan for an organization. This includes:',
-            'items' => [
-                'Digital maturity assessment',
-                'Pain point identification',
-                'AI integration roadmap',
-                'Technology selection',
-                'Governance and change management plan',
-                'Transformation KPIs and measurement framework',
-            ],
-            'closing' => 'This capstone serves as a practical demonstration of executive-level transformation capabilities.',
-        ],
-    ],
-
-    'duration' => [
-        'heading' => 'Program Duration & Format',
-        'cards'   => [
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-25.png',
-                'title' => 'Three-Month Executive Weekend Training',
-                'items' => [
-                    'Total Duration: 12 Weeks (3 Months)',
-                    'Total Hours: 72 training hours',
-                ],
-            ],
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-26.png',
-                'title' => 'Schedule',
-                'items' => [
-                    'Fridays: 1 hour (Executive Lecture / Strategy Briefing)',
-                    'Saturdays: 5 hours (Workshops, AI Labs, Simulations)',
-                ],
-            ],
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-27.png',
-                'title' => 'Mode',
-                'items' => [
-                    'Cohort-Based Learning (group-paced), or',
-                    'Individual Executive Track (custom schedule)',
-                ],
-            ],
-        ],
-    ],
-
-    'assessment' => [
-        'heading' => 'Assessment Options',
-        'intro'   => 'Learners can choose one of the two graduation pathways:',
-        'image'   => 'https://aapscm.org/wp-content/uploads/2026/01/img.png',
-        'options' => [
-            [
-                'title' => 'Option 1: Multiple-Choice Certification Examination',
-                'items' => [
-                    '100 MCQs',
-                    '90 minutes',
-                    'Passing score: 70%',
-                    'Online proctored',
-                    'Covers all 8 modules',
-                ],
-            ],
-            [
-                'title' => 'Option 2: Capstone Project Completion',
-                'items' => [
-                    'Submission of AI Procurement Transformation Plan',
-                    'Oral defense before AAPSCM academic board',
-                    'Graded on strategy, accuracy, innovation, and practicality',
-                ],
-            ],
-        ],
-        'closing' => 'Both assessment options lead to the same Executive Diploma and Certification.',
-    ],
-
-    'accreditation' => [
-        'heading'      => 'Accreditation',
-        'intro'        => 'This diploma aligns with major international standards:',
-        'standards'    => [
-            ['image' => 'https://aapscm.org/wp-content/uploads/2026/01/iso-symbol.png',   'title' => 'ISO 20400',      'text' => 'Sustainable Procurement Guidelines'],
-            ['image' => 'https://aapscm.org/wp-content/uploads/2026/01/award.png',         'title' => 'ISO 28000',      'text' => 'Supply Chain Security Management'],
-            ['image' => 'https://aapscm.org/wp-content/uploads/2026/01/iso.png',           'title' => 'ISO 9001',       'text' => 'Quality Management Standards'],
-            ['image' => 'https://aapscm.org/wp-content/uploads/2026/01/iso-1.png',         'title' => 'ISO/IEC 42001',  'text' => 'Artificial Intelligence Management Systems'],
-            ['image' => 'https://aapscm.org/wp-content/uploads/2026/01/iso-symbol-1.png', 'title' => 'ANSI/ISO 17024', 'text' => 'Personnel Certification Compliance (for exam processes)'],
-        ],
-    ],
-
-    'awards' => [
-        'heading' => 'Diploma & Certification Awarded',
-        'intro'   => 'Upon successful completion, participants receive:',
-        'cards'   => [
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-28.png',
-                'title' => 'Executive Diploma Award',
-                'text'  => 'Executive Diploma in AI-Driven Procurement Strategy & Transformation (ED-AIPST)® Issued by AAPSCM®, U.S. Chartered Professional Body',
-            ],
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-29.png',
-                'title' => 'Professional Certification Award',
-                'text'  => 'Certified AI Procurement Transformation Strategist (CAIPTS™) (Optional credential awarded to those who pass the exam or capstone)',
-            ],
-        ],
-        'participants_label' => 'Participants receive',
-        'participants_items' => [
-            'Soft and hardcopy certificates',
-            'Digital credential badge',
-            'Verification registry entry',
-            'Eligibility for higher chartered membership tiers',
-        ],
-    ],
-
-    'careers' => [
-        'image'   => 'https://aapscm.org/wp-content/uploads/2026/01/1-31.png',
-        'heading' => 'Career Pathways',
-        'intro'   => 'Graduates of this program are prepared for senior roles, including:',
-        'items'   => [
-            'Chief Procurement Officer (CPO)',
-            'Head of Procurement Transformation',
-            'AI Procurement Strategist',
-            'Vice President, Strategic Sourcing',
-            'Director, Supply Chain Digitization',
-            'Digital Procurement Manager',
-            'Senior Procurement Consultant',
-        ],
-    ],
-
-    'fees' => [
-        'heading' => 'Program Fee & Payment Options',
-        'intro'   => 'The Executive Diploma Program is offered at a total program fee of $4,800, covering all instructional sessions, course materials, AI labs, assessments, and certification processing. Participants may choose from two flexible payment options designed to accommodate individual and organizational budgets.',
-        'cards'   => [
-            [
-                'image'    => 'https://aapscm.org/wp-content/uploads/2026/01/1-32.png',
-                'title'    => 'Weekly Payment Plan — $1,500',
-                'subtitle' => 'Participants may enroll through a flexible weekly payment plan',
-                'items'    => [
-                    '$1,500 per week',
-                    'Payments must be completed prior to receiving the diploma and certification',
-                    'Ideal for candidates seeking short-term installment flexibility',
-                ],
-            ],
-            [
-                'image'    => 'https://aapscm.org/wp-content/uploads/2026/01/1-33.png',
-                'title'    => 'Full Payment — $4,800',
-                'subtitle' => 'Participants may also pay the full tuition upfront',
-                'items'    => [
-                    '$4,800 total program fee',
-                    'One-time payment covering the full 12-week Executive Diploma',
-                    'Available for Virtual or In-Seat / In-Class training formats',
-                ],
-            ],
-        ],
-    ],
-
-    'delivery' => [
-        'heading' => 'Training Delivery Locations',
-        'intro_blocks' => [
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-34.png',
-                'lead'  => 'Participants may choose either',
-                'items' => [
-                    'Virtual Instructor-Led Training (Global Access)',
-                    'In-Seat / In-Class Training at the AAPSCM® Conference & Training Center: 1901 Main Street, Floor 18, Columbia, SC 29201',
-                ],
-            ],
-            [
-                'image' => 'https://aapscm.org/wp-content/uploads/2026/01/1-35.png',
-                'lead'  => 'Both formats provide full access',
-                'items' => [
-                    'AI Labs',
-                    'Digital Learning Portals',
-                    'Assessments (Exam or Capstone)',
-                    'xecutive Diploma + Certification',
-                ],
-            ],
-        ],
-    ],
-
-    'fee_table' => [
-        'headers' => ['Program Fee Structure', 'Details', 'Amount'],
-        'rows'    => [
-            ['Full Program Fee',                   'One-time payment covering all 12-week sessions, AI labs, materials, assessments, diploma + certification', '$4,800'],
-            ['Weekly Payment Plan',                'Flexible weekly installment plan (must be paid before issuance of diploma/certification)',                '$1,500 per week'],
-            ['Training Format – Virtual',          'Live instructor-led sessions + digital resources + AI labs',                                                'Included in the fee'],
-            ['Training Format – In-Seat / In-Class','Instructor-led physical classes at AAPSCM® Training & Conference Center',                                  'Included in the fee'],
-            ['Training Location',                  '1901 Main Street, Floor 18, Columbia, SC 29201',                                                            'On-site option available'],
-        ],
-    ],
-
-    'cta' => [
-        'check_icon' => 'https://aapscm.org/wp-content/uploads/2024/12/check.png',
-        'options' => [
-            [
-                'label' => 'Weekly Payment Plan — $1,500:',
-                'cta_label' => 'Purchase and Pay',
-                'cta_href'  => 'https://aapscm.org/checkout/?add-to-cart=46511 ',
-            ],
-            [
-                'label' => 'Full Payment — $4,800:',
-                'cta_label' => 'Purchase and Pay',
-                'cta_href'  => 'https://aapscm.org/checkout/?add-to-cart=46509 ',
-            ],
-            [
-                'label' => 'Download Brochure:',
-                'cta_label' => 'Download',
-                'cta_href'  => '#',
-            ],
-        ],
-    ],
-];
+																																	</span>
+														</span>
+						</th>
+								</tr></thead>
+				<tbody>
+			<!-- ROWS -->
+										<tr data-entry="1" class="uael-table-row">
+																	<td class="uael-table-col uael-table-body-cell-text elementor-repeater-item-66d95d6" data-title="Program Fee Structure">
+															<span class="uael-table__text">
+																																					<span class="uael-table__text-inner">Full Program Fee</span>
+																																				</span>
+													</td>
+													<td class="uael-table-col uael-table-body-cell-text elementor-repeater-item-1e95600" data-title="Details">
+															<span class="uael-table__text">
+																																					<span class="uael-table__text-inner">One-time payment covering all 12-week sessions, AI labs, materials, assessments, diploma + certification</span>
+																																				</span>
+													</td>
+													<td class="uael-table-col uael-table-body-cell-text elementor-repeater-item-d161cf5" data-title="Amount">
+															<span class="uael-table__text">
+																																					<span class="uael-table__text-inner">$4,800</span>
+																																				</span>
+													</td>
+														</tr><tr data-entry="2" class="uael-table-row">
+																		<td class="uael-table-col uael-table-body-cell-text elementor-repeater-item-75fa37f" data-title="Program Fee Structure">
+															<span class="uael-table__text">
+																																					<span class="uael-table__text-inner">Weekly Payment Plan</span>
+																																				</span>
+													</td>
+													<td class="uael-table-col uael-table-body-cell-text elementor-repeater-item-18b3e06" data-title="Details">
+															<span class="uael-table__text">
+																																					<span class="uael-table__text-inner">Flexible weekly installment plan (must be paid before issuance of diploma/certification)</span>
+																																				</span>
+													</td>
+													<td class="uael-table-col uael-table-body-cell-text elementor-repeater-item-61f2ec1" data-title="Amount">
+															<span class="uael-table__text">
+																																					<span class="uael-table__text-inner">$1,500 per week</span>
+																																				</span>
+													</td>
+														</tr><tr data-entry="3" class="uael-table-row">
+																		<td class="uael-table-col uael-table-body-cell-text elementor-repeater-item-c9459f5" data-title="Program Fee Structure">
+															<span class="uael-table__text">
+																																					<span class="uael-table__text-inner">Training Format – Virtual</span>
+																																				</span>
+													</td>
+													<td class="uael-table-col uael-table-body-cell-text elementor-repeater-item-f9bca66" data-title="Details">
+															<span class="uael-table__text">
+																																					<span class="uael-table__text-inner">Live instructor-led sessions + digital resources + AI labs</span>
+																																				</span>
+													</td>
+													<td class="uael-table-col uael-table-body-cell-text elementor-repeater-item-ac69f73" data-title="Amount">
+															<span class="uael-table__text">
+																																					<span class="uael-table__text-inner">Included in the fee</span>
+																																				</span>
+													</td>
+														</tr><tr data-entry="4" class="uael-table-row">
+																		<td class="uael-table-col uael-table-body-cell-text elementor-repeater-item-69034ba" data-title="Program Fee Structure">
+															<span class="uael-table__text">
+																																					<span class="uael-table__text-inner">Training Format – In-Seat / In-Class</span>
+																																				</span>
+													</td>
+													<td class="uael-table-col uael-table-body-cell-text elementor-repeater-item-36486ef" data-title="Details">
+															<span class="uael-table__text">
+																																					<span class="uael-table__text-inner">Instructor-led physical classes at AAPSCM® Training &amp; Conference Center</span>
+																																				</span>
+													</td>
+													<td class="uael-table-col uael-table-body-cell-text elementor-repeater-item-011547e" data-title="Amount">
+															<span class="uael-table__text">
+																																					<span class="uael-table__text-inner">Included in the fee</span>
+																																				</span>
+													</td>
+														</tr><tr data-entry="5" class="uael-table-row">
+																		<td class="uael-table-col uael-table-body-cell-text elementor-repeater-item-7ac7c4e" data-title="Program Fee Structure">
+															<span class="uael-table__text">
+																																					<span class="uael-table__text-inner">Training Location</span>
+																																				</span>
+													</td>
+													<td class="uael-table-col uael-table-body-cell-text elementor-repeater-item-3a52c2b" data-title="Details">
+															<span class="uael-table__text">
+																																					<span class="uael-table__text-inner">
+1901 Main Street, Floor 18, Columbia, SC 29201</span>
+																																				</span>
+													</td>
+													<td class="uael-table-col uael-table-body-cell-text elementor-repeater-item-c5b9dc6" data-title="Amount">
+															<span class="uael-table__text">
+																																					<span class="uael-table__text-inner">On-site option available</span>
+																																				</span>
+													</td>
+									</tr></tbody>
+	</table>
+		</div>
+				</div>
+				</div>
+					</div>
+				</div>
+				<section class="elementor-section elementor-top-section elementor-element elementor-element-db603db elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="db603db" data-element_type="section" data-e-type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-d3a1983" data-id="d3a1983" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-27a5a15 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="27a5a15" data-element_type="section" data-e-type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-ad42bca" data-id="ad42bca" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-2f88533 t-bx elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="2f88533" data-element_type="section" data-e-type="section" data-settings=\'{"background_background":"classic"}\'>
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-7c716c0" data-id="7c716c0" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-3ac2001 elementor-position-left elementor-vertical-align-top elementor-widget elementor-widget-image-box" data-id="3ac2001" data-element_type="widget" data-e-type="widget" data-widget_type="image-box.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img loading="lazy" decoding="async" width="92" height="79" src="https://aapscm.org/wp-content/uploads/2024/12/check.png" class="attachment-full size-full wp-image-29747" alt=""></figure><div class="elementor-image-box-content"><p class="elementor-image-box-description"><b>Weekly Payment Plan — $1,500</b>: </p></div></div>				</div>
+				</div>
+				<div class="elementor-element elementor-element-e87f26a elementor-align-left elementor-widget elementor-widget-button" data-id="e87f26a" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+									<div class="elementor-button-wrapper">
+					<a class="elementor-button elementor-button-link elementor-size-sm" href="https://aapscm.org/checkout/?add-to-cart=46511%20">
+						<span class="elementor-button-content-wrapper">
+						<span class="elementor-button-icon">
+				<i aria-hidden="true" class="fas fa-arrow-right"></i>			</span>
+									<span class="elementor-button-text">Purchase and Pay</span>
+					</span>
+					</a>
+				</div>
+								</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-a12f39f" data-id="a12f39f" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-584a833 t-bx elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="584a833" data-element_type="section" data-e-type="section" data-settings=\'{"background_background":"classic"}\'>
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-4498070" data-id="4498070" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-6230a71 elementor-position-left elementor-vertical-align-top elementor-widget elementor-widget-image-box" data-id="6230a71" data-element_type="widget" data-e-type="widget" data-widget_type="image-box.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img loading="lazy" decoding="async" width="92" height="79" src="https://aapscm.org/wp-content/uploads/2024/12/check.png" class="attachment-full size-full wp-image-29747" alt=""></figure><div class="elementor-image-box-content"><p class="elementor-image-box-description"><b>Full Payment — $4,800</b>: </p></div></div>				</div>
+				</div>
+				<div class="elementor-element elementor-element-7a130ed elementor-align-left elementor-widget elementor-widget-button" data-id="7a130ed" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+									<div class="elementor-button-wrapper">
+					<a class="elementor-button elementor-button-link elementor-size-sm" href="https://aapscm.org/checkout/?add-to-cart=46509%20">
+						<span class="elementor-button-content-wrapper">
+						<span class="elementor-button-icon">
+				<i aria-hidden="true" class="fas fa-arrow-right"></i>			</span>
+									<span class="elementor-button-text">Purchase and Pay</span>
+					</span>
+					</a>
+				</div>
+								</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-5a616a2" data-id="5a616a2" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<section class="elementor-section elementor-inner-section elementor-element elementor-element-5b95bae t-bx elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="5b95bae" data-element_type="section" data-e-type="section" data-settings=\'{"background_background":"classic"}\'>
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-inner-column elementor-element elementor-element-9217d92" data-id="9217d92" data-element_type="column" data-e-type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-1a873c3 elementor-position-left elementor-vertical-align-top elementor-widget elementor-widget-image-box" data-id="1a873c3" data-element_type="widget" data-e-type="widget" data-widget_type="image-box.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-image-box-wrapper"><figure class="elementor-image-box-img"><img loading="lazy" decoding="async" width="92" height="79" src="https://aapscm.org/wp-content/uploads/2024/12/check.png" class="attachment-full size-full wp-image-29747" alt=""></figure><div class="elementor-image-box-content"><p class="elementor-image-box-description"><b>Download Brochure</b>: </p></div></div>				</div>
+				</div>
+				<div class="elementor-element elementor-element-c2dddd2 elementor-align-left elementor-widget elementor-widget-button" data-id="c2dddd2" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
+				<div class="elementor-widget-container">
+									<div class="elementor-button-wrapper">
+					<a class="elementor-button elementor-button-link elementor-size-sm" href="#">
+						<span class="elementor-button-content-wrapper">
+						<span class="elementor-button-icon">
+				<i aria-hidden="true" class="fas fa-arrow-right"></i>			</span>
+									<span class="elementor-button-text">Download </span>
+					</span>
+					</a>
+				</div>
+								</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+					</div>
+		</div>
+					</div>
+		</section>
+					</div>
+		</div>
+					</div>
+		</section>
+				',
+);

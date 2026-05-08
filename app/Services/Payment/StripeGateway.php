@@ -21,6 +21,7 @@ class StripeGateway implements PaymentGatewayContract
             'amount' => $data['amount_cents'],
             'currency' => strtolower($data['currency'] ?? 'usd'),
             'metadata' => $data['metadata'] ?? [],
+            'capture_method' => 'manual',
             'automatic_payment_methods' => ['enabled' => true],
         ]);
 
@@ -31,9 +32,24 @@ class StripeGateway implements PaymentGatewayContract
         ];
     }
 
+    public function getPayment(string $gatewayId): array
+    {
+        $intent = $this->client->paymentIntents->retrieve($gatewayId);
+
+        return [
+            'gateway_id' => $intent->id,
+            'client_secret' => $intent->client_secret,
+            'status' => $intent->status,
+        ];
+    }
+
     public function capturePayment(string $gatewayId, array $data = []): array
     {
-        $intent = $this->client->paymentIntents->capture($gatewayId);
+        $intent = $this->client->paymentIntents->retrieve($gatewayId);
+
+        if ($intent->status === 'requires_capture') {
+            $intent = $this->client->paymentIntents->capture($gatewayId);
+        }
 
         return [
             'gateway_id' => $intent->id,

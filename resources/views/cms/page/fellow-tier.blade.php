@@ -20,15 +20,12 @@
         $eliImage = $eligibility['image'] ?? ($hero['image'] ?? null);
     @endphp
 
-    {{-- Hero --}}
-    <section class="relative bg-[#0B2F5E] py-16 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-[#0B2F5E] to-[#14166e] opacity-90"></div>
-        <div class="relative max-w-[1100px] mx-auto px-4 text-center">
-            <h1 class="text-[28px] md:text-[40px] font-bold text-white leading-tight">
-                {{ $hero['heading'] ?? $page->title }}
-            </h1>
-        </div>
-    </section>
+    <x-cms.eltdf-title-bar
+        :title="$page->title"
+        :breadcrumbs="[
+            ['label' => $page->title],
+        ]"
+    />
 
     {{-- Eligibility --}}
     @if (!empty($eligibility))

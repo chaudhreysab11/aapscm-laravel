@@ -3,7 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
+use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
+use App\Models\ProductPrice;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -16,6 +18,7 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class ProductResource extends Resource
@@ -47,10 +50,19 @@ class ProductResource extends Resource
             Textarea::make('description')
                 ->columnSpanFull(),
 
-            TextInput::make('price')
-                ->required()
+            TextInput::make('public_price')
+                ->label('Public Price')
                 ->numeric()
                 ->prefix('$'),
+
+            TextInput::make('public_price_currency')
+                ->label('Public Price Currency')
+                ->default('USD')
+                ->maxLength(3),
+
+            Toggle::make('public_price_is_active')
+                ->label('Public Price Active')
+                ->default(true),
 
             TextInput::make('stock')
                 ->required()
@@ -60,6 +72,13 @@ class ProductResource extends Resource
             Toggle::make('is_active')
                 ->default(true),
         ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            RelationManagers\ProductPricesRelationManager::class,
+        ];
     }
 
     public static function table(Table $table): Table
@@ -73,9 +92,31 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('sku')
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('price')
-                    ->money()
+                Tables\Columns\TextColumn::make('source_id')
+                    ->label('WP ID')
+                    ->sortable()
+                    ->toggleable(),
+
+                Tables\Columns\TextColumn::make('type')
+                    ->badge()
                     ->sortable(),
+
+                Tables\Columns\TextColumn::make('migration_review_status')
+                    ->label('Migration Review')
+                    ->badge()
+                    ->placeholder('approved')
+                    ->toggleable(),
+
+                Tables\Columns\TextColumn::make('publicPrice.price')
+                    ->label('Public Price')
+                    ->state(fn (Product $record): string => $record->publicPrice instanceof ProductPrice
+                        ? $record->publicPrice->currency . ' ' . number_format((float) $record->publicPrice->price, 2, '.', '')
+                        : 'No price'),
+
+                Tables\Columns\IconColumn::make('publicPrice.is_active')
+                    ->label('Public Price Active')
+                    ->boolean()
+                    ->state(fn (Product $record): bool => $record->publicPrice?->is_active ?? false),
 
                 Tables\Columns\TextColumn::make('stock')
                     ->numeric()
@@ -110,5 +151,49 @@ class ProductResource extends Resource
             'create' => Pages\CreateProduct::route('/create'),
             'edit' => Pages\EditProduct::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with('publicPrice');
+    }
+
+    public static function persistPublicPrice(Product $product, mixed $price, ?string $currency = 'USD', bool $isActive = true): void
+    {
+        $publicPrice = $product->prices()
+            ->whereNull('membership_tier_id')
+            ->latest('id')
+            ->first();
+
+        $normalizedCurrency = strtoupper(trim((string) ($currency ?: 'USD')));
+
+        if ($normalizedCurrency === '') {
+            $normalizedCurrency = 'USD';
+        }
+
+        $normalizedPrice = is_numeric($price)
+            ? number_format((float) $price, 2, '.', '')
+            : ($publicPrice instanceof ProductPrice ? $publicPrice->price : null);
+
+        if ($normalizedPrice === null) {
+            return;
+        }
+
+        if ($publicPrice instanceof ProductPrice) {
+            $publicPrice->fill([
+                'price' => $normalizedPrice,
+                'currency' => $normalizedCurrency,
+                'is_active' => $isActive,
+            ])->save();
+
+            return;
+        }
+
+        $product->prices()->create([
+            'membership_tier_id' => null,
+            'price' => $normalizedPrice,
+            'currency' => $normalizedCurrency,
+            'is_active' => $isActive,
+        ]);
     }
 }

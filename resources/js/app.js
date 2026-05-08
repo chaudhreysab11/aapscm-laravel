@@ -4,7 +4,20 @@ import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
-Alpine.start();
+function startAlpine() {
+    if (window.__aapscmAlpineStarted) {
+        return;
+    }
+
+    window.__aapscmAlpineStarted = true;
+    Alpine.start();
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startAlpine, { once: true });
+} else {
+    startAlpine();
+}
 
 // Decodes Cloudflare email-protection spans emitted by x-cms.cf-email.
 // Runs once at load and again after any DOM addition (for Livewire/Alpine swaps).

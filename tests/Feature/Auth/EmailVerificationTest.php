@@ -13,16 +13,16 @@ class EmailVerificationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_email_verification_screen_can_be_rendered(): void
+    public function test_email_verification_screen_redirects_to_dashboard_while_verification_is_disabled(): void
     {
         $user = User::factory()->unverified()->create();
 
         $response = $this->actingAs($user)->get('/verify-email');
 
-        $response->assertStatus(200);
+        $response->assertRedirect(route('dashboard', absolute: false));
     }
 
-    public function test_email_can_be_verified(): void
+    public function test_verification_links_redirect_without_dispatching_events_while_verification_is_disabled(): void
     {
         $user = User::factory()->unverified()->create();
 
@@ -36,12 +36,12 @@ class EmailVerificationTest extends TestCase
 
         $response = $this->actingAs($user)->get($verificationUrl);
 
-        Event::assertDispatched(Verified::class);
+        Event::assertNotDispatched(Verified::class);
         $this->assertTrue($user->fresh()->hasVerifiedEmail());
         $response->assertRedirect(route('dashboard', absolute: false) . '?verified=1');
     }
 
-    public function test_email_is_not_verified_with_invalid_hash(): void
+    public function test_invalid_verification_hashes_are_still_rejected(): void
     {
         $user = User::factory()->unverified()->create();
 
@@ -51,8 +51,6 @@ class EmailVerificationTest extends TestCase
             ['id' => $user->id, 'hash' => sha1('wrong-email')]
         );
 
-        $this->actingAs($user)->get($verificationUrl);
-
-        $this->assertFalse($user->fresh()->hasVerifiedEmail());
+        $this->actingAs($user)->get($verificationUrl)->assertForbidden();
     }
 }

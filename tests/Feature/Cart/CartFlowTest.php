@@ -40,6 +40,89 @@ it('adds a product to the cart and redirects to the cart page by default', funct
         ->assertSee('USD 99.98'); // 2 x 49.99
 });
 
+it('adds a product to the cart by WordPress source id', function (): void {
+    $product = seedPricedProduct();
+    $product->update(['source_id' => 987654]);
+
+    $this->post(route('cart.add', $product->source_id), ['quantity' => 1])
+        ->assertRedirect(route('cart.show'));
+
+    $this->get('/cart/')
+        ->assertOk()
+        ->assertSee($product->name)
+        ->assertSee('USD 49.99');
+});
+
+it('adds a product to the cart from a WooCommerce checkout add-to-cart query', function (): void {
+    $product = seedPricedProduct();
+    $product->update(['source_id' => 4234]);
+
+    $this->get('/checkout/?add-to-cart=4234')
+        ->assertRedirect(route('checkout.show'));
+
+    expect(session('cart.items.' . $product->id . '.quantity'))->toBe(1);
+
+    $this->get(route('checkout.show'))
+        ->assertOk()
+        ->assertSee($product->name)
+        ->assertSee('USD 49.99');
+});
+
+it('does not duplicate a WooCommerce checkout add-to-cart item after the query is removed', function (): void {
+    $product = seedPricedProduct();
+    $product->update(['source_id' => 4234]);
+
+    $this->get('/checkout/?add-to-cart=4234')
+        ->assertRedirect(route('checkout.show'));
+
+    expect(session('cart.items.' . $product->id . '.quantity'))->toBe(1);
+
+    $this->get(route('checkout.show'))->assertOk();
+    $this->get(route('checkout.show'))->assertOk();
+
+    expect(session('cart.items.' . $product->id . '.quantity'))->toBe(1);
+});
+
+it('redirects an invalid WooCommerce checkout add-to-cart source id to the cart with an error', function (): void {
+    $this->get('/checkout/?add-to-cart=999999')
+        ->assertRedirect(route('cart.show'))
+        ->assertSessionHas('error', 'The requested product is not available.');
+});
+
+it('redirects an inactive WooCommerce checkout add-to-cart product to the cart with an error', function (): void {
+    $product = seedPricedProduct();
+    $product->update([
+        'is_active' => false,
+        'source_id' => 4234,
+    ]);
+
+    $this->get('/checkout/?add-to-cart=4234')
+        ->assertRedirect(route('cart.show'))
+        ->assertSessionHas('error', 'The requested product is not available.');
+
+    expect(session('cart.items'))->toBeNull();
+});
+
+it('prefers Laravel product id over WordPress source id when identifiers collide', function (): void {
+    $productById = seedPricedProduct('10.00');
+    $productById->update(['name' => 'Laravel ID Product']);
+
+    $productBySourceId = seedPricedProduct('20.00');
+    $productBySourceId->update([
+        'name' => 'WordPress Source ID Product',
+        'source_id' => $productById->id,
+    ]);
+
+    $this->post(route('cart.add', $productById->id), ['quantity' => 1])
+        ->assertRedirect(route('cart.show'));
+
+    $this->get('/cart/')
+        ->assertOk()
+        ->assertSee($productById->name)
+        ->assertDontSee($productBySourceId->name)
+        ->assertSee('USD 10.00');
+});
+
 it('updates the quantity of a cart line', function (): void {
     $product = seedPricedProduct('20.00');
 

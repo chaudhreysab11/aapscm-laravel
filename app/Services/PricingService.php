@@ -119,19 +119,21 @@ class PricingService
      *
      * @param  array<array{price: string, quantity: int, discount?: string}>  $lineItems
      * @param  float  $taxRate  e.g. 0.0 for no tax
+     * @param  float  $orderDiscount  cart-level discount applied after line discounts
      * @return array{subtotal: string, tax: string, discount: string, total: string}
      */
-    public function calculateOrderTotals(array $lineItems, float $taxRate = 0.0): array
+    public function calculateOrderTotals(array $lineItems, float $taxRate = 0.0, float $orderDiscount = 0.0): array
     {
         $subtotal = array_reduce($lineItems, function (float $carry, array $item): float {
             return $carry + ((float) $item['price'] * $item['quantity']);
         }, 0.0);
 
-        $discount = array_reduce($lineItems, function (float $carry, array $item): float {
+        $lineDiscount = array_reduce($lineItems, function (float $carry, array $item): float {
             return $carry + (float) ($item['discount'] ?? 0.0);
         }, 0.0);
 
-        $taxable = $subtotal - $discount;
+        $discount = $lineDiscount + max(min($orderDiscount, $subtotal - $lineDiscount), 0.0);
+        $taxable = max($subtotal - $discount, 0.0);
         $tax = round($taxable * $taxRate, 2);
         $total = $taxable + $tax;
 

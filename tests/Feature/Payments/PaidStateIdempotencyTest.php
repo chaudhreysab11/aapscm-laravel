@@ -10,7 +10,6 @@ use App\Models\User;
 use App\Services\Payment\StripeGateway;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\URL;
 
 uses(RefreshDatabase::class);
 
@@ -43,10 +42,15 @@ function makePendingStripeOrder(): array
     return [$user, $order];
 }
 
-it('rejects unsigned access to payment.success with 403', function (): void {
-    [$user, $order] = makePendingStripeOrder();
+it('rejects payment.success when the current buyer context does not match the order', function (): void {
+    [, $order] = makePendingStripeOrder();
 
-    $this->actingAs($user)
+    $this->get("/payment/{$order->id}/success")
+        ->assertForbidden();
+
+    $otherUser = User::factory()->create();
+
+    $this->actingAs($otherUser)
         ->get("/payment/{$order->id}/success")
         ->assertForbidden();
 });
@@ -73,12 +77,10 @@ it('dispatches OrderPaid only once when webhook arrives before user returns', fu
 
     expect($order->fresh()->payment_status)->toBe('paid');
 
-    // 2. User returns via signed success URL \u2192 must NOT capture, must NOT re-dispatch.
-    $signed = URL::temporarySignedRoute('payment.success', now()->addHour(), ['order' => $order->id]);
-
+    // 2. User returns via success URL -> must NOT capture, must NOT re-dispatch.
     $this->actingAs($user)
-        ->get($signed)
-        ->assertRedirect('/dashboard');
+        ->get("/payment/{$order->id}/success")
+        ->assertRedirect("/order/{$order->id}/receipt");
 
     Event::assertDispatchedTimes(OrderPaid::class, 1);
 });
@@ -100,12 +102,10 @@ it('dispatches OrderPaid only once when user returns before webhook arrives', fu
     ]);
     $this->instance(StripeGateway::class, $stripe);
 
-    // 1. User returns first \u2192 capture runs, order becomes paid (OrderPaid #1).
-    $signed = URL::temporarySignedRoute('payment.success', now()->addHour(), ['order' => $order->id]);
-
+    // 1. User returns first -> capture runs, order becomes paid (OrderPaid #1).
     $this->actingAs($user)
-        ->get($signed)
-        ->assertRedirect('/dashboard');
+        ->get("/payment/{$order->id}/success")
+        ->assertRedirect("/order/{$order->id}/receipt");
 
     expect($order->fresh()->payment_status)->toBe('paid');
 

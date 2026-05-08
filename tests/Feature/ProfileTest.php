@@ -18,7 +18,10 @@ class ProfileTest extends TestCase
             ->actingAs($user)
             ->get('/profile');
 
-        $response->assertOk();
+        $response->assertOk()
+            ->assertSee('Account Settings')
+            ->assertSee('Profile Information')
+            ->assertSee('Update Password');
     }
 
     public function test_profile_information_can_be_updated(): void
@@ -30,6 +33,10 @@ class ProfileTest extends TestCase
             ->patch('/profile', [
                 'name' => 'Test User',
                 'email' => 'test@example.com',
+                'phone' => '+1 555 123 4567',
+                'job_title' => 'Procurement Director',
+                'company' => 'AAPSCM Labs',
+                'country' => 'USA',
             ]);
 
         $response
@@ -40,6 +47,10 @@ class ProfileTest extends TestCase
 
         $this->assertSame('Test User', $user->name);
         $this->assertSame('test@example.com', $user->email);
+        $this->assertSame('+1 555 123 4567', $user->phone);
+        $this->assertSame('Procurement Director', $user->job_title);
+        $this->assertSame('AAPSCM Labs', $user->company);
+        $this->assertSame('USA', $user->country);
         $this->assertNull($user->email_verified_at);
     }
 
@@ -52,6 +63,7 @@ class ProfileTest extends TestCase
             ->patch('/profile', [
                 'name' => 'Test User',
                 'email' => $user->email,
+                'phone' => '123456',
             ]);
 
         $response

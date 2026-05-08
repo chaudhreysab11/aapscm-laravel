@@ -87,7 +87,7 @@ class TrademarkPageSeeder extends Seeder
             'contact_line_html' => 'For more details, email ' . $cfEmail('info@aapscm.org'),
         ];
 
-        Page::updateOrCreate(
+        $page = Page::updateOrCreate(
             ['slug' => 'trademark'],
             [
                 'title'            => 'Trademark',
@@ -97,10 +97,15 @@ class TrademarkPageSeeder extends Seeder
                 'is_published'     => true,
                 'template'         => 'legal_full_width',
                 'page_data'        => $pageData,
-                'meta_title'       => 'Trademark | AAPSCM',
+                'seo_title'        => 'Trademark - AAPSCM®',
+                'meta_title'       => 'Trademark - AAPSCM®',
                 'meta_description' => 'Guidelines for authorized use of AAPSCM® trademarks, logos, and certification marks.',
                 'show_in_nav'      => true,
             ],
         );
+
+        $page->seoMeta()->updateOrCreate([], [
+            'seo_title' => 'Trademark - AAPSCM®',
+        ]);
     }
 }

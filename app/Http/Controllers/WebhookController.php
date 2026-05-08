@@ -76,8 +76,8 @@ class WebhookController extends Controller
         $data = (array) ($event['data'] ?? []);
 
         $isPaymentSuccess = match ($provider) {
-            'stripe' => in_array($eventType, ['payment_intent.succeeded', 'checkout.session.completed'], true),
-            'paypal' => in_array($eventType, ['CHECKOUT.ORDER.APPROVED', 'PAYMENT.CAPTURE.COMPLETED'], true),
+            'stripe' => $eventType === 'payment_intent.succeeded',
+            'paypal' => $eventType === 'PAYMENT.CAPTURE.COMPLETED',
             default => false,
         };
 

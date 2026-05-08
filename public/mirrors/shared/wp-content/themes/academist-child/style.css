@@ -1,0 +1,109 @@
+﻿/*
+Theme Name: Academist Child
+Theme URI: https://academist.qodeinteractive.com/
+Description: A child theme of Academist Theme
+Author: Elated Themes
+Author URI: http://themeforest.net/user/elated-themes
+Version: 1.0.1
+Text Domain: academist
+Template: academist
+*/
+
+.member-s-sec ul.list-unstyled.membership-feature-list {
+    list-style: none;
+    border-top: 1px solid #000;
+    padding-top: 20px;
+}
+.member-s-sec ul.list-unstyled.membership-feature-list i {
+    color: #009a44;
+    margin-right: 10px;
+}
+.member-s-sec ul.list-unstyled.membership-feature-list li {
+    padding: 5px 0;
+}
+.member-s-sec .col-md-8.col-md-offset-2 {
+    max-width: 60%;
+    margin: auto;
+    border: 1px solid #000;
+    padding: 10px 70px 30px;
+}
+.member-s-sec a.btn.btn-primary {
+    background: #14166E;
+    color: #fff;
+    padding: 10px 20px;
+    display: block;
+    text-align: center;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+.single-course .eltdf-course-single-holder .eltdf-course-image-wrapper {
+    display: none;
+}
+.single-course ul.eltdf-tabs-nav.clearfix.ui-tabs-nav.ui-corner-all.ui-helper-reset.ui-helper-clearfix.ui-widget-header {
+    display: none;
+}
+.single-course .eltdf-course-single-holder .eltdf-course-single-title {
+    margin: 50px 0 0px;
+}
+.single-course .eltdf-tabs.eltdf-tabs-standard .eltdf-tab-container {
+    margin: 0px 0 0;
+}
+.single-course .eltdf-course-basic-info-wrapper .eltdf-course-categories, .single-course .eltdf-course-basic-info-wrapper .eltdf-course-reviews {
+    padding: 0;
+}
+.single-course .eltdf-course-basic-info-wrapper .eltdf-course-categories .eltdf-course-category-items, .single-course .eltdf-course-basic-info-wrapper .eltdf-course-categories .eltdf-course-category-label, .single-course .eltdf-course-basic-info-wrapper .eltdf-course-reviews-label, .single-course .eltdf-course-basic-info-wrapper  span.eltdf-course-single-type {
+    display: inline-block;
+}
+.single-course .eltdf-course-single-holder .eltdf-course-single-type {
+	top: 0px;
+}
+.single-course .eltdf-course-basic-info-wrapper {
+    margin: 30px 0 0;
+}
+.single-course .eltdf-course-basic-info-wrapper .eltdf-course-action {
+    display: none;
+}
+.custom_variation .label {
+    padding: 26px 17px!important;
+    font-family: "Poppins", Sans-serif;
+    text-align: center;
+    color: #fff!important;
+    background: #005b1c!important;
+    width: 10%;
+}
+.custom_variation div {
+    display: flex;
+    width: 100%;
+}
+select#custom_options {
+    width: 45%;
+    justify-content: center;
+}
+
+@media(max-width:767px){
+	rs-layer-wrap.rs-parallax-wrap {
+    left: 15px !important;
+}
+div#one {
+    width: 100% !important;
+    max-width: 48%;
+}
+div#one {
+    width: 100% !important;
+    max-width: 400px;
+    margin: auto;
+}
+div#mm {
+    width: 48% !important;
+    display: inline-flex;
+}
+	
+	
+}
+
+
+.certificate-menu-link a{
+	display: block;
+}
+

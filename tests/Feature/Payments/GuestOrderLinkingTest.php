@@ -37,7 +37,10 @@ function placeGuestStripeOrder(string $email, string $name): Order
             'billing_email' => $email,
             'billing_address' => '1 Test Street',
             'billing_city' => 'Columbia',
+            'billing_state' => 'Maryland',
+            'billing_postcode' => '21044',
             'billing_country' => 'USA',
+            'billing_phone' => '+1 555 0100',
             'gateway' => 'stripe',
         ])
         ->assertRedirect();

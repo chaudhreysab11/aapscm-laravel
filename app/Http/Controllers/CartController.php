@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ApplyCouponRequest;
 use App\Models\Product;
+use App\Services\CartPricingService;
 use App\Services\CartService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,24 +14,56 @@ use Illuminate\View\View;
 
 class CartController extends Controller
 {
-    public function __construct(private CartService $cart) {}
+    public function __construct(
+        private CartService $cart,
+        private CartPricingService $cartPricing,
+    ) {}
 
-    public function show(): View
+    public function show(Request $request): View
     {
+        $items = $this->cart->items();
+        $summary = $this->cartPricing->summarize($items, $this->cart->couponCode());
+        $couponError = $summary['coupon_error'];
+
+        if ($couponError !== null) {
+            $this->cart->removeCoupon();
+            $summary = $this->cartPricing->summarize($items, null);
+            $request->session()->now('error', $couponError);
+        }
+
         return view('cms.page.cart', [
-            'items' => $this->cart->items(),
-            'subtotal' => $this->cart->subtotal(),
+            'items' => $items,
+            'subtotal' => $summary['totals']['subtotal'],
+            'totals' => $summary['totals'],
+            'appliedCoupon' => $summary['coupon'],
         ]);
     }
 
-    public function add(Request $request, Product $product): RedirectResponse
+    public function add(Request $request, string $product): RedirectResponse
     {
-        $quantity = (int) $request->input('quantity', 1);
-        $this->cart->add($product, max(1, $quantity), $request->user());
+        $validated = $request->validate([
+            'redirect_to' => ['nullable', 'string', 'max:2048'],
+            'custom_options' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $product = $this->resolveProductForCart($product);
+        $meta = array_filter([
+            'selected_option' => isset($validated['custom_options']) && trim($validated['custom_options']) !== ''
+                ? trim($validated['custom_options'])
+                : null,
+        ]);
+
+        $this->cart->add($product, 1, $request->user(), $meta);
 
         return redirect()
-            ->to($request->input('redirect_to', route('cart.show')))
+            ->to($validated['redirect_to'] ?? route('cart.show'))
             ->with('success', "{$product->name} added to your cart.");
+    }
+
+    private function resolveProductForCart(string $identifier): Product
+    {
+        return Product::find($identifier)
+            ?? Product::where('source_id', $identifier)->firstOrFail();
     }
 
     public function update(Request $request, Product $product): RedirectResponse
@@ -48,5 +82,30 @@ class CartController extends Controller
         $this->cart->remove($product->id);
 
         return redirect()->route('cart.show')->with('success', 'Item removed from cart.');
+    }
+
+    public function applyCoupon(ApplyCouponRequest $request): RedirectResponse
+    {
+        if ($this->cart->isEmpty()) {
+            return redirect()->route('cart.show')->with('error', 'Add an item to the cart before applying a coupon.');
+        }
+
+        $items = $this->cart->items();
+        $summary = $this->cartPricing->summarize($items, $request->validated('coupon_code'));
+
+        if ($summary['coupon_error'] !== null || $summary['coupon_code'] === null) {
+            return redirect()->route('cart.show')->with('error', $summary['coupon_error'] ?? 'That coupon could not be applied.');
+        }
+
+        $this->cart->applyCoupon($summary['coupon_code']);
+
+        return redirect()->route('cart.show')->with('success', "Coupon {$summary['coupon_code']} applied.");
+    }
+
+    public function removeCoupon(): RedirectResponse
+    {
+        $this->cart->removeCoupon();
+
+        return redirect()->route('cart.show')->with('success', 'Coupon removed.');
     }
 }

@@ -95,3 +95,18 @@ it('redirect middleware only resolves one hop — does not recurse infinitely', 
         ->assertStatus(301)
         ->assertRedirect('/loop-b/');
 });
+
+it('redirects the plural affiliates-partners variant to the canonical affiliate-partners page', function () {
+    Page::factory()->create(['slug' => 'affiliate-partners', 'is_published' => true]);
+
+    Redirect::factory()->create([
+        'from_path' => '/affiliates-partners/',
+        'to_path' => '/affiliate-partners/',
+        'http_code' => 301,
+        'is_active' => true,
+    ]);
+
+    $this->get('/affiliates-partners/')
+        ->assertStatus(301)
+        ->assertRedirect('/affiliate-partners/');
+});

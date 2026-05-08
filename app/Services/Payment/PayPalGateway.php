@@ -51,6 +51,11 @@ class PayPalGateway implements PaymentGatewayContract
                     'amount' => ['currency_code' => $currency, 'value' => $value],
                     'custom_id' => $data['metadata']['order_id'] ?? null,
                 ]],
+                'application_context' => array_filter([
+                    'return_url' => $data['return_url'] ?? null,
+                    'cancel_url' => $data['cancel_url'] ?? null,
+                    'shipping_preference' => 'NO_SHIPPING',
+                ]),
             ],
         ]);
 
@@ -63,8 +68,37 @@ class PayPalGateway implements PaymentGatewayContract
         ];
     }
 
+    public function getPayment(string $gatewayId): array
+    {
+        $token = $this->getAccessToken();
+
+        $response = $this->http->get("/v2/checkout/orders/{$gatewayId}", [
+            'headers' => [
+                'Authorization' => "Bearer {$token}",
+                'Content-Type' => 'application/json',
+            ],
+        ]);
+
+        $body = json_decode((string) $response->getBody(), true);
+
+        return [
+            'gateway_id' => $body['id'],
+            'approve_url' => collect($body['links'] ?? [])->firstWhere('rel', 'approve')['href'] ?? null,
+            'status' => $body['status'] ?? null,
+        ];
+    }
+
     public function capturePayment(string $gatewayId, array $data = []): array
     {
+        $existing = $this->getPayment($gatewayId);
+
+        if (strtoupper((string) ($existing['status'] ?? '')) === 'COMPLETED') {
+            return [
+                'gateway_id' => $existing['gateway_id'],
+                'status' => $existing['status'],
+            ];
+        }
+
         $token = $this->getAccessToken();
 
         $response = $this->http->post("/v2/checkout/orders/{$gatewayId}/capture", [

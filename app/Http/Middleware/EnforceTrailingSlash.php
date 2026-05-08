@@ -28,15 +28,19 @@ class EnforceTrailingSlash
         '/login',
         '/logout',
         '/register',
+        '/my-account',
         '/dashboard',
         '/profile',
         '/account',
         '/forgot-password',
+        '/set-password',
         '/reset-password',
         '/verify-email',
         '/confirm-password',
         '/email',
         '/password',
+        // Search — not an SEO-indexed page; also covers /search/suggest
+        '/search',
     ];
 
     public function handle(Request $request, Closure $next): Response

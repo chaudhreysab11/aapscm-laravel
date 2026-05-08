@@ -6,20 +6,26 @@
         $preselectedTier = request('tier');
     @endphp
 
-    {{-- Hero --}}
-    <section class="relative bg-[#0B2F5E] py-16 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-[#0B2F5E] to-[#14166e] opacity-90"></div>
-        <div class="relative max-w-[1100px] mx-auto px-4 text-center">
-            <h1 class="text-[28px] md:text-[40px] font-bold text-white leading-tight">
-                Membership Application Form
-            </h1>
-            <nav class="text-blue-100 text-[14px] mt-3">
-                <a href="/" class="hover:text-white">Home</a>
-                <span class="mx-2">/</span>
-                <span>Membership Application Form</span>
-            </nav>
+    <div class="eltdf-title-holder eltdf-standard-with-breadcrumbs-type eltdf-title-va-header-bottom eltdf-has-bg-image" style="height: 240px;background-color: #14166e;background-image:url(https://aapscm.org/wp-content/uploads/2021/10/onlinetestingimproved-bg-1.png);position: relative; display: inline-block; width: 100%; vertical-align: middle; height: 240 px; background-color: black ! important; background-position: center 0; background-repeat: no-repeat; z-index: 101;" data-height="240">
+        <div class="eltdf-title-wrapper" style="height: 240px; position: relative; display: table-cell; width: 100%; vertical-align: middle;">
+            <div class="eltdf-title-inner" style="height: 240px; position: relative; display: table-cell; width: 100%; vertical-align: middle;">
+                <div class="eltdf-grid" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+                    <div class="eltdf-title-info">
+                        <h2 class="eltdf-page-title entry-title" style="color: #fff; font-size: 45px; line-height: 1.2; font-weight: 700; margin: 0 0 8px; text-align: left;">
+                            {{ $page->title }}
+                        </h2>
+                        <div class="eltdf-breadcrumbs-info">
+                            <div itemprop="breadcrumb" class="eltdf-breadcrumbs" style="color: rgba(255, 255, 255, 0.82); font-size: 13px; line-height: 1.6; text-align: left;">
+                                <a itemprop="url" href="{{ url('/') }}" style="color: inherit; text-decoration: none;">Home</a>
+                                <span class="eltdf-delimiter">&nbsp; / &nbsp;</span>
+                                <span class="eltdf-current" style="color: #fff;">{{ $page->title }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
 
     <section class="bg-[#f6f8fb] py-14">
         <div class="max-w-[900px] mx-auto px-4">
@@ -41,11 +47,11 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('fellow-membership-form.submit') }}" enctype="multipart/form-data" class="space-y-8">
+            <form method="POST" action="{{ route('fellow-membership-form.submit') }}" enctype="multipart/form-data" class="space-y-8 bg-white rounded-xl p-6 md:p-8 shadow-sm">
                 @csrf
 
                 {{-- Submit Your CV (Membership Tier Selection) --}}
-                <fieldset class="bg-white rounded-xl p-6 md:p-8 shadow-sm">
+                <fieldset>
                     <legend class="text-[20px] md:text-[24px] font-semibold text-[#14166e] mb-2">Submit Your CV <span class="text-red-500">*</span></legend>
                     <p class="text-[14px] text-gray-600 mb-5">Select the Fellow membership tier you are applying for.</p>
 
@@ -64,7 +70,7 @@
                 </fieldset>
 
                 {{-- Personal Information --}}
-                <fieldset class="bg-white rounded-xl p-6 md:p-8 shadow-sm">
+                <fieldset>
                     <legend class="text-[20px] md:text-[24px] font-semibold text-[#14166e] mb-6">Personal Information</legend>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="md:col-span-2">
@@ -86,7 +92,7 @@
                 </fieldset>
 
                 {{-- Contact Information --}}
-                <fieldset class="bg-white rounded-xl p-6 md:p-8 shadow-sm">
+                <fieldset >
                     <legend class="text-[20px] md:text-[24px] font-semibold text-[#14166e] mb-6">Contact Information</legend>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
@@ -108,7 +114,7 @@
                 </fieldset>
 
                 {{-- Professional Information --}}
-                <fieldset class="bg-white rounded-xl p-6 md:p-8 shadow-sm">
+                <fieldset >
                     <legend class="text-[20px] md:text-[24px] font-semibold text-[#14166e] mb-6">Professional Information</legend>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="md:col-span-2">
@@ -135,7 +141,7 @@
                 </fieldset>
 
                 {{-- Qualifications --}}
-                <fieldset class="bg-white rounded-xl p-6 md:p-8 shadow-sm">
+                <fieldset >
                     <legend class="text-[20px] md:text-[24px] font-semibold text-[#14166e] mb-6">Qualifications</legend>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="md:col-span-2">
@@ -162,7 +168,7 @@
                 </fieldset>
 
                 {{-- Membership Requirements --}}
-                <fieldset class="bg-white rounded-xl p-6 md:p-8 shadow-sm">
+                <fieldset >
                     <legend class="text-[20px] md:text-[24px] font-semibold text-[#14166e] mb-6">Membership Requirements</legend>
                     <div class="space-y-5">
                         <div>
@@ -192,7 +198,7 @@
                 </fieldset>
 
                 {{-- Declaration --}}
-                <fieldset class="bg-white rounded-xl p-6 md:p-8 shadow-sm">
+                <fieldset >
                     <legend class="text-[20px] md:text-[24px] font-semibold text-[#14166e] mb-6">Declaration <span class="text-red-500">*</span></legend>
                     <label class="flex items-start gap-3">
                         <input type="checkbox" name="declaration_agreed" value="1" required
@@ -205,7 +211,7 @@
                 </fieldset>
 
                 {{-- Payment --}}
-                <fieldset class="bg-white rounded-xl p-6 md:p-8 shadow-sm">
+                <fieldset >
                     <legend class="text-[20px] md:text-[24px] font-semibold text-[#14166e] mb-6">Payment</legend>
                     <div>
                         <label for="payment_proof" class="block text-[14px] font-medium text-gray-700 mb-1">

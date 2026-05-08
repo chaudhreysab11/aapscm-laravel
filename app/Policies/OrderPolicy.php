@@ -10,14 +10,27 @@ use Illuminate\Support\Facades\Session;
 
 class OrderPolicy
 {
+    public function viewPayment(?User $user, Order $order): bool
+    {
+        return $this->buyerMatchesOrder($user, $order) || $this->isAdminReviewer($user);
+    }
+
     /**
      * Receipt view rules:
      *  - Authenticated owner (matches user_id) ALWAYS allowed.
      *  - Guest with session-bound billing_email matching the order allowed.
-     *  - All other access denied (signed URL gate handled by route middleware,
-     *    not by this policy).
      */
     public function viewReceipt(?User $user, Order $order): bool
+    {
+        return $this->buyerMatchesOrder($user, $order) || $this->isAdminReviewer($user);
+    }
+
+    private function isAdminReviewer(?User $user): bool
+    {
+        return $user !== null && $user->hasRole(['admin', 'staff']);
+    }
+
+    private function buyerMatchesOrder(?User $user, Order $order): bool
     {
         if ($user !== null && $order->user_id === $user->id) {
             return true;

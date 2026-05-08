@@ -51,7 +51,7 @@ class BecomePartnerPageSeeder extends Seeder
             ],
         ];
 
-        Page::updateOrCreate(
+        $page = Page::updateOrCreate(
             ['slug' => 'become-a-partner'],
             [
                 'title'            => 'Become a Partner',
@@ -61,10 +61,15 @@ class BecomePartnerPageSeeder extends Seeder
                 'is_published'     => true,
                 'template'         => 'standard_content',
                 'page_data'        => $pageData,
-                'meta_title'       => 'Become a Partner | AAPSCM',
+                'seo_title'        => 'Become a partner - AAPSCM®',
+                'meta_title'       => 'Become a partner - AAPSCM®',
                 'meta_description' => 'Join AAPSCM® as an Academic or Delivery Partner. Access exam voucher discounts, course materials, co-promotional opportunities, and more.',
                 'show_in_nav'      => true,
             ],
         );
+
+        $page->seoMeta()->updateOrCreate([], [
+            'seo_title' => 'Become a partner - AAPSCM®',
+        ]);
     }
 }

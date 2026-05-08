@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Listeners;
 
 use App\Events\OrderPaid;
+use App\Actions\Course\FulfillPaidCourseOrderAction;
 
 /**
  * Enrol the buyer in any course products bought by a paid order.
@@ -14,9 +15,10 @@ use App\Events\OrderPaid;
  */
 class EnrollUserInCourseOnOrderPaid
 {
+    public function __construct(private FulfillPaidCourseOrderAction $fulfillCourseOrder) {}
+
     public function handle(OrderPaid $event): void
     {
-        // TODO: inspect $event->order->items where item_type = 'training'
-        // and create CourseEnrollment rows for the order's user.
+        ($this->fulfillCourseOrder)($event->order);
     }
 }

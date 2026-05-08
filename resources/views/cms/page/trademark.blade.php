@@ -11,23 +11,15 @@
         $contactLine     = $page->page_data['contact_line_html']  ?? '';
     @endphp
 
-    <x-cms.eltdf-title-bar
-        :title="$page->title"
-        :breadcrumbs="[['label' => $page->title]]"
-    />
-
-    {{-- Hero heading band --}}
-    <section class="bg-[#fef5ef] py-14">
-        <div class="max-w-[900px] mx-auto px-4 text-center">
-            <h2 class="text-[30px] md:text-[36px] font-semibold text-[#14166e] leading-tight">
-                {{ $heroHeading }}
-            </h2>
-        </div>
-    </section>
-
     {{-- Body --}}
     <section class="bg-white py-14">
         <div class="max-w-[900px] mx-auto px-4 text-[16px] leading-relaxed text-gray-800">
+
+            @if ($heroHeading)
+                <h2 class="text-[30px] md:text-[36px] font-semibold text-[#14166e] leading-tight mb-8">
+                    {{ $heroHeading }}
+                </h2>
+            @endif
 
             @if ($intro)
                 <p class="mb-8">{{ $intro }}</p>

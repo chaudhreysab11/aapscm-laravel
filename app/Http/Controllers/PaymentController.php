@@ -9,8 +9,10 @@ use App\Services\CartService;
 use App\Services\Payment\OrderPaymentService;
 use App\Services\Payment\PaymentManager;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
 use RuntimeException;
+use Illuminate\View\View;
 
 class PaymentController extends Controller
 {
@@ -21,50 +23,55 @@ class PaymentController extends Controller
     ) {}
 
     /**
-     * Create a payment on the chosen gateway and redirect the user to the
-     * approval/checkout flow (PayPal) or the success route (Stripe — captured
-     * inline once the client-side payment intent is confirmed).
+     * Start or resume payment for the order.
      */
-    public function start(Order $order): RedirectResponse
+    public function start(Order $order): RedirectResponse|View
     {
+        Gate::authorize('viewPayment', $order);
+
         if ($order->payment_status === 'paid') {
-            return redirect($this->successUrl($order));
+            return redirect($this->postPaymentRedirect($order))->with('success', 'Payment already confirmed.');
         }
 
-        $gateway = $this->payments->gateway($order->payment_method ?? 'stripe');
+        $gatewayKey = $order->payment_method ?? 'stripe';
+        $gateway = $this->payments->gateway($gatewayKey);
 
-        $result = $gateway->createPayment([
-            'amount_cents' => (int) round(((float) $order->total) * 100),
-            'currency' => $order->currency,
-            'metadata' => ['order_id' => $order->id],
-        ]);
+        $result = $order->payment_intent_id !== null
+            ? $gateway->getPayment($order->payment_intent_id)
+            : $gateway->createPayment([
+                'amount_cents' => (int) round(((float) $order->total) * 100),
+                'currency' => $order->currency,
+                'metadata' => ['order_id' => $order->id],
+                'return_url' => route('payment.success', ['order' => $order->id]),
+                'cancel_url' => route('payment.cancel', ['order' => $order->id]),
+            ]);
 
-        $order->update([
-            'payment_intent_id' => $result['gateway_id'] ?? null,
-            'status' => 'processing',
-        ]);
-
-        // PayPal returns an approve_url the buyer must visit before capture.
-        if (! empty($result['approve_url'])) {
-            return redirect()->away($result['approve_url']);
+        if ($order->payment_intent_id === null) {
+            $order->update([
+                'payment_intent_id' => $result['gateway_id'] ?? null,
+                'status' => 'processing',
+            ]);
         }
 
-        // Stripe (and any other inline-confirm gateway): proceed to success.
-        return redirect($this->successUrl($order));
-    }
+        if ($gatewayKey === 'paypal') {
+            if (! empty($result['approve_url'])) {
+                return redirect()->away($result['approve_url']);
+            }
 
-    /**
-     * Build a temporary signed URL for the success route. The buyer must
-     * arrive via this URL; the `signed` middleware on the route rejects
-     * un-signed or tampered requests with 403.
-     */
-    private function successUrl(Order $order): string
-    {
-        return URL::temporarySignedRoute(
-            'payment.success',
-            now()->addHour(),
-            ['order' => $order->id],
-        );
+            throw new RuntimeException('PayPal approval URL could not be generated for this order.');
+        }
+
+        if (($result['client_secret'] ?? null) === null) {
+            throw new RuntimeException('Stripe client secret could not be generated for this order.');
+        }
+
+        return view('cms.page.payment-stripe', [
+            'order' => $order->load('items.product'),
+            'publishableKey' => (string) config('services.stripe.key', ''),
+            'clientSecret' => (string) $result['client_secret'],
+            'returnUrl' => route('payment.success', ['order' => $order->id]),
+            'cancelUrl' => route('payment.cancel', ['order' => $order->id]),
+        ]);
     }
 
     /**
@@ -72,6 +79,8 @@ class PaymentController extends Controller
      */
     public function success(Order $order): RedirectResponse
     {
+        Gate::authorize('viewPayment', $order);
+
         // Idempotent fast-path: order already settled (e.g. webhook arrived first).
         if ($order->payment_status === 'paid') {
             $this->cart->clear();
@@ -107,13 +116,14 @@ class PaymentController extends Controller
     }
 
     /**
-     * After a successful payment, authenticated members go to /dashboard.
-     * Guests get a 7-day signed link to their order receipt page.
+     * After a successful payment, buyers land on the receipt surface.
+     * Authenticated owners use the normal receipt route; guests get a signed
+     * receipt URL that remains time-limited.
      */
     private function postPaymentRedirect(Order $order): string
     {
         if (auth()->check()) {
-            return '/dashboard';
+            return route('order.receipt', ['order' => $order->id]);
         }
 
         return URL::temporarySignedRoute(
@@ -125,6 +135,8 @@ class PaymentController extends Controller
 
     public function cancel(Order $order): RedirectResponse
     {
+        Gate::authorize('viewPayment', $order);
+
         if (! in_array($order->payment_status, ['paid', 'refunded'], true)) {
             $order->update(['status' => 'cancelled']);
         }

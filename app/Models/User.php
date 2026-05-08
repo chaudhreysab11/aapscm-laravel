@@ -25,6 +25,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         'name',
         'email',
         'password',
+        'password_initialized_at',
         'phone',
         'job_title',
         'company',
@@ -45,6 +46,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'password_initialized_at' => 'datetime',
             'is_active' => 'boolean',
             'profile_payload' => 'array',
         ];
@@ -99,5 +101,30 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     public function activeMembershipTier(): ?MembershipTier
     {
         return $this->currentMembership?->tier;
+    }
+
+    public function requiresPasswordSetup(): bool
+    {
+        if ($this->password_initialized_at !== null) {
+            return false;
+        }
+
+        return data_get($this->profile_payload, 'migration.password_reset_required') === true
+            || data_get($this->profile_payload, 'auth.password_setup_required') === true;
+    }
+
+    public function hasInitializedPassword(): bool
+    {
+        return ! $this->requiresPasswordSetup();
+    }
+
+    public function hasVerifiedEmail(): bool
+    {
+        return true;
+    }
+
+    public function sendEmailVerificationNotification(): void
+    {
+        // Temporarily disabled until outbound email is configured.
     }
 }

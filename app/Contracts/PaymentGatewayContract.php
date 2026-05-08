@@ -13,6 +13,13 @@ interface PaymentGatewayContract
     public function createPayment(array $data): array;
 
     /**
+     * Fetch an existing payment intent / gateway order.
+     *
+     * @return array<string, mixed> Gateway-specific result
+     */
+    public function getPayment(string $gatewayId): array;
+
+    /**
      * Capture / confirm a previously created payment.
      *
      * @param  string  $gatewayId  The provider's payment/order ID

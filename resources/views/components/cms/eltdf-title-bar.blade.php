@@ -1,35 +1,67 @@
 @props([
     'title',
     'breadcrumbs' => [],
+    'height' => 240,
+    'titleTag' => 'h2',
+    'backgroundColor' => '#14166e',
+    'backgroundImage' => null,
+    'titleImageSrc' => null,
 ])
 
-{{--
-    Theme title bar matching the WordPress Qode/Eltdf theme chrome:
-      - 240px tall full-bleed band
-      - #14166e background (exact match with live aapscm.org)
-      - page title + breadcrumb trail, left-aligned inside a theme grid
---}}
-<div
-    class="w-full flex items-center"
-    style="height: 240px; background-color: #14166e;"
->
-    <div class="w-full max-w-[1100px] mx-auto px-4">
-        <h1 class="text-white text-[30px] leading-tight font-normal mb-2">
-            {{ $title }}
-        </h1>
+@php
+    $holderClasses = 'eltdf-title-holder eltdf-standard-with-breadcrumbs-type eltdf-title-va-header-bottom';
+    if ($backgroundImage || $titleImageSrc) {
+        $holderClasses .= ' eltdf-has-bg-image';
+    }
 
-        @if (! empty($breadcrumbs))
-            <nav aria-label="Breadcrumb" class="text-[13px] text-white/80">
-                <a href="{{ url('/') }}" class="hover:text-white">Home</a>
-                @foreach ($breadcrumbs as $crumb)
-                    <span class="px-1 text-white/50">/</span>
-                    @if (! empty($crumb['url']) && ! $loop->last)
-                        <a href="{{ $crumb['url'] }}" class="hover:text-white">{{ $crumb['label'] }}</a>
+    $resolvedTitleImage = $titleImageSrc ?? $backgroundImage;
+
+    $holderStyle = collect([
+        "background-color: {$backgroundColor}",
+        $backgroundImage ? "background-image: url('{$backgroundImage}')" : null,
+        $backgroundImage ? 'background-position: 50% 0' : null,
+        $backgroundImage ? 'background-repeat: no-repeat' : null,
+    ])->filter()->implode('; ');
+@endphp
+
+<div class="{{ $holderClasses }}" style="{{ $holderStyle }};">
+    @if ($resolvedTitleImage)
+        <div class="eltdf-title-image">
+            <img itemprop="image" src="{{ $resolvedTitleImage }}" alt="{{ $title }}">
+        </div>
+    @endif
+
+    <div class="eltdf-title-wrapper" style="height: {{ $height }}px;">
+        <div class="eltdf-title-inner">
+            <div class="eltdf-grid" style="max-width: 1300px; margin: 0 auto; padding: 0 16px;">
+                <div class="eltdf-title-info">
+                    @if ($titleTag === 'h1')
+                        <h1 class="eltdf-page-title entry-title" style="color: #fff; font-size: 45px; line-height: 1.2; font-weight: 700; margin: 0 0 8px; text-align: left;">
+                            {{ $title }}
+                        </h1>
                     @else
-                        <span class="text-white">{{ $crumb['label'] }}</span>
+                        <h2 class="eltdf-page-title entry-title" style="color: #fff; font-size: 45px; line-height: 1.2; font-weight: 700; margin: 0 0 8px; text-align: left;">
+                            {{ $title }}
+                        </h2>
                     @endif
-                @endforeach
-            </nav>
-        @endif
+
+                    @if (! empty($breadcrumbs))
+                        <div class="eltdf-breadcrumbs-info">
+                            <div itemprop="breadcrumb" class="eltdf-breadcrumbs" style="color: rgba(255, 255, 255, 0.82); font-size: 13px; line-height: 1.6; text-align: left;">
+                                <a itemprop="url" href="{{ url('/') }}" style="color: inherit; text-decoration: none;">Home</a>
+                                @foreach ($breadcrumbs as $crumb)
+                                    <span class="eltdf-delimiter">&nbsp; / &nbsp;</span>
+                                    @if (! empty($crumb['url']) && ! $loop->last)
+                                        <a itemprop="url" href="{{ $crumb['url'] }}" style="color: inherit; text-decoration: none;">{{ $crumb['label'] }}</a>
+                                    @else
+                                        <span class="eltdf-current" style="color: #fff;">{{ $crumb['label'] }}</span>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
     </div>
 </div>

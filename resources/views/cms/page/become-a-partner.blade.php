@@ -10,24 +10,16 @@
         $form         = $page->page_data['form']           ?? [];
     @endphp
 
-    <x-cms.eltdf-title-bar
-        :title="$page->title"
-        :breadcrumbs="[['label' => $page->title]]"
-    />
-
-    {{-- Hero heading band --}}
-    <section class="bg-[#fef5ef] py-14">
-        <div class="max-w-[900px] mx-auto px-4 text-center">
-            <h2 class="text-[30px] md:text-[36px] font-semibold text-[#14166e] leading-tight">
-                {{ $heroHeading }}
-            </h2>
-        </div>
-    </section>
-
     {{-- Dedication --}}
     @if (! empty($dedication))
         <section class="bg-white py-14">
             <div class="max-w-[960px] mx-auto px-4">
+                @if ($heroHeading)
+                    <h2 class="text-[30px] md:text-[36px] font-semibold text-[#14166e] mb-8 leading-tight">
+                        {{ $heroHeading }}
+                    </h2>
+                @endif
+
                 @if (! empty($dedication['heading']))
                     <h3 class="text-[24px] md:text-[28px] font-semibold text-[#14166e] mb-5">
                         {{ $dedication['heading'] }}
@@ -115,74 +107,92 @@
                         </p>
                     @endif
 
-                    <form method="post" action="#" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    @if (session('success'))
+                        <div class="mb-6 rounded-lg border border-green-200 bg-green-50 px-5 py-4 text-[15px] text-green-800">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="mb-6 rounded-lg border border-red-200 bg-red-50 px-5 py-4 text-[14px] text-red-700">
+                            <p class="font-semibold">Please correct the highlighted issues and try again.</p>
+                            <ul class="mt-2 list-disc pl-5">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form method="post" action="{{ route('become-a-partner.submit') }}" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        @csrf
                         <div>
                             <label for="user_login" class="block text-[14px] font-medium text-[#14166e] mb-1">Username</label>
-                            <input type="text" id="user_login" name="user_login" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]" />
+                            <input type="text" id="user_login" name="user_login" value="{{ old('user_login') }}" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]" />
                         </div>
 
                         <div>
                             <label for="first_name" class="block text-[14px] font-medium text-[#14166e] mb-1">First Name</label>
-                            <input type="text" id="first_name" name="first_name" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]" />
+                            <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]" />
                         </div>
 
                         <div>
                             <label for="user_pass" class="block text-[14px] font-medium text-[#14166e] mb-1">User Password <span class="text-red-600">*</span></label>
-                            <input type="password" id="user_pass" name="user_pass" required class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]" />
+                            <input type="password" id="user_pass" name="user_pass" required minlength="8" autocomplete="new-password" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]" />
                         </div>
 
                         <div>
                             <label for="last_name" class="block text-[14px] font-medium text-[#14166e] mb-1">Last Name</label>
-                            <input type="text" id="last_name" name="last_name" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]" />
+                            <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]" />
                         </div>
 
                         <div>
                             <label for="user_email" class="block text-[14px] font-medium text-[#14166e] mb-1">User Email <span class="text-red-600">*</span></label>
-                            <input type="email" id="user_email" name="user_email" required class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]" />
+                            <input type="email" id="user_email" name="user_email" value="{{ old('user_email') }}" required class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]" />
                         </div>
 
                         <div>
                             <label for="role" class="block text-[14px] font-medium text-[#14166e] mb-1">Role</label>
-                            <input type="text" id="role" name="role" maxlength="20" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]" />
+                            <input type="text" id="role" name="role" value="{{ old('role') }}" maxlength="20" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]" />
                         </div>
 
                         <div>
                             <label for="city" class="block text-[14px] font-medium text-[#14166e] mb-1">City</label>
-                            <input type="text" id="city" name="city" maxlength="20" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]" />
+                            <input type="text" id="city" name="city" value="{{ old('city') }}" maxlength="20" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]" />
                         </div>
 
                         <div>
                             <label for="country" class="block text-[14px] font-medium text-[#14166e] mb-1">Country</label>
                             <select id="country" name="country" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] bg-white focus:outline-none focus:border-[#14166e]">
                                 <option value="">Select country…</option>
-                                <option value="US">United States (US)</option>
-                                <option value="GB">United Kingdom (UK)</option>
-                                <option value="CA">Canada</option>
-                                <option value="AU">Australia</option>
-                                <option value="NG">Nigeria</option>
-                                <option value="IN">India</option>
-                                <option value="ZA">South Africa</option>
-                                <option value="GH">Ghana</option>
-                                <option value="KE">Kenya</option>
+                                <option value="US" @selected(old('country') === 'US')>United States (US)</option>
+                                <option value="GB" @selected(old('country') === 'GB')>United Kingdom (UK)</option>
+                                <option value="CA" @selected(old('country') === 'CA')>Canada</option>
+                                <option value="AU" @selected(old('country') === 'AU')>Australia</option>
+                                <option value="NG" @selected(old('country') === 'NG')>Nigeria</option>
+                                <option value="IN" @selected(old('country') === 'IN')>India</option>
+                                <option value="ZA" @selected(old('country') === 'ZA')>South Africa</option>
+                                <option value="GH" @selected(old('country') === 'GH')>Ghana</option>
+                                <option value="KE" @selected(old('country') === 'KE')>Kenya</option>
                             </select>
                         </div>
 
                         <div>
                             <label for="organization" class="block text-[14px] font-medium text-[#14166e] mb-1">Organization &amp; Institution</label>
-                            <input type="text" id="organization" name="organization" maxlength="50" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]" />
+                            <input type="text" id="organization" name="organization" value="{{ old('organization') }}" maxlength="255" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]" />
                         </div>
 
                         <div>
                             <label for="partner_type" class="block text-[14px] font-medium text-[#14166e] mb-1">Partner Type</label>
                             <select id="partner_type" name="partner_type" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] bg-white focus:outline-none focus:border-[#14166e]">
-                                <option value="Academic Partner">Academic Partner</option>
-                                <option value="Delivery Partner">Delivery Partner</option>
+                                <option value="Academic Partner" @selected(old('partner_type', 'Academic Partner') === 'Academic Partner')>Academic Partner</option>
+                                <option value="Delivery Partner" @selected(old('partner_type') === 'Delivery Partner')>Delivery Partner</option>
                             </select>
                         </div>
 
                         <div class="md:col-span-2">
                             <label for="assist" class="block text-[14px] font-medium text-[#14166e] mb-1">How may AAPSCM assist you?</label>
-                            <textarea id="assist" name="assist" rows="4" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]"></textarea>
+                            <textarea id="assist" name="assist" rows="4" class="w-full border border-gray-300 rounded px-3 py-2 text-[15px] focus:outline-none focus:border-[#14166e]">{{ old('assist') }}</textarea>
                         </div>
 
                         <div class="md:col-span-2 text-center pt-2">

@@ -64,6 +64,11 @@ class WpRedirectsSeeder extends Seeder
                 'notes' => 'Old affiliates-partners page (WP ID 3911) consolidated — note plural variant',
             ],
             [
+                'from_path' => '/affiliates-partners/',
+                'to_path' => '/affiliate-partners/',
+                'notes' => 'Plural affiliates-partners variant redirected to the canonical affiliate-partners slug',
+            ],
+            [
                 'from_path' => '/affiliate-partners-old/',
                 'to_path' => '/affiliate-partners/',
                 'notes' => 'Duplicate affiliate-partners page (WP ID 5005) consolidated',

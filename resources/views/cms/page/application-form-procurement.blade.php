@@ -22,11 +22,11 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('free-training.submit') }}" class="space-y-10">
+            <form method="POST" action="{{ route('free-training.submit') }}" class="space-y-10 bg-white rounded-xl p-6 md:p-8 shadow-sm">
                 @csrf
 
                 {{-- ── Section 1: Personal Information ── --}}
-                <fieldset class="bg-white rounded-xl p-6 md:p-8 shadow-sm">
+                <fieldset>
                     <legend class="text-[20px] md:text-[24px] font-semibold text-[#14166e] mb-6">Personal Information</legend>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -80,7 +80,7 @@
                 </fieldset>
 
                 {{-- ── Section 2: Academic Information ── --}}
-                <fieldset class="bg-white rounded-xl p-6 md:p-8 shadow-sm">
+                <fieldset>
                     <legend class="text-[20px] md:text-[24px] font-semibold text-[#14166e] mb-6">Academic Information</legend>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -140,7 +140,7 @@
                 </fieldset>
 
                 {{-- ── Section 3: Additional Information ── --}}
-                <fieldset class="bg-white rounded-xl p-6 md:p-8 shadow-sm">
+                <fieldset>
                     <legend class="text-[20px] md:text-[24px] font-semibold text-[#14166e] mb-6">Additional Information</legend>
 
                     <div class="space-y-5">
@@ -189,7 +189,7 @@
                 </fieldset>
 
                 {{-- ── Section 4: Availability ── --}}
-                <fieldset class="bg-white rounded-xl p-6 md:p-8 shadow-sm">
+                <fieldset>
                     <legend class="text-[20px] md:text-[24px] font-semibold text-[#14166e] mb-6">Availability</legend>
 
                     <div class="space-y-5">
@@ -265,7 +265,7 @@
                 </fieldset>
 
                 {{-- ── Section 5: Declaration ── --}}
-                <fieldset class="bg-white rounded-xl p-6 md:p-8 shadow-sm">
+                <fieldset>
                     <legend class="text-[20px] md:text-[24px] font-semibold text-[#14166e] mb-6">Declaration</legend>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">

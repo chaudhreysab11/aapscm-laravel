@@ -10,6 +10,15 @@ class EditUser extends EditRecord
 {
     protected static string $resource = UserResource::class;
 
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        if (! empty($data['password'])) {
+            $data['password_initialized_at'] = now();
+        }
+
+        return $data;
+    }
+
     protected function getHeaderActions(): array
     {
         return [

@@ -52,6 +52,24 @@ it('follows an active 301 redirect from an old slug', function () {
         ->assertRedirect('/certifications-faq/');
 });
 
+it('preserves trailing slashes in redirect location headers', function () {
+    Page::factory()->create(['slug' => 'certificate-video', 'is_published' => true]);
+
+    Redirect::factory()->create([
+        'from_path' => '/certificate-video-old/',
+        'to_path' => '/certificate-video/',
+        'http_code' => 301,
+        'is_active' => true,
+    ]);
+
+    $response = $this->get('/certificate-video-old/');
+
+    $response->assertStatus(301);
+
+    expect(parse_url((string) $response->headers->get('Location'), PHP_URL_PATH))
+        ->toBe('/certificate-video/');
+});
+
 it('does not follow an inactive redirect — returns 404', function () {
     Redirect::factory()->inactive()->create([
         'from_path' => '/inactive-old-path/',
