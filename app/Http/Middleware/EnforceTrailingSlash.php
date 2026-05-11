@@ -63,6 +63,10 @@ class EnforceTrailingSlash
             }
         }
 
+        if ($this->lastSegmentContainsHash($path)) {
+            return $next($request);
+        }
+
         if (! str_ends_with($path, '/')) {
             $url = $path . '/';
             $qs = $request->getQueryString();
@@ -100,5 +104,12 @@ class EnforceTrailingSlash
         $uriRef->setValue($request, null);
 
         return $next($request);
+    }
+
+    private function lastSegmentContainsHash(string $path): bool
+    {
+        $lastSegment = basename(rtrim($path, '/'));
+
+        return str_contains(rawurldecode($lastSegment), '#');
     }
 }

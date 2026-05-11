@@ -159,10 +159,7 @@ class WordPressUserCustomerImporter
                 $attributes = $this->registeredAttributes($row, $email, $sourceId);
 
                 if ($user === null) {
-                    $user = User::create($attributes + [
-                        'password' => Str::password(40),
-                        'password_initialized_at' => null,
-                    ]);
+                    $user = User::create($attributes + ['password' => Str::password(40)]);
                     $registeredCreated++;
                 } else {
                     $user->fill($attributes);
@@ -303,7 +300,6 @@ class WordPressUserCustomerImporter
         return [
             'name' => $this->registeredName($row, $email),
             'email' => $email,
-            'password_initialized_at' => null,
             'phone' => $this->nullableString($row['billing_phone'] ?? null),
             'job_title' => null,
             'company' => $this->nullableString($row['billing_company'] ?? null),
@@ -587,7 +583,7 @@ class WordPressUserCustomerImporter
 
     private function resolvePath(string $path): string
     {
-        if (preg_match('/^(?:[A-Za-z]:[\\\\\/]|\/|\\\\)/', $path) === 1) {
+        if (str_starts_with($path, '/') || preg_match('#^[A-Za-z]:[\\/]#', $path) === 1) {
             return $path;
         }
 

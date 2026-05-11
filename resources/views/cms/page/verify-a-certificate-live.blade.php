@@ -29,7 +29,7 @@
                 <div class="eltdf-page-content-holder eltdf-grid-col-12">
                     <form id="verify-certificate-form"
                         method="post"
-                        action="{{ url('/verify-a-certificate/') }}"
+                        action="/verify-a-certificate/"
                         style="width: 100%; max-width: 425.6px; padding: 40px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px; background: transparent;">
                         @csrf
 
@@ -73,7 +73,7 @@
                                         @if ($awarded->user)
                                             <div style="display: flex; margin-bottom: 8px;">
                                                 <dt style="width: 176px; font-weight: 500;">Holder:</dt>
-                                                <dd>{{ trim(($awarded->user->first_name ?? '') . ' ' . ($awarded->user->last_name ?? '')) }}</dd>
+                                                <dd>{{ $awarded->user->name }}</dd>
                                             </div>
                                         @endif
                                         @if ($awarded->catalogEntry)

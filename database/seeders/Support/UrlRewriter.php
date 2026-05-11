@@ -63,13 +63,13 @@ final class UrlRewriter
         }
 
         $parts = parse_url($url);
-        $path  = $parts['path']  ?? '/';
+        $path = $parts['path'] ?? '/';
         $query = isset($parts['query']) ? '?' . $parts['query'] : '';
-        $frag  = isset($parts['fragment']) ? '#' . $parts['fragment'] : '';
+        $frag = isset($parts['fragment']) ? '#' . $parts['fragment'] : '';
 
         // Add trailing slash for extension-less paths (matches EnforceTrailingSlash).
         $basename = basename($path);
-        if ($path !== '/' && ! str_ends_with($path, '/') && ! str_contains($basename, '.')) {
+        if ($frag === '' && $path !== '/' && ! str_ends_with($path, '/') && ! str_contains($basename, '.')) {
             $path .= '/';
         }
 
@@ -123,7 +123,6 @@ final class UrlRewriter
      * Rewrites a PDF URL to its local /storage/cms-pdfs counterpart.
      * Pass-through for already-local paths and empty strings.
      */
-
     public static function pdf(string $url): string
     {
         if ($url === '') {

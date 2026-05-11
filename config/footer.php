@@ -98,7 +98,7 @@ return [
     'offices' => [
         [
             'heading'      => 'Spartanburg, SC Chapter & Center',
-            'section'      => 'More Information',
+            'section'      => 'Office 1 Information',
             'city_summary' => 'Columbia, SC 29201 USA',
             'address'      => 'Venture X Downtown Columbia Building, 18th Floor, Columbia, SC 29201 USA',
             'mailstop'     => '450 Ganton Ct. Blythewood SC 29016',
@@ -109,8 +109,8 @@ return [
             'email'        => null,
         ],
         [
-            'heading'      => 'Dallas, Texas Office and Conference Center',
-            'section'      => null,
+            'heading'      => 'Dallas, Texas Office & Conference Center',
+            'section'      => 'Office 2 Information',
             'city_summary' => 'Dallas, TX 75229',
             'address'      => '2540 Walnut Hill Ln, Dallas, TX 75229. Building 2B (inside Parker U. Campus)',
             'mailstop'     => '2701 Little Elm Pkwy Ste 100 Little Elm, TX 75068',

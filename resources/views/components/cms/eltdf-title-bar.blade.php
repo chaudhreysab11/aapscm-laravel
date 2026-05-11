@@ -9,7 +9,7 @@
 ])
 
 @php
-    $holderClasses = 'eltdf-title-holder eltdf-standard-with-breadcrumbs-type eltdf-title-va-header-bottom';
+    $holderClasses = 'eltdf-title-holder eltdf-standard-with-breadcrumbs-type eltdf-title-va-header-bottom flex items-center';
     if ($backgroundImage || $titleImageSrc) {
         $holderClasses .= ' eltdf-has-bg-image';
     }
@@ -31,7 +31,7 @@
         </div>
     @endif
 
-    <div class="eltdf-title-wrapper" style="height: {{ $height }}px;">
+    <div class="eltdf-title-wrapper flex items-center" style="height: {{ $height }}px;">
         <div class="eltdf-title-inner">
             <div class="eltdf-grid" style="max-width: 1300px; margin: 0 auto; padding: 0 16px;">
                 <div class="eltdf-title-info">

@@ -26,6 +26,11 @@ it('redirects slug WITHOUT trailing slash to slug WITH trailing slash (301)', fu
         ->assertRedirect('/about-us/');
 });
 
+it('does not enforce a trailing slash when the final path segment contains an encoded hash', function () {
+    $this->get('/popup%23elementor-action')
+        ->assertNotFound();
+});
+
 it('returns 404 for a page with is_published = false', function () {
     Page::factory()->draft()->create(['slug' => 'hidden-page']);
 

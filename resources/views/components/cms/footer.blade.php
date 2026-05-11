@@ -1,19 +1,20 @@
 {{--
-    AAPSCM Footer — Light Professional + Dark Trust Bar
+    AAPSCM Footer — Navy Contact + Dark Trust Bar
     ────────────────────────────────────────────────────────────────────────
-    Section 1 : Brand + CTA          bg-[#F8FAFC]  — logo, description, 2 buttons
-    Section 2 : Pathway Cards         bg-white      — 4 guided cards (always visible)
-    Section 3 : Contact Bar + Panels  bg-[#08186A]  — office summary + 2 Alpine panels
-                 Panel A : Full Office Details        (x-show="offices")
-                 Panel B : Full Site Directory        (x-show="directory")
-    Section 4 : Bottom Trust Bar      bg-[#0B1220]  — ICE badge | copyright | social
+    Section 1 : Contact Bar + Panel   bg-[#08186A]  — brand, office details, directory
+                 Panel A : Full Site Directory        (x-show="directory")
+    Section 2 : Bottom Trust Bar      bg-[#0B1220]  — ICE badge | copyright | social
 
     All original labels, URLs, phone, fax, email, social, logo, ICE badge preserved.
     Data  : config/footer.php | Tailwind CSS v3 | Alpine.js v3
 --}}
 
 @php
-    $u  = fn (string $p): string => rtrim(url(trim($p)), '/') . '/';
+    $u = function (string $p): string {
+        [$base, $fragment] = array_pad(explode('#', url(trim($p)), 2), 2, null);
+
+        return rtrim($base, '/') . '/' . ($fragment !== null ? '#' . $fragment : '');
+    };
     $ft = config('footer');
 
     $socialSvg = [
@@ -83,325 +84,115 @@
 <footer class="[&_a]:no-underline [&_p]:m-0" aria-label="Site footer">
 
 {{-- ════════════════════════════════════════════════════════════════════════
-     SECTION 1 — Brand + CTA
-     Light background. Logo on the left, description below, buttons on right.
+     SECTION 1 — Contact Bar + Expandable Panels
+    Navy background. Brand, office details, and directory action in four columns.
+    Site directory panel expands below the bar on demand.
 ════════════════════════════════════════════════════════════════════════ --}}
-<div class="bg-[#E8EDF4] border-b border-[#D4DCE9]">
-    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-10">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+<div x-data="{ directory: false }" class="bg-[#08186A]">
 
-            {{-- Logo + description --}}
-            <div class="flex flex-col items-center md:items-start gap-3 md:max-w-[520px]">
-                <a href="{{ $u('/') }}" aria-label="AAPSCM Home">
+    {{-- ── Contact Summary Bar ────────────────────────────────────────────── --}}
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-12 lg:py-14">
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 xl:gap-10 lg:min-h-[260px]">
+
+            {{-- Brand + CTA --}}
+            <div class="space-y-4">
+                <a href="{{ $u('/') }}" aria-label="AAPSCM Home"
+                   class="inline-flex bg-white rounded-md px-3 py-2">
                     <img src="{{ $ft['brand']['logo_src'] }}"
                          alt="{{ $ft['brand']['logo_alt'] }}"
-                         class="h-[80px] w-auto object-contain"
+                         class="h-[150px] w-auto object-contain"
                          loading="lazy">
                 </a>
-                <p class="text-[14px] text-[#6B7280] leading-relaxed text-center md:text-left">
+                <p class="text-[13px] text-blue-100/75 leading-relaxed max-w-[280px]">
                     {{ $ft['brand']['description'] }}
                 </p>
             </div>
 
-            {{-- CTA buttons --}}
-            <div class="flex flex-col sm:flex-row items-center gap-3 flex-shrink-0">
-                @foreach($ft['cta']['buttons'] as $btn)
-                    @if($btn['style'] === 'primary')
-                    <a href="{{ $u($btn['path']) }}"
-                       class="inline-flex items-center justify-center gap-2 bg-[#08186A]
-                              hover:bg-[#0B2F5E] text-white font-semibold text-sm px-7 py-3
-                              rounded-full transition-colors whitespace-nowrap w-full sm:w-auto">
-                        {{ $btn['label'] }}
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
-                             viewBox="0 0 24 24" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/>
-                        </svg>
-                    </a>
-                    @else
-                    <a href="{{ $u($btn['path']) }}"
-                       class="inline-flex items-center justify-center border border-[#08186A]
-                              text-[#08186A] hover:bg-[#08186A] hover:text-white font-semibold
-                              text-sm px-7 py-3 rounded-full transition-colors whitespace-nowrap
-                              w-full sm:w-auto">
-                        {{ $btn['label'] }}
-                    </a>
-                    @endif
-                @endforeach
-            </div>
-
-        </div>
-    </div>
-</div>
-
-{{-- ════════════════════════════════════════════════════════════════════════
-     SECTION 2 — Pathway Cards
-     4 guided cards replacing the traditional link-list sitemap.
-     Secondary links inside each card are always visible (not hidden).
-════════════════════════════════════════════════════════════════════════ --}}
-<div class="bg-white border-b border-[#E5E7EB]">
-    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-10">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-
-            {{-- Card 1: Explore Certifications --}}
-            <div class="border border-[#E5E7EB] rounded-2xl p-6 flex flex-col
-                        hover:border-[#08186A]/20 hover:shadow-md transition-all duration-200">
-                <h3 class="text-[#111827] font-bold text-[15px] leading-snug mb-2">
-                    Explore Certifications
-                </h3>
-                <p class="text-[#6B7280] text-[13px] leading-relaxed mb-5 flex-1">
-                    Find programs in procurement, supply chain, tourism, e-commerce, and AI.
+            {{-- Office details --}}
+            @foreach($ft['offices'] as $office)
+            <address class="not-italic">
+                @if($office['section'])
+                <p class="text-[9px] font-bold uppercase tracking-widest text-[#E85D04] m-0">
+                    {{ $office['section'] }}
                 </p>
-                <a href="{{ $u('/certifications-for-professionals') }}"
-                   class="inline-flex items-center gap-1.5 text-[#08186A] font-semibold
-                          text-[13px] hover:text-[#E85D04] transition-colors self-start">
-                    View Certifications
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
-                         stroke-linecap="round" stroke-linejoin="round"
-                         viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M13 7l5 5-5 5"/>
-                    </svg>
-                </a>
-                <ul class="mt-4 pt-4 border-t border-[#F3F4F6] space-y-1.5"
-                    aria-label="Certifications sub-links">
-                    <li>
-                        <a href="{{ $u('/procurement-management-certifications') }}"
-                           class="text-[12px] text-[#6B7280] hover:text-[#E85D04] transition-colors
-                                  leading-snug block">
-                            Procurement Management
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ $u('/supply-chain-management-certifications') }}"
-                           class="text-[12px] text-[#6B7280] hover:text-[#E85D04] transition-colors
-                                  leading-snug block">
-                            Supply Chain Management
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ $u('/artificial-intelligence-ai-courses') }}"
-                           class="text-[12px] text-[#6B7280] hover:text-[#E85D04] transition-colors
-                                  leading-snug block">
-                            AI Courses
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                @endif
+                <h4 class="text-white font-bold text-[13.5px] leading-snug m-0">
+                    {{ $office['heading'] }}
+                </h4>
 
-            {{-- Card 2: Membership & Registration --}}
-            <div class="border border-[#E5E7EB] rounded-2xl p-6 flex flex-col
-                        hover:border-[#08186A]/20 hover:shadow-md transition-all duration-200">
-                <h3 class="text-[#111827] font-bold text-[15px] leading-snug mb-2">
-                    Membership &amp; Registration
-                </h3>
-                <p class="text-[#6B7280] text-[13px] leading-relaxed mb-5 flex-1">
-                    Join AAPSCM, apply for certification, or manage your professional membership pathway.
-                </p>
-                <a href="{{ $u('/membership') }}"
-                   class="inline-flex items-center gap-1.5 text-[#08186A] font-semibold
-                          text-[13px] hover:text-[#E85D04] transition-colors self-start">
-                    Membership Options
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
-                         stroke-linecap="round" stroke-linejoin="round"
-                         viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M13 7l5 5-5 5"/>
-                    </svg>
-                </a>
-                <ul class="mt-4 pt-4 border-t border-[#F3F4F6] space-y-1.5"
-                    aria-label="Membership sub-links">
-                    <li>
-                        <a href="{{ $u('/student-membership') }}"
-                           class="text-[12px] text-[#6B7280] hover:text-[#E85D04] transition-colors
-                                  leading-snug block">
-                            Become a Student Member
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ $u('/membership-faqs') }}"
-                           class="text-[12px] text-[#6B7280] hover:text-[#E85D04] transition-colors
-                                  leading-snug block">
-                            Membership FAQs
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ $u('/membership') }}"
-                           class="text-[12px] text-[#6B7280] hover:text-[#E85D04] transition-colors
-                                  leading-snug block">
-                            Apply for Certification
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                <dl class="space-y-3 text-[12.5px] m-0">
+                    <div>
+                        <dt class="text-[9px] font-semibold uppercase tracking-wider
+                                   text-white/35 m-0">
+                            Address
+                        </dt>
+                        <dd class="text-blue-100/75 leading-snug m-0">{{ $office['address'] }}</dd>
+                    </div>
 
-            {{-- Card 3: Exams & Credentialing --}}
-            <div class="border border-[#E5E7EB] rounded-2xl p-6 flex flex-col
-                        hover:border-[#08186A]/20 hover:shadow-md transition-all duration-200">
-                <h3 class="text-[#111827] font-bold text-[15px] leading-snug mb-2">
-                    Exams &amp; Credentialing
-                </h3>
-                <p class="text-[#6B7280] text-[13px] leading-relaxed mb-5 flex-1">
-                    Verify certificates, access digital badges, and review credentialing resources.
-                </p>
-                <a href="{{ $u('/verify-a-certificate') }}"
-                   class="inline-flex items-center gap-1.5 text-[#08186A] font-semibold
-                          text-[13px] hover:text-[#E85D04] transition-colors self-start">
-                    Credential Services
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
-                         stroke-linecap="round" stroke-linejoin="round"
-                         viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M13 7l5 5-5 5"/>
-                    </svg>
-                </a>
-                <ul class="mt-4 pt-4 border-t border-[#F3F4F6] space-y-1.5"
-                    aria-label="Credentialing sub-links">
-                    <li>
-                        <a href="{{ $u('/certification-process') }}"
-                           class="text-[12px] text-[#6B7280] hover:text-[#E85D04] transition-colors
-                                  leading-snug block">
-                            Certification Process
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ $u('/digital-badges') }}"
-                           class="text-[12px] text-[#6B7280] hover:text-[#E85D04] transition-colors
-                                  leading-snug block">
-                            Digital Badges
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ $u('/verify-a-certificate') }}"
-                           class="text-[12px] text-[#6B7280] hover:text-[#E85D04] transition-colors
-                                  leading-snug block">
-                            Verify a Certification
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                    <div>
+                        <dt class="text-[9px] font-semibold uppercase tracking-wider
+                                   text-white/35 m-0">
+                            Mailstop
+                        </dt>
+                        <dd class="text-blue-100/75 leading-snug m-0">{{ $office['mailstop'] }}</dd>
+                    </div>
 
-            {{-- Card 4: Career Center --}}
-            <div class="border border-[#E5E7EB] rounded-2xl p-6 flex flex-col
-                        hover:border-[#08186A]/20 hover:shadow-md transition-all duration-200">
-                <h3 class="text-[#111827] font-bold text-[15px] leading-snug mb-2">
-                    Career Center
-                </h3>
-                <p class="text-[#6B7280] text-[13px] leading-relaxed mb-5 flex-1">
-                    Access job listings, resume services, job seeker tools, and member career support.
-                </p>
-                <a href="{{ $u('/career-center') }}"
-                   class="inline-flex items-center gap-1.5 text-[#08186A] font-semibold
-                          text-[13px] hover:text-[#E85D04] transition-colors self-start">
-                    Career Resources
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
-                         stroke-linecap="round" stroke-linejoin="round"
-                         viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M13 7l5 5-5 5"/>
-                    </svg>
-                </a>
-                <ul class="mt-4 pt-4 border-t border-[#F3F4F6] space-y-1.5"
-                    aria-label="Career Center sub-links">
-                    <li>
-                        <a href="{{ $u('/job-listing') }}"
-                           class="text-[12px] text-[#6B7280] hover:text-[#E85D04] transition-colors
-                                  leading-snug block">
-                            Job Listing
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ $u('/post-resume') }}"
-                           class="text-[12px] text-[#6B7280] hover:text-[#E85D04] transition-colors
-                                  leading-snug block">
-                            Post Resume
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ $u('/member-services') }}"
-                           class="text-[12px] text-[#6B7280] hover:text-[#E85D04] transition-colors
-                                  leading-snug block">
-                            Member Services
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                    @if(! empty($office['phones']) || $office['fax'])
+                    <div class="grid grid-cols-1 sm:grid-cols-2">
+                        @if(! empty($office['phones']))
+                        <dt class="text-[9px] font-semibold uppercase tracking-wider
+                                   text-white/35 m-0">
+                            Phone
+                        </dt>
+                        <dd class="space-y-1 sm:col-start-1 sm:row-start-2 m-0">
+                            @foreach($office['phones'] as $phone)
+                            <a href="{{ $phone['href'] }}"
+                               class="block text-blue-200 hover:text-white transition-colors m-0">
+                                {{ $phone['display'] }}
+                            </a>
+                            @endforeach
+                        </dd>
+                        @endif
 
-        </div>
-    </div>
-</div>
-
-{{-- ════════════════════════════════════════════════════════════════════════
-     SECTION 3 — Contact Bar + Expandable Panels
-     Navy background. Office summaries left, action buttons right.
-     Two Alpine.js panels expand below the bar on demand.
-     Clicking one button collapses the other to keep the UI focused.
-════════════════════════════════════════════════════════════════════════ --}}
-<div x-data="{ offices: false, directory: false }" class="bg-[#08186A]">
-
-    {{-- ── Contact Summary Bar ────────────────────────────────────────────── --}}
-    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-8">
-        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
-
-            {{-- Office summaries --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1">
-
-                @foreach($ft['offices'] as $office)
-                <div>
-                    @if($office['section'])
-                    <p class="text-[9px] font-bold uppercase tracking-widest text-[#E85D04] mb-1">
-                        {{ $office['section'] }}
-                    </p>
-                    @endif
-                    <h4 class="text-white font-bold text-[13.5px] leading-snug mb-2">
-                        {{ $office['heading'] }}
-                    </h4>
-                    <div class="space-y-1 text-[12.5px]">
-                        <p class="text-blue-200/60">{{ $office['city_summary'] }}</p>
-                        @foreach($office['phones'] as $phone)
-                        <a href="{{ $phone['href'] }}"
-                           class="block text-blue-200 hover:text-white transition-colors">
-                            {{ $phone['display'] }}
-                        </a>
-                        @endforeach
-                        @if($office['email'])
-                        <a href="{{ $office['email']['href'] }}"
-                           class="block text-blue-200 hover:text-white transition-colors">
-                            {{ $office['email']['display'] }}
-                        </a>
+                        @if($office['fax'])
+                        <dt class="text-[9px] font-semibold uppercase tracking-wider
+                                   text-white/35 m-0 @if(! empty($office['phones'])) sm:col-start-2 sm:row-start-1 @endif">
+                            Fax
+                        </dt>
+                        <dd class="text-blue-100/75 m-0 @if(! empty($office['phones'])) sm:col-start-2 sm:row-start-2 @endif">{{ $office['fax'] }}</dd>
                         @endif
                     </div>
-                </div>
-                @endforeach
+                    @endif
 
-            </div>
+                    @if($office['email'])
+                    <div>
+                        <dt class="text-[9px] font-semibold uppercase tracking-wider
+                                   text-white/35 m-0">
+                            Email
+                        </dt>
+                        <dd class="m-0">
+                            <a href="{{ $office['email']['href'] }}"
+                               class="text-blue-200 hover:text-white transition-colors m-0">
+                                {{ $office['email']['display'] }}
+                            </a>
+                        </dd>
+                    </div>
+                    @endif
+                </dl>
+            </address>
+            @endforeach
 
-            {{-- Expand action buttons --}}
-            <div class="flex flex-row lg:flex-col gap-3 flex-shrink-0">
-
-                <button @click="offices = !offices; directory = false"
-                        :aria-expanded="offices.toString()"
-                        class="inline-flex items-center justify-center gap-2 border border-white/25
-                               hover:border-white/60 hover:bg-white/[0.07] text-white font-semibold
-                               text-[12.5px] px-5 py-2.5 rounded-full transition-colors
-                               whitespace-nowrap focus:outline-none focus:ring-2
-                               focus:ring-white/30">
-                    <span x-text="offices ? 'Hide office details' : 'View full office details'">
-                        View full office details
-                    </span>
-                    <svg class="w-3.5 h-3.5 transition-transform duration-200 flex-shrink-0"
-                         :class="{ 'rotate-180': offices }"
-                         fill="none" stroke="currentColor" stroke-width="2.5"
-                         stroke-linecap="round" stroke-linejoin="round"
-                         viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </button>
-
-                <button @click="directory = !directory; offices = false"
+            {{-- Directory action --}}
+            <div class="flex flex-col gap-3 sm:col-span-2 xl:col-span-1 xl:items-stretch">
+                <button @click="directory = !directory"
                         :aria-expanded="directory.toString()"
                         class="inline-flex items-center justify-center gap-2 border border-white/25
                                hover:border-white/60 hover:bg-white/[0.07] text-white font-semibold
                                text-[12.5px] px-5 py-2.5 rounded-full transition-colors
                                whitespace-nowrap focus:outline-none focus:ring-2
                                focus:ring-white/30">
-                    <span x-text="directory ? 'Hide site directory' : 'View full site directory'">
-                        View full site directory
+                    <span x-text="directory ? 'Hide Quick Links' : 'View Quick Links'">
+                        View Quick Links
                     </span>
                     <svg class="w-3.5 h-3.5 transition-transform duration-200 flex-shrink-0"
                          :class="{ 'rotate-180': directory }"
@@ -417,99 +208,7 @@
         </div>
     </div>
 
-    {{-- ── Panel A — Full Office Details ──────────────────────────────────── --}}
-    <div x-show="offices" style="display:none"
-         x-transition:enter="transition ease-out duration-200"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-150"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"
-         class="border-t border-white/[0.10]">
-        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-
-                @foreach($ft['offices'] as $office)
-                <address class="not-italic bg-white/[0.06] border border-white/[0.12]
-                                rounded-2xl p-6 space-y-4">
-
-                    @if($office['section'])
-                    <p class="text-[9px] font-bold uppercase tracking-widest text-[#E85D04]">
-                        {{ $office['section'] }}
-                    </p>
-                    @endif
-
-                    <h4 class="text-white font-bold text-[14px] leading-snug">
-                        {{ $office['heading'] }}
-                    </h4>
-
-                    <dl class="space-y-3 text-[12.5px]">
-
-                        <div>
-                            <dt class="text-[9px] font-semibold uppercase tracking-wider
-                                       text-white/35 mb-0.5">
-                                Address
-                            </dt>
-                            <dd class="text-blue-100/75 leading-snug">{{ $office['address'] }}</dd>
-                        </div>
-
-                        <div>
-                            <dt class="text-[9px] font-semibold uppercase tracking-wider
-                                       text-white/35 mb-0.5">
-                                Mailstop
-                            </dt>
-                            <dd class="text-blue-100/75 leading-snug">{{ $office['mailstop'] }}</dd>
-                        </div>
-
-                        @foreach($office['phones'] as $phone)
-                        <div>
-                            <dt class="text-[9px] font-semibold uppercase tracking-wider
-                                       text-white/35 mb-0.5">
-                                Phone
-                            </dt>
-                            <dd>
-                                <a href="{{ $phone['href'] }}"
-                                   class="text-blue-200 hover:text-white transition-colors">
-                                    {{ $phone['display'] }}
-                                </a>
-                            </dd>
-                        </div>
-                        @endforeach
-
-                        @if($office['fax'])
-                        <div>
-                            <dt class="text-[9px] font-semibold uppercase tracking-wider
-                                       text-white/35 mb-0.5">
-                                Fax
-                            </dt>
-                            <dd class="text-blue-100/75">{{ $office['fax'] }}</dd>
-                        </div>
-                        @endif
-
-                        @if($office['email'])
-                        <div>
-                            <dt class="text-[9px] font-semibold uppercase tracking-wider
-                                       text-white/35 mb-0.5">
-                                Email
-                            </dt>
-                            <dd>
-                                <a href="{{ $office['email']['href'] }}"
-                                   class="text-blue-200 hover:text-white transition-colors">
-                                    {{ $office['email']['display'] }}
-                                </a>
-                            </dd>
-                        </div>
-                        @endif
-
-                    </dl>
-                </address>
-                @endforeach
-
-            </div>
-        </div>
-    </div>
-
-    {{-- ── Panel B — Full Site Directory ───────────────────────────────────── --}}
+    {{-- ── Panel A — Full Site Directory ───────────────────────────────────── --}}
     <div x-show="directory" style="display:none"
          x-transition:enter="transition ease-out duration-200"
          x-transition:enter-start="opacity-0"
@@ -552,7 +251,7 @@
 </div>
 
 {{-- ════════════════════════════════════════════════════════════════════════
-     SECTION 4 — Bottom Trust Bar
+    SECTION 2 — Bottom Trust Bar
      Three-column: ICE badge | copyright | social icons
 ════════════════════════════════════════════════════════════════════════ --}}
 <div class="bg-[#0B1220]">
@@ -564,7 +263,7 @@
                         justify-center md:justify-start">
                 <img src="{{ $ft['brand']['ice_badge']['src'] }}"
                      alt="{{ $ft['brand']['ice_badge']['alt'] }}"
-                     class="w-[92px] h-auto object-contain"
+                     class="w-[150px] h-auto object-contain"
                      loading="lazy">
                 <div>
                     <p class="text-[9px] font-bold uppercase tracking-widest

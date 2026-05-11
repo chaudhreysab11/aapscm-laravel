@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
-use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use App\Models\ProductPrice;
 use Filament\Actions\BulkActionGroup;
@@ -55,15 +54,6 @@ class ProductResource extends Resource
                 ->numeric()
                 ->prefix('$'),
 
-            TextInput::make('public_price_currency')
-                ->label('Public Price Currency')
-                ->default('USD')
-                ->maxLength(3),
-
-            Toggle::make('public_price_is_active')
-                ->label('Public Price Active')
-                ->default(true),
-
             TextInput::make('stock')
                 ->required()
                 ->numeric()
@@ -72,13 +62,6 @@ class ProductResource extends Resource
             Toggle::make('is_active')
                 ->default(true),
         ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            RelationManagers\ProductPricesRelationManager::class,
-        ];
     }
 
     public static function table(Table $table): Table
@@ -112,11 +95,6 @@ class ProductResource extends Resource
                     ->state(fn (Product $record): string => $record->publicPrice instanceof ProductPrice
                         ? $record->publicPrice->currency . ' ' . number_format((float) $record->publicPrice->price, 2, '.', '')
                         : 'No price'),
-
-                Tables\Columns\IconColumn::make('publicPrice.is_active')
-                    ->label('Public Price Active')
-                    ->boolean()
-                    ->state(fn (Product $record): bool => $record->publicPrice?->is_active ?? false),
 
                 Tables\Columns\TextColumn::make('stock')
                     ->numeric()
@@ -158,32 +136,21 @@ class ProductResource extends Resource
         return parent::getEloquentQuery()->with('publicPrice');
     }
 
-    public static function persistPublicPrice(Product $product, mixed $price, ?string $currency = 'USD', bool $isActive = true): void
+    public static function persistPublicPrice(Product $product, mixed $price): void
     {
+        if ($price === null || $price === '' || ! is_numeric($price)) {
+            return;
+        }
+
         $publicPrice = $product->prices()
             ->whereNull('membership_tier_id')
             ->latest('id')
             ->first();
 
-        $normalizedCurrency = strtoupper(trim((string) ($currency ?: 'USD')));
-
-        if ($normalizedCurrency === '') {
-            $normalizedCurrency = 'USD';
-        }
-
-        $normalizedPrice = is_numeric($price)
-            ? number_format((float) $price, 2, '.', '')
-            : ($publicPrice instanceof ProductPrice ? $publicPrice->price : null);
-
-        if ($normalizedPrice === null) {
-            return;
-        }
-
         if ($publicPrice instanceof ProductPrice) {
             $publicPrice->fill([
-                'price' => $normalizedPrice,
-                'currency' => $normalizedCurrency,
-                'is_active' => $isActive,
+                'price' => number_format((float) $price, 2, '.', ''),
+                'is_active' => true,
             ])->save();
 
             return;
@@ -191,9 +158,9 @@ class ProductResource extends Resource
 
         $product->prices()->create([
             'membership_tier_id' => null,
-            'price' => $normalizedPrice,
-            'currency' => $normalizedCurrency,
-            'is_active' => $isActive,
+            'price' => number_format((float) $price, 2, '.', ''),
+            'currency' => 'USD',
+            'is_active' => true,
         ]);
     }
 }

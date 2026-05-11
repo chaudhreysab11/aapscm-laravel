@@ -9,8 +9,8 @@ use App\Http\Requests\StoreCheckoutRequest;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
-use App\Services\CartPricingService;
 use App\Services\CartService;
+use App\Services\PricingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +21,7 @@ class CheckoutController extends Controller
 {
     public function __construct(
         private CartService $cart,
-        private CartPricingService $cartPricing,
+        private PricingService $pricing,
         private AddProductToCartBySourceIdAction $addProductToCartBySourceId,
     ) {}
 
@@ -39,31 +39,18 @@ class CheckoutController extends Controller
                     ->with('error', 'The requested product is not available.');
             }
 
-            return redirect()
-                ->route('cart.show')
-                ->with('success', "{$product->name} added to your cart.");
+            return redirect()->route('checkout.show');
         }
 
         if ($this->cart->isEmpty()) {
-            return redirect()->route('cart.show')
+            return redirect()
+                ->route('cart.show')
                 ->with('error', 'Your cart is currently empty. Add a product before checking out.');
         }
 
-        $items = $this->cart->items();
-        $summary = $this->cartPricing->summarize($items, $this->cart->couponCode());
-        $couponError = $summary['coupon_error'];
-
-        if ($couponError !== null) {
-            $this->cart->removeCoupon();
-            $summary = $this->cartPricing->summarize($items, null);
-            $request->session()->now('error', $couponError);
-        }
-
         return view('cms.page.checkout', [
-            'items' => $items,
-            'subtotal' => $summary['totals']['subtotal'],
-            'totals' => $summary['totals'],
-            'appliedCoupon' => $summary['coupon'],
+            'items' => $this->cart->items(),
+            'subtotal' => $this->cart->subtotal(),
         ]);
     }
 
@@ -74,69 +61,29 @@ class CheckoutController extends Controller
         }
 
         $items = $this->cart->items();
-        $summary = $this->cartPricing->summarize($items, $this->cart->couponCode());
-
-        if ($summary['coupon_error'] !== null) {
-            $this->cart->removeCoupon();
-
-            return redirect()->route('checkout.show')->with('error', $summary['coupon_error']);
-        }
-
-        $totals = $summary['totals'];
-        $appliedCoupon = $summary['coupon'];
+        $subtotal = (float) $this->cart->subtotal();
         $currency = $items->first()['currency'] ?? 'USD';
         $data = $request->validated();
-        $gateway = 'stripe';
 
-        $billingName = trim((string) ($data['billing_name'] ?? ''));
-
-        if ($billingName === '') {
-            $billingName = trim(implode(' ', array_filter([
-                $data['billing_first_name'] ?? null,
-                $data['billing_last_name'] ?? null,
-            ])));
-        }
-
-        $checkoutContext = [
-            'allergic_to_peanuts' => $data['allergic_to_peanuts'] ?? null,
-        ];
-
-        if ($request->user() === null && $request->boolean('create_account')) {
-            $checkoutContext['create_account'] = true;
-        }
-
-        $orderNotes = [
-            'billing_address' => $data['billing_address'],
-            'billing_address_line_2' => $data['billing_address_line_2'] ?? null,
-            'billing_city' => $data['billing_city'],
-            'billing_state' => $data['billing_state'] ?? null,
-            'billing_postcode' => $data['billing_postcode'] ?? null,
-            'billing_country' => $data['billing_country'],
-            'billing_phone' => $data['billing_phone'] ?? null,
-            'billing_company' => $data['billing_company'] ?? null,
-            'customer_note' => $data['notes'] ?? null,
-            'checkout_context' => array_filter($checkoutContext, static fn ($value): bool => $value !== null && $value !== ''),
-        ];
-
-        $order = DB::transaction(function () use ($items, $totals, $appliedCoupon, $currency, $data, $request, $billingName, $orderNotes, $gateway): Order {
+        $order = DB::transaction(function () use ($items, $subtotal, $currency, $data, $request): Order {
             $order = Order::create([
                 'user_id' => $request->user()?->id,
                 'billing_email' => $data['billing_email'],
-                'billing_name' => $billingName,
+                'billing_name' => $data['billing_name'],
                 'order_number' => $this->generateOrderNumber(),
                 'status' => 'pending',
-                'payment_method' => $gateway,
+                'payment_method' => $data['gateway'],
                 'payment_status' => 'unpaid',
                 'currency' => $currency,
-                'subtotal' => $totals['subtotal'],
-                'tax' => $totals['tax'],
-                'discount' => $totals['discount'],
-                'coupon_id' => $appliedCoupon['id'] ?? null,
-                'coupon_code' => $appliedCoupon['code'] ?? null,
-                'coupon_type' => $appliedCoupon['type'] ?? null,
-                'coupon_value' => $appliedCoupon['value'] ?? null,
-                'total' => $totals['total'],
-                'notes' => json_encode(array_filter($orderNotes, static fn ($value): bool => $value !== null && $value !== '')),
+                'subtotal' => number_format($subtotal, 2, '.', ''),
+                'tax' => '0.00',
+                'discount' => '0.00',
+                'total' => number_format($subtotal, 2, '.', ''),
+                'notes' => $data['notes'] ?? json_encode([
+                    'billing_address' => $data['billing_address'],
+                    'billing_city' => $data['billing_city'],
+                    'billing_country' => $data['billing_country'],
+                ]),
             ]);
 
             foreach ($items as $line) {
@@ -151,7 +98,7 @@ class CheckoutController extends Controller
                     'unit_price' => $line['unit_price'],
                     'total_price' => $line['line_total'],
                     'item_type' => $product->type,
-                    'meta' => $line['meta'] ?? null,
+                    'meta' => null,
                 ]);
             }
 

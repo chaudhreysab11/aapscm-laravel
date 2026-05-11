@@ -30,10 +30,13 @@ class VerifyCertificateController extends Controller
             ->where('certificate_number', $data['certificate_number']);
 
         if (! empty($data['first_name'])) {
-            $query->whereHas('user', fn ($q) => $q->where('first_name', 'LIKE', $data['first_name'] . '%'));
+            $query->whereHas('user', fn ($q) => $q->where('name', 'LIKE', $data['first_name'] . '%'));
         }
         if (! empty($data['last_name'])) {
-            $query->whereHas('user', fn ($q) => $q->where('last_name', 'LIKE', $data['last_name'] . '%'));
+            $query->whereHas('user', function ($q) use ($data): void {
+                $q->where('name', 'LIKE', '% ' . $data['last_name'])
+                    ->orWhere('name', $data['last_name']);
+            });
         }
 
         $awarded = $query->first();

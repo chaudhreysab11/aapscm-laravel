@@ -89,7 +89,7 @@ class HomePageSeeder extends Seeder
                 'title' => 'Improve Your Skills',
                 'body_html' => 'Be Chartered!! We are Vendor-Neutral. We are Chartered in USA! Join our “Spartanburg, South Carolina Charter today”!!',
                 'cta_label' => self::READ_MORE_LABEL,
-                'cta_href' => UrlRewriter::local('https://aapscm.org/us-charters/#aapscm-spartanburg-sc-chapter'),
+                'cta_href' => UrlRewriter::local('https://aapscm.org/us-charters/'),
                 'image' => UrlRewriter::image('https://aapscm.org/wp-content/uploads/2023/12/s3.jpg'),
             ],
             [
@@ -160,6 +160,7 @@ class HomePageSeeder extends Seeder
             ],
             'test_cta' => [
                 'icon'        => '/storage/cms-images/2023/10/cta_2_shape3.png',
+                'icon2'       => '/storage/cms-images/2026/05/bg-img.jpeg',
                 'eyebrow'     => 'Get Your Certifications',
                 'heading'     => 'Test Online – Get Your <span class="text-yellow-300">Certifications</span> by Registering <br>and Taking Your Test Online.',
                 'description' => 'Certifications validate your expertise in a particular field. They prove that you have undergone rigorous training and have the necessary skills to excel in your profession.',

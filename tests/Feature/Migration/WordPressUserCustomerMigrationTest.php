@@ -111,7 +111,6 @@ it('imports registered users idempotently and preserves WordPress source id', fu
         ->and($user->email)->toBe('aaaboalola@gmail.com')
         ->and($user->phone)->toBe('+966543100720')
         ->and($user->company)->toBe('AAPSCM Test')
-        ->and($user->password_initialized_at)->toBeNull()
         ->and($user->profile_payload['migration']['password_reset_required'])->toBeTrue()
         ->and($user->profile_payload['migration']['wordpress_password_reused'])->toBeFalse()
         ->and($user->hasRole('subscriber'))->toBeTrue();

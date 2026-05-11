@@ -9,7 +9,11 @@
 --}}
 
 @php
-    $u   = fn (string $p): string => rtrim(url(trim($p)), '/') . '/';
+    $u = function (string $p): string {
+        [$base, $fragment] = array_pad(explode('#', url(trim($p)), 2), 2, null);
+
+        return rtrim($base, '/') . '/' . ($fragment !== null ? '#' . $fragment : '');
+    };
     $nav = config('navigation');
 
     /* SVG fragments reused inside the file */
@@ -44,7 +48,7 @@
         mob(s)  { this.mobileSection = this.mobileSection === s ? null : s; }
     }"
     id="site-header"
-    class="sticky top-0 z-[10010] bg-white [&_a]:no-underline"
+    class="top-0 left-0 right-0 z-[10010] bg-white [&_a]:no-underline"
     aria-label="Site header"
 >
 {{--
@@ -111,15 +115,15 @@
 {{-- ═══════════════════════════════════════════════════════════════════════
      ROW 1 — Slim utility bar (desktop only)
 ════════════════════════════════════════════════════════════════════════ --}}
-<div class="hidden lg:block bg-slate-50 border-b border-gray-200">
-    <div class="max-w-[1440px] mx-auto px-6">
-        <div class="flex items-center justify-between h-9 gap-2">
+<div class="hidden lg:flex justify-end">
+    <div class="max-w-[1440px] px-6">
+        <div class="flex items-center h-9 gap-2">
 
             {{-- Left: primary utility links --}}
             <nav class="flex items-center gap-0" aria-label="Utility navigation">
                 @foreach($nav['utility'] as $link)
                 <a href="{{ $u($link['path']) }}"
-                   class="px-2.5 py-1 text-xs font-bold text-gray-500 hover:text-[#08186A] hover:bg-white rounded transition-colors whitespace-nowrap">
+                   class="px-2.5 py-1 text-base text-gray-500 font-thin hover:text-[#08186A] hover:bg-white rounded transition-colors whitespace-nowrap">
                     {!! $link['label'] !!}
                 </a>
                 @endforeach
@@ -134,7 +138,7 @@
                      @mouseenter="show()" @mouseleave="hide()">
                     <button @click="open = !open"
                             :aria-expanded="open"
-                            class="flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-gray-500 hover:text-[#08186A] hover:bg-white rounded transition-colors">
+                            class="flex items-center gap-1 px-2.5 py-1 text-base text-gray-500 font-thin hover:text-[#08186A] hover:bg-white rounded transition-colors">
                         Free Student Training
                         <svg class="w-2.5 h-2.5 transition-transform duration-150" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
@@ -150,7 +154,7 @@
                         <div class="bg-white rounded-xl shadow-xl border border-gray-100 py-1.5">
                             @foreach($nav['free_training'] as $link)
                             <a href="{{ $u($link['path']) }}"
-                               class="block px-4 py-2 text-xs text-gray-700 hover:bg-slate-50 hover:text-[#08186A] transition-colors">
+                               class="block px-4 py-2 text-sm text-gray-500 hover:bg-slate-50 hover:text-[#08186A] transition-colors">
                                 {{ $link['label'] }}
                             </a>
                             @endforeach
@@ -164,7 +168,7 @@
                      @mouseenter="show()" @mouseleave="hide()">
                     <button @click="open = !open"
                             :aria-expanded="open"
-                            class="flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-gray-500 hover:text-[#08186A] hover:bg-white rounded transition-colors">
+                            class="flex items-center gap-1 px-2.5 py-1 text-base text-gray-500 font-thin hover:text-[#08186A] hover:bg-white rounded transition-colors">
                         Exam, Tests & Training
                         <svg class="w-2.5 h-2.5 transition-transform duration-150" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
@@ -178,8 +182,8 @@
                          class="absolute right-0 top-full pt-1 w-48 z-50"
                          style="display:none">
                         <div class="bg-white rounded-xl shadow-xl border border-gray-100 py-1.5">
-                            <a href="{{ $u('/all-courses') }}" class="block px-4 py-2 text-xs text-gray-700 hover:bg-slate-50 hover:text-[#08186A] transition-colors">All Courses</a>
-                            <a href="{{ $u('/online-exam') }}" class="block px-4 py-2 text-xs text-gray-700 hover:bg-slate-50 hover:text-[#08186A] transition-colors">Online Exams</a>
+                            <a href="{{ $u('/all-courses') }}" class="block px-4 py-2 text-sm text-gray-500 hover:bg-slate-50 hover:text-[#08186A] transition-colors">All Courses</a>
+                            <a href="{{ $u('/online-exam') }}" class="block px-4 py-2 text-sm text-gray-500 hover:bg-slate-50 hover:text-[#08186A] transition-colors">Online Exams</a>
                         </div>
                     </div>
                 </div>
@@ -192,7 +196,7 @@
 {{-- ═══════════════════════════════════════════════════════════════════════
      ROW 2 — Main header: logo | search | auth + CTA | hamburger
 ════════════════════════════════════════════════════════════════════════ --}}
-<div class="bg-white border-b border-gray-200 shadow-sm">
+<div class="bg-white shadow-sm h-[100px]">
     <div class="max-w-[1440px] mx-auto px-4 lg:px-6">
         <div class="flex items-center gap-3 lg:gap-5 h-[72px]">
 
@@ -200,12 +204,12 @@
             <a href="{{ $u('/') }}" class="flex-shrink-0" aria-label="AAPSCM Home">
                 <img src="/storage/cms-images/2023/04/logo.jpg"
                      alt="AAPSCM®"
-                     class="h-[52px] lg:h-[68px] w-auto object-contain"
+                     class="h-[100px] lg:h-[123px] w-auto object-contain mt-[25px]"
                      loading="eager">
             </a>
 
             {{-- Search bar (desktop) — live autocomplete via /search/suggest --}}
-            <div class="hidden lg:flex flex-1 max-w-xl mx-4 relative"
+            <div class="hidden lg:flex flex-1 mx-4 relative"
                  x-data="{
                      q: '',
                      items: [],
@@ -256,7 +260,7 @@
                                @keydown="nav($event)"
                                @focus="q.length >= 2 && items.length && (open = true)"
                                placeholder="Search courses, certifications, diplomas..."
-                               class="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none border-0 focus:ring-0 min-w-0"
+                               class="flex-1 bg-transparent text-base text-gray-500 placeholder-gray-400 outline-none border-0 focus:ring-0 min-w-0"
                                autocomplete="off"
                                aria-label="Search AAPSCM"
                                :aria-expanded="open">
@@ -272,7 +276,7 @@
                         </button>
 
                         <button type="submit"
-                                class="flex-shrink-0 text-[10px] text-white bg-[#08186A] hover:bg-[#0B2F5E] rounded-full px-3 py-1 font-semibold tracking-wide transition-colors">
+                                class="flex-shrink-0 text-xs text-white bg-[#08186A] hover:bg-[#0B2F5E] rounded-full px-3 py-1 font-semibold tracking-wide transition-colors">
                             Search
                         </button>
                     </div>
@@ -297,7 +301,7 @@
                                           'bg-purple-50 text-purple-700 ring-purple-100':   item.type === 'product',
                                       }"
                                       x-text="item.badge"></span>
-                                <span class="text-sm text-gray-700 truncate" x-text="item.title"></span>
+                                <span class="text-base text-gray-500 truncate" x-text="item.title"></span>
                             </a>
                         </template>
                         <div class="px-4 py-2.5 bg-gray-50 border-t border-gray-100">
@@ -370,168 +374,446 @@
      The outer div is `relative` so mega menus (`absolute top-full`) are
      anchored to the bottom of this row, not the full header height.
 ════════════════════════════════════════════════════════════════════════ --}}
-<div class="hidden lg:block bg-white border-b border-gray-200 relative">
+<div class="hidden lg:block bg-slate-100 relative">
     <div class="max-w-[1440px] mx-auto px-6">
-        <nav aria-label="Main navigation">
-            <ul class="flex items-center">
+        {{-- ── Mega nav (bottom row) ────────────────────────────────────────── --}}
+        <nav class="relative flex items-center" aria-label="Main navigation">
+            <ul class="flex items-center flex-wrap w-full" role="menubar">
 
-{{-- ────────────────────────────────────────────────────────────────────
-     NAV 1 — Certifications (card-based mega menu)
-──────────────────────────────────────────────────────────────────────── --}}
-<li @mouseenter="on('certs')" @mouseleave="off()">
-    <button role="menuitem" aria-haspopup="true" :aria-expanded="openMenu==='certs'"
-            class="flex items-center gap-1 px-3.5 py-4 text-[13px] font-bold whitespace-nowrap transition-colors focus:outline-none"
-            :class="openMenu==='certs' ? 'text-[#08186A] border-b-2 border-[#08186A]' : 'text-gray-700 hover:text-[#08186A] border-b-2 border-transparent'">
+{{-- ── 1. Membership & Registrations ──────────────────────────── --}}
+<li @mouseenter="on('membership')" @mouseleave="off()" role="none">
+    <button role="menuitem" aria-haspopup="true" :aria-expanded="openMenu==='membership'"
+        class="flex items-center gap-1 px-3 py-[14px] text-[15px] font-semibold whitespace-nowrap transition-colors"
+        :class="openMenu==='membership' ? 'text-[#0B2F5E]' : 'text-gray-500 hover:text-[#0B2F5E]'">
+        Membership
+        <svg class="w-3 h-3 transition-transform duration-200" :class="openMenu==='membership'?'rotate-180':''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+    </button>
+    <div x-show="openMenu==='membership'" @mouseenter="keep('membership')" @mouseleave="off()"
+         x-transition:enter="transition ease-out duration-150"
+         x-transition:enter-start="opacity-0 translate-y-1"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         class="absolute left-0 right-0 top-full pt-1 z-50" style="display:none">
+        <div class="bg-white border border-gray-200 rounded-b-xl shadow-2xl" role="menu">
+            <div class="grid grid-cols-3 divide-x divide-gray-100 p-6">
+                <div class="pr-6">
+                    <p class="text-[14px] font-bold uppercase tracking-widest text-gray-400 mb-3">Membership Types</p>
+                    @foreach($nav['membership']['types'] as $link)
+                    <a href="{{ $u($link['path']) }}" class="flex items-center gap-2 py-1.5 text-[15px] text-gray-500 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">{!! $chevron !!} {{ $link['label'] }}</a>
+                    @endforeach
+                </div>
+                <div class="px-6">
+                    <p class="text-[14px] font-bold uppercase tracking-widest text-gray-400 mb-3">Why AAPSCM</p>
+                    @foreach([
+                        ['Become a Chartered Professional/Manager',   '/chartered-supply-chain-professional-member'],
+                        ['Why Join AAPSCM®',      '/why-join-aapscm'],
+                    ] as [$label, $path])
+                    <a href="{{ $u($path) }}" class="flex items-center gap-2 py-1.5 text-[15px] text-gray-500 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">{!! $chevron !!} {{ $label }}</a>
+                    @endforeach
+                </div>
+                <div class="pl-6">
+                    <p class="text-[14px] font-bold uppercase tracking-widest text-gray-400 mb-3">Membership Overview</p>
+                    @foreach($nav['membership']['overview'] as $link)
+                    <a href="{{ $u($link['path']) }}" class="flex items-center gap-2 py-1.5 text-[15px] text-gray-500 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">{!! $chevron !!} {{ $link['label'] }}</a>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</li>
+
+{{-- ── 2. Certifications ──────────────────────────── --}}
+@php
+$ob = '<svg class="w-3.5 h-3.5 flex-shrink-0 mt-px" viewBox="0 0 14 14"><circle cx="7" cy="7" r="7" fill="#e85d04"/><path d="M5.5 4.5 9 7 5.5 9.5V4.5z" fill="white"/></svg>';
+$certCats = [
+    [
+        'label' => 'Procurement Management',
+        'path'  => '/procurement-management-certifications',
+        'certs' => [
+            ['ACPP®',      '/acpp'],
+            ['ACPM®',      '/american-certified-procurement-manager-acpm'],
+            ['AC-DPA®',    '/american-certified-digital-procurement-analytics-specialist'],
+            ['AC-SGPES®',  '/american-certified-sustainable-procurement-ethical-sourcing-professional'],
+            ['AC-PRM®',    '/american-certified-procurement-risk-management-specialist'],
+            ['AC-SPR®',    '/american-certified-strategic-procurement-supplier-relationship-specialist'],
+            ['CHPP®',      '/chartered-healthcare-procurement-solutions-professional-chpp'],
+            ['CHPM®',      '/chartered-healthcare-procurement-solutions-manager-chpm'],
+            ['CSP-SRM®',   '/chartered-strategic-procurement-supplier-relationship-specialist'],
+            ['ACIPDT®',    '/american-certified-it-procurement-digital-transformation-specialist'],
+            ['AC-PSPC®',   '/american-certified-public-sector-procurement-compliance-specialist'],
+            ['AC-GPCS®',   '/american-certified-global-procurement-cross-border-supply-specialist-ac-gpcss'],
+            ['AC-PDS®',    '/american-certified-procurement-data-science-ai-specialist-ac-pdss'],
+            ['AC-PLCM®',   '/american-certified-procurement-leadership-change-management-specialist'],
+            ['AC-PARP®',   '/american-certified-procurement-automation-rpa-specialist-ac-paras-2'],
+            ['CAIPP®',     '/chartered-ai-procurement-professional-caipp'],
+            ['CAIPM®',     '/chartered-ai-procurement-manager-caipm'],
+            ['CAIRPP®',    '/certified-ai-amp-rpa-procurement-professional-cairpp'],
+            ['CAIRPM®',    '/certified-ai-rpa-procurement-manager-cairpm'],
+            ['CIPPM®',     '/certified-international-professional-in-procurement-materials-management-cippm'],
+            ['CIMPM®',     '/certified-international-manager-in-procurement-materials-management-cimpm'],
+        ],
+    ],
+    [
+        'label' => 'Supply Chain Management',
+        'path'  => '/supply-chain-management-certifications',
+        'certs' => [
+            ['ACSCP®',    '/the-american-certified-supply-chain-professional-acscp'],
+            ['ACSCM®',    '/chartered-supply-chain-manager-acscm'],
+            ['CSCT®',     '/acsct'],
+            ['CA-SCCM®',  '/chartered-advanced-supply-chain-cybersecurity-manager-ca-sccm'],
+            ['CSSCM®',    '/chartered-sustainable-supply-chain-manager-csscm'],
+            ['AC-BSCP®',  '/american-certified-blockchain-for-supply-chain-professional-ac-bscp'],
+            ['AC-DSCI®',  '/american-certified-digital-supply-chain-integration-professional-ac-dscip'],
+            ['AC-CSCSP®', '/american-certified-sustainable-and-circular-supply-chain-professional-ac-cscsp'],
+            ['AC-SCCP®',  '/american-certified-supply-chain-cybersecurity-professional-ac-sccp'],
+            ['AC-SCCM®',  '/american-certified-supply-chain-cybersecurity-manager-ac-sccm'],
+            ['AC-SCDTP®', '/american-certified-supply-chain-digital-transformation-professional-ac-scdtp'],
+            ['AC-SCDTM®', '/american-certified-supply-chain-digital-transformation-manager-ac-scdtm'],
+            ['AC-GSRP®',  '/american-certified-global-supply-chain-risk-and-resilience-professionalac-gsrp'],
+            ['AC-GSRM®',  '/american-certified-global-supply-chain-risk-and-resilience-manager-ac-gsrm'],
+            ['CIPWIM®',   '/certified-international-professional-in-warehouse-inventory-management-cipwim'],
+            ['CIMWIM®',   '/certified-international-manager-in-warehouse-inventory-management-cimwim'],
+            ['CHSTE®',    '/chartered-healthcare-supply-chain-transformation-executive-chste'],
+            ['CCP®',      '/certified-contract-professional-ccp'],
+            ['CCM®',      '/certified-contract-manager-ccm'],
+            ['CCMC®',     '/certified-contract-management-consultant-ccmc'],
+        ],
+    ],
+    [
+        'label' => 'Tourism Management',
+        'path'  => '/tourism-management-certifications',
+        'certs' => [
+            ['CTM®',       '/ctm-2'],
+            ['ACTP®',      '/american-certified-tourism-professional'],
+            ['CSCTM®',     '/chartered-sustainable-culinary-tourism-manager-csctm'],
+            ['A-HXP®',     '/certified-ai-powered-hospitality-experience-professional-a-hxp'],
+            ['A-HXM®',     '/certified-ai-powered-hospitality-experience-manager-a-hxm'],
+            ['AITP-DMS®',  '/certified-ai-enabled-travel-personalization-digital-marketing-specialist-aitp-dms'],
+            ['AITP-DMM®',  '/certified-ai-enabled-travel-personalization-digital-marketing-manager-aitp-dmm'],
+            ['CSHI®',      '/certified-sustainable-hospitality-innovator-cshi'],
+            ['CDTEP®',     '/certified-digital-tourism-experience-professional-cdtep'],
+            ['CDTEM®',     '/certified-digital-tourism-experience-manager-cdtem'],
+            ['GEDP®',      '/certified-global-event-destination-professional-gedp'],
+            ['GEDM®',      '/certified-global-event-destination-manager-gedm'],
+            ['CTTP®',      '/certified-tourism-technology-professional-cttp'],
+            ['AITA®',      '/certified-ai-driven-tourism-data-analyst-aita'],
+            ['SDMP®',      '/certified-smart-destination-management-professional-sdmp'],
+            ['DTTS®',      '/certified-digital-tourism-transformation-specialist-dtts'],
+        ],
+    ],
+    [
+        'label' => 'E-Commerce',
+        'path'  => '/e-commerce-certifications ',
+        'certs' => [
+            ['AC-ESGP®', '/american-certified-e-commerce-strategy-and-growth-professional-ac-esgp'],
+            ['AC-DMUX®', '/american-certified-digital-merchandising-and-user-experience-professional-ac-dmux'],
+            ['CED-AI®',  '/chartered-e-commerce-data-analytics-and-ai-professional-ced-ai'],
+            ['AC-SEEP®', '/american-certified-ethical-practices-sustainable-e-commerce-professional-ac-seep'],
+            ['CGCBE®',   '/chartered-global-cross-border-e-commerce-manager-cgcbe'],
+        ],
+    ],
+    [
+        'label' => 'Combined Procurement &amp; SC',
+        'path'  => '/combined-procurement-logistics-and-supply-chain-certifications',
+        'certs' => [
+            ['AC-GPLSCP',   '/american-certified-global-procurement-logistics-amp-supply-chain-professional-ac-gplscp'],
+            ['CSP-SCM®',    '/chartered-strategic-procurement-supply-chain-manager-csp-scm'],
+            ['AC-PLSCM®',   '/advanced-certified-procurement-logistics-supply-chain-manager-ac-plscm'],
+            ['AC-SPGSCP®',  '/american-certified-sustainable-procurement-amp-green-supply-chain-professional-ac-spgscp'],
+            ['AC-DSCPTP®',  '/american-certified-digital-supply-chain-amp-procurement-transformation-professional-ac-dscptp'],
+            ['AC-PLTE®',    '/american-certified-procurement-logistics-transportation-expert-ac-plte'],
+            ['AC-APSCP®',   '/american-certified-agile-procurement-amp-supply-chain-professional-ac-apscp'],
+            ['AC-RCPPSC®',  '/american-certified-risk-amp-compliance-professional-in-procurement-amp-supply-chain-ac-rcppsc'],
+            ['EDPLSCL®',    '/executive-diploma-in-procurement-logistics-supply-chain-leadership-edplscl'],
+            ['CPLIMP®',     '/combined-procurement-logistics-and-supply-chain-certifications'],
+        ],
+    ],
+    [
+        'label' => 'AI &amp; Digital',
+        'path'  => '/artificial-intelligence-ai-courses',
+        'certs' => [
+            ['AC-SCAI®',   '/american-certified-supply-chain-artificial-intelligence-ai-professional-ac-scai'],
+            ['CSAI-M®',    '/chartered-supply-chain-artificial-intelligence-manager-csai-m'],
+            ['CAIPP®',     '/chartered-ai-procurement-professional-caipp'],
+            ['CAIPS®',     '/chartered-ai-procurement-strategist-caips'],
+            ['CAISCA®',    '/chartered-ai-supply-chain-analyst-caisca'],
+            ['CAIRPP®',    '/certified-ai-amp-rpa-procurement-professional-cairpp'],
+            ['CSPEAI®',    '/chartered-sustainable-procurement-esg-ai-manager-cspeai'],
+            ['CAISNRP®',   '/chartered-ai-supplier-negotiation-risk-professional-caisnrp'],
+            ['CAISNRM®',   '/chartered-ai-supplier-negotiation-risk-manager-caisnrm'],
+            ['CAIPFCM®',   '/american-certified-ai-procurement-fraud-amp-cybersecurity-manager-caipfcm'],
+            ['CSAI®',      '/chartered-supply-chain-artificial-intelligence-analyst'],
+            ['AC-AISCRC®', '/american-certified-ai-supply-chain-resilience-amp-crisis-manager-ac-aiscrc'],
+            ['AC-AIBPP®',  '/american-certified-ai-amp-blockchain-procurement-professional-ac-aibpp'],
+            ['AC-AIPDFA®', '/american-certified-ai-procurement-demand-amp-forecasting-analyst-ac-aipdfa'],
+            ['AC-AIPCSR®', '/american-certified-ai-procurement-chatbot-amp-supplier-relations-professional-ac-aipcsr'],
+            ['CAI-SPP®',   '/chartered-ai-driven-sustainable-procurement-professional-cai-spp'],
+            ['CAI-SPM®',   '/chartered-ai-driven-sustainable-procurement-manager-cai-spm'],
+            ['AITP-DMP®',  '/certified-ai-enabled-travel-personalization-digital-marketing-professional-aitp-dmp'],
+            ['AITP-DMM®',  '/certified-ai-enabled-travel-personalization-digital-marketing-manager-aitp-dmm'],
+        ],
+    ],
+];
+@endphp
+<li @mouseenter="on('certifications')" @mouseleave="off()" role="none">
+    <button role="menuitem" aria-haspopup="true" :aria-expanded="openMenu==='certifications'"
+        class="flex items-center gap-1 px-3 py-[14px] text-[15px] font-semibold whitespace-nowrap transition-colors"
+        :class="openMenu==='certifications' ? 'text-[#0B2F5E]' : 'text-gray-500 hover:text-[#0B2F5E]'">
         Certifications
-        <svg class="w-3 h-3 transition-transform duration-200" :class="openMenu==='certs'?'rotate-180':''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
-        </svg>
+        <svg class="w-3 h-3 transition-transform duration-200" :class="openMenu==='certifications'?'rotate-180':''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
     </button>
-    {{-- Mega menu panel --}}
-    <div x-show="openMenu==='certs'" @mouseenter="keep('certs')" @mouseleave="off()"
+    <div x-show="openMenu==='certifications'" @mouseenter="keep('certifications')" @mouseleave="off()"
          x-transition:enter="transition ease-out duration-150"
          x-transition:enter-start="opacity-0 translate-y-1"
          x-transition:enter-end="opacity-100 translate-y-0"
-         class="absolute left-0 right-0 top-full z-50"
-         style="display:none"
-         aria-label="Certifications menu">
-        <div class="bg-white border-t-2 border-[#08186A] shadow-2xl">
-            <div class="max-w-[1440px] mx-auto px-6 py-6">
-                <div class="flex gap-6">
-
-                    {{-- Left sidebar: overview links --}}
-                    <div class="flex-shrink-0 w-44 border-r border-gray-100 pr-6">
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Overview</p>
-                        @foreach($nav['cert_overview'] as $link)
-                        <a href="{{ $u($link['path']) }}"
-                           class="flex items-center gap-2 py-1.5 text-[13px] text-gray-600 hover:text-[#08186A] hover:font-semibold transition-colors rounded -mx-1 px-1"
-                           role="menuitem">
-                            {!! $chevron !!} {{ $link['label'] }}
-                        </a>
-                        @endforeach
-                    </div>
-
-                    {{-- Category cards grid (3 columns × 2 rows) --}}
-                    <div class="grid grid-cols-3 gap-3 flex-1 min-w-0">
-                        @foreach($nav['cert_categories'] as $cat)
-                        <div class="border border-gray-100 rounded-xl p-4 hover:border-[#08186A]/30 hover:shadow-md transition-all duration-200 group bg-white">
-                            <div class="flex items-start justify-between mb-1.5">
-                                <a href="{{ $u($cat['path']) }}"
-                                   class="text-sm font-bold text-[#08186A] group-hover:text-[#E85D04] transition-colors leading-snug block"
-                                   role="menuitem">
-                                    {{ $cat['label'] }}
-                                </a>
-                                @if(!empty($cat['badge']))
-                                <span class="flex-shrink-0 ml-2 text-[9px] font-bold uppercase bg-[#E85D04] text-white px-1.5 py-0.5 rounded-full tracking-wide">
-                                    {{ $cat['badge'] }}
-                                </span>
-                                @endif
-                            </div>
-                            <p class="text-[11px] text-gray-400 mb-3 leading-snug">{{ $cat['description'] }}</p>
-                            <div class="space-y-0.5 mb-3">
-                                @foreach($cat['featured'] as [$label, $path])
-                                <a href="{{ $u($path) }}"
-                                   class="flex items-center gap-1.5 text-[12px] text-gray-600 hover:text-[#08186A] py-0.5 transition-colors"
-                                   role="menuitem">
-                                    {!! $dot !!} {{ $label }}
-                                </a>
-                                @endforeach
-                            </div>
-                            <a href="{{ $u($cat['path']) }}"
-                               class="inline-flex items-center gap-1 text-[11px] font-semibold text-[#E85D04] hover:text-[#08186A] transition-colors"
-                               role="menuitem">
-                                View all {!! $arrow !!}
-                            </a>
+         class="absolute left-0 right-0 top-full pt-1 z-50" style="display:none">
+        <div class="bg-white border border-gray-200 rounded-b-xl shadow-2xl" role="menu">
+            <div class="flex p-6">
+                <div class="flex-shrink-0 w-44 border-r border-gray-100 pr-6">
+                    <p class="text-[14px] font-bold uppercase tracking-widest text-gray-400 mb-3">Certification Overview</p>
+                    @foreach([
+                        ['Certification Process',  '/certification-process'],
+                        ['Certification FAQs',     '/certifications-faq'],
+                        ['Benefits and Resources', '/benefits-and-resources'],
+                    ] as [$label, $path])
+                    <a href="{{ $u($path) }}" class="flex items-center gap-2 py-1.5 text-[15px] text-gray-600 hover:text-[#0B2F5E] hover:font-semibold transition-colors rounded -mx-1 px-1" role="menuitem">{!! $chevron !!} {{ $label }}</a>
+                    @endforeach
+                    <p class="text-[14px] font-bold uppercase tracking-widest text-gray-400 mt-4 mb-3">Resources</p>
+                    @foreach([
+                        ['4 Steps to Certification', '/4-steps-to-verification'],
+                        ['Workshop/Training',         '/workshop-trainings'],
+                    ] as [$label, $path])
+                    <a href="{{ $u($path) }}" class="flex items-center gap-2 py-1.5 text-[15px] text-gray-600 hover:text-[#0B2F5E] hover:font-semibold transition-colors rounded -mx-1 px-1" role="menuitem">{!! $chevron !!} {{ $label }}</a>
+                    @endforeach
+                </div>
+                <div class="grid grid-cols-3 gap-3 flex-1 pl-6">
+                    @foreach($certCats as $cat)
+                    <div class="border border-gray-100 rounded-xl overflow-hidden">
+                        <a href="{{ $u($cat['path']) }}"
+                           class="block bg-[#1e5c38] px-4 py-2 text-[14px] font-bold text-white hover:bg-[#174d30] transition-colors leading-snug"
+                           role="menuitem">{!! $cat['label'] !!}</a>
+                        <div class="p-3 max-h-[200px] overflow-y-auto space-y-0.5">
+                            @foreach($cat['certs'] as [$label, $path])
+                            <a href="{{ $u($path) }}" class="flex items-center gap-1.5 text-[14px] text-gray-600 hover:text-[#0B2F5E] py-0.5 transition-colors" role="menuitem">{!! $ob !!} {{ $label }}</a>
+                            @endforeach
                         </div>
-                        @endforeach
                     </div>
-
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
 </li>
 
-{{-- ────────────────────────────────────────────────────────────────────
-     NAV 2 — AI Courses
-──────────────────────────────────────────────────────────────────────── --}}
-<li @mouseenter="on('ai')" @mouseleave="off()">
-    <button role="menuitem" aria-haspopup="true" :aria-expanded="openMenu==='ai'"
-            class="flex items-center gap-1 px-3.5 py-4 text-[13px] font-bold whitespace-nowrap transition-colors focus:outline-none"
-            :class="openMenu==='ai' ? 'text-[#08186A] border-b-2 border-[#08186A]' : 'text-gray-700 hover:text-[#08186A] border-b-2 border-transparent'">
-        <span class="inline-flex items-center gap-1.5">
-            AI Courses
-            <span class="text-[9px] font-bold uppercase bg-[#E85D04] text-white px-1.5 py-0.5 rounded-full tracking-wide leading-none">New</span>
-        </span>
-        <svg class="w-3 h-3 transition-transform duration-200" :class="openMenu==='ai'?'rotate-180':''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
-        </svg>
+{{-- ── 3. Testing & Learning ──────────────────────────── --}}
+<li @mouseenter="on('testing')" @mouseleave="off()" role="none">
+    <button role="menuitem" aria-haspopup="true" :aria-expanded="openMenu==='testing'"
+        class="flex items-center gap-1 px-3 py-[14px] text-[15px] font-semibold whitespace-nowrap transition-colors"
+        :class="openMenu==='testing' ? 'text-[#0B2F5E]' : 'text-gray-500 hover:text-[#0B2F5E]'">
+        Testing &amp; Learning
+        <svg class="w-3 h-3 transition-transform duration-200" :class="openMenu==='testing'?'rotate-180':''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
     </button>
-    <div x-show="openMenu==='ai'" @mouseenter="keep('ai')" @mouseleave="off()"
+    <div x-show="openMenu==='testing'" @mouseenter="keep('testing')" @mouseleave="off()"
          x-transition:enter="transition ease-out duration-150"
          x-transition:enter-start="opacity-0 translate-y-1"
          x-transition:enter-end="opacity-100 translate-y-0"
-         class="absolute left-0 right-0 top-full z-50"
-         style="display:none"
-         aria-label="AI Courses menu">
-        <div class="bg-white border-t-2 border-[#E85D04] shadow-2xl">
-            <div class="max-w-[1440px] mx-auto px-6 py-5">
-                <div class="flex gap-8 max-w-xl">
-                    <div>
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Artificial Intelligence Programs</p>
-                        @foreach($nav['ai_courses'] as $link)
-                        <a href="{{ $u($link['path']) }}"
-                           class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#08186A] hover:font-semibold transition-colors"
-                           role="menuitem">
-                            {!! $chevron !!} {{ $link['label'] }}
-                        </a>
-                        @endforeach
-                        <div class="mt-4 pt-4 border-t border-gray-100">
-                            <a href="{{ $u('/artificial-intelligence-ai-courses') }}"
-                               class="inline-flex items-center gap-1.5 text-sm font-bold text-white hover:text-white bg-[#E85D04] hover:bg-[#c94e02] px-4 py-2 rounded-full transition-colors">
-                                Browse All AI Courses {!! $arrow !!}
-                            </a>
-                        </div>
-                    </div>
+         class="absolute left-0 right-0 top-full pt-1 z-50" style="display:none">
+        <div class="bg-white border border-gray-200 rounded-b-xl shadow-2xl" role="menu">
+            <div class="grid grid-cols-2 gap-8 max-w-2xl divide-x divide-gray-100 p-6">
+                <div>
+                    <p class="text-[14px] font-bold uppercase tracking-widest text-gray-400 mb-3">Testing Overview</p>
+                    @foreach([
+                        ['About Testing Options',       '/about-testing-options'],
+                        ['Online Exams',                '/online-exam'],
+                        ['Certification/Program Match', '/programs-match'],
+                        ['In-Person Exam Proctoring',   '/exam-proctoring '],
+                    ] as [$label, $path])
+                    <a href="{{ $u($path) }}" class="flex items-center gap-2 py-1.5 text-[15px] text-gray-500 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">{!! $chevron !!} {{ $label }}</a>
+                    @endforeach
+                </div>
+                <div class="pl-8">
+                    <p class="text-[14px] font-bold uppercase tracking-widest text-gray-400 mb-3">Policies &amp; Support</p>
+                    @foreach([
+                        ['About Exam Policies',  '/certificate-exam-policies'],
+                        ['Exam Support Hotline', '/aapscm-hotline'],
+                    ] as [$label, $path])
+                    <a href="{{ $u($path) }}" class="flex items-center gap-2 py-1.5 text-[15px] text-gray-500 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">{!! $chevron !!} {{ $label }}</a>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
 </li>
 
-{{-- ────────────────────────────────────────────────────────────────────
-     NAV 3 — Executive Diplomas
-──────────────────────────────────────────────────────────────────────── --}}
-<li @mouseenter="on('diploma')" @mouseleave="off()">
+{{-- ── 4. Resources ──────────────────────────── --}}
+<li @mouseenter="on('resources')" @mouseleave="off()" role="none">
+    <button role="menuitem" aria-haspopup="true" :aria-expanded="openMenu==='resources'"
+        class="flex items-center gap-1 px-3 py-[14px] text-[15px] font-semibold whitespace-nowrap transition-colors"
+        :class="openMenu==='resources' ? 'text-[#0B2F5E]' : 'text-gray-500 hover:text-[#0B2F5E]'">
+        Resources
+        <svg class="w-3 h-3 transition-transform duration-200" :class="openMenu==='resources'?'rotate-180':''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+    </button>
+    <div x-show="openMenu==='resources'" @mouseenter="keep('resources')" @mouseleave="off()"
+         x-transition:enter="transition ease-out duration-150"
+         x-transition:enter-start="opacity-0 translate-y-1"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         class="absolute left-0 right-0 top-full pt-1 z-50" style="display:none">
+        <div class="bg-white border border-gray-200 rounded-b-xl shadow-2xl" role="menu">
+            <div class="grid grid-cols-3 divide-x divide-gray-100 p-6">
+                <div class="pr-6">
+                    <p class="text-[14px] font-bold uppercase tracking-widest text-gray-400 mb-3">Quick Links</p>
+                    @foreach([
+                        ['Certification Process', '/certification-process'],
+                        ['Benefits &amp; Resources',  '/benefits-and-resources'],
+                        ['Online Store',          '/online-courses'],
+                        ['Exam FAQs',             '/certifications-faq'],
+                        ['Verify a Certificate',  '/verify-a-certificate '],
+                    ] as [$label, $path])
+                    <a href="{{ $u($path) }}" class="flex items-center gap-2 py-1.5 text-[15px] text-gray-500 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">{!! $chevron !!} {!! $label !!}</a>
+                    @endforeach
+                </div>
+                <div class="px-6">
+                    <p class="text-[14px] font-bold uppercase tracking-widest text-gray-400 mb-2">Brochures</p>
+                    @foreach([
+                        ['Become Authorized Training Partner', '/become-a-authorized-training-partner'],
+                        ['Purchase Brochures and Books',       '/online-courses'],
+                    ] as [$label, $path])
+                    <a href="{{ $u($path) }}" class="flex items-center gap-2 py-1.5 text-[15px] text-gray-500 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">{!! $chevron !!} {{ $label }}</a>
+                    @endforeach
+                </div>
+                <div class="pl-6">
+                    <p class="text-[14px] font-bold uppercase tracking-widest text-gray-400 mb-3">Career Tools</p>
+                    @foreach([
+                        ['Program Match – AAPSCM', '/programs-match'],
+                        ['AAPSCM® Community',       '/communities'],
+                        ['USA Chapters',            '/us-charters'],
+                    ] as [$label, $path])
+                    <a href="{{ $u($path) }}" class="flex items-center gap-2 py-1.5 text-[15px] text-gray-500 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">{!! $chevron !!} {{ $label }}</a>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</li>
+
+{{-- ── 5. Corporate Solutions ──────────────────────────── --}}
+<li @mouseenter="on('corporate')" @mouseleave="off()" role="none">
+    <button role="menuitem" aria-haspopup="true" :aria-expanded="openMenu==='corporate'"
+        class="flex items-center gap-1 px-3 py-[14px] text-[15px] font-semibold whitespace-nowrap transition-colors"
+        :class="openMenu==='corporate' ? 'text-[#0B2F5E]' : 'text-gray-500 hover:text-[#0B2F5E]'">
+        Corporate Solutions
+        <svg class="w-3 h-3 transition-transform duration-200" :class="openMenu==='corporate'?'rotate-180':''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+    </button>
+    <div x-show="openMenu==='corporate'" @mouseenter="keep('corporate')" @mouseleave="off()"
+         x-transition:enter="transition ease-out duration-150"
+         x-transition:enter-start="opacity-0 translate-y-1"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         class="absolute left-0 right-0 top-full pt-1 z-50" style="display:none">
+        <div class="bg-white border border-gray-200 rounded-b-xl shadow-2xl" role="menu">
+            <div class="grid grid-cols-2 gap-8 max-w-2xl divide-x divide-gray-100 p-6">
+                <div>
+                    <p class="text-[14px] font-bold uppercase tracking-widest text-gray-400 mb-3">Corporate Programs</p>
+                    @foreach([
+                        ['Corporate Membership',               '/corporate-membership'],
+                        ['Become Authorized Training Partner', '/become-a-authorized-training-partner'],
+                        ['Affiliate Partners',                 '/affiliate-partners'],
+                        ['USA Chapters',                       '/us-charters '],
+                    ] as [$label, $path])
+                    <a href="{{ $u($path) }}" class="flex items-center gap-2 py-1.5 text-[15px] text-gray-500 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">{!! $chevron !!} {{ $label }}</a>
+                    @endforeach
+                </div>
+                <div class="pl-8">
+                    <p class="text-[14px] font-bold uppercase tracking-widest text-gray-400 mb-3">Training &amp; Resources</p>
+                    @foreach([
+                        ['Benefits and Resources',   '/benefits-and-resources'],
+                        ['Corporate Training',       '/workshop-trainings'],
+                        ['Bulk Certification Seats', '/online-courses'],
+                    ] as [$label, $path])
+                    <a href="{{ $u($path) }}" class="flex items-center gap-2 py-1.5 text-[15px] text-gray-500 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">{!! $chevron !!} {{ $label }}</a>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</li>
+
+{{-- ── 6. Credentialing ──────────────────────────── --}}
+<li @mouseenter="on('credentialing')" @mouseleave="off()" role="none">
+    <button role="menuitem" aria-haspopup="true" :aria-expanded="openMenu==='credentialing'"
+        class="flex items-center gap-1 px-3 py-[14px] text-[15px] font-semibold whitespace-nowrap transition-colors"
+        :class="openMenu==='credentialing' ? 'text-[#0B2F5E]' : 'text-gray-500 hover:text-[#0B2F5E]'">
+        Credentialing
+        <svg class="w-3 h-3 transition-transform duration-200" :class="openMenu==='credentialing'?'rotate-180':''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+    </button>
+    <div x-show="openMenu==='credentialing'" @mouseenter="keep('credentialing')" @mouseleave="off()"
+         x-transition:enter="transition ease-out duration-150"
+         x-transition:enter-start="opacity-0 translate-y-1"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         class="absolute left-0 right-0 top-full pt-1 z-50" style="display:none">
+        <div class="bg-white border border-gray-200 rounded-b-xl shadow-2xl" role="menu">
+            <div class="grid grid-cols-2 gap-8 max-w-3xl divide-x divide-gray-100 p-6">
+                <div>
+                    <p class="text-[14px] font-bold uppercase tracking-widest text-gray-400 mb-3">Manage Your Credential</p>
+                    @foreach([
+                        ['Which Certification Is Right For You?', '/which-certification-is-right-for-you'],
+                        ['Renew a Certification',                  '/request-pdes-for-certificate'],
+                        ['Renew Professional Membership',          '/professional-membership-renewal'],
+                        ['Verify a Certification',                 '/verify-a-certificate'],
+                        ['Obtain Professional Certification',      '/certification-for-professionals'],
+                        ['Digital Badges',                         '/digital-badges'],
+                    ] as [$label, $path])
+                    <a href="{{ $u($path) }}" class="flex items-center gap-2 py-1.5 text-[15px] text-gray-500 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">{!! $chevron !!} {{ $label }}</a>
+                    @endforeach
+                </div>
+                <div class="pl-8">
+                    <p class="text-[14px] font-bold uppercase tracking-widest text-gray-400 mb-3">Which Exam Prep</p>
+                    @foreach([
+                        ['Train Your Way With Official AAPSCM Exam Prep',         '/certification-process/#certificate-categories'],
+                        ["Build Your Team's Performance With Customized Training", '/training-and-credentialing'],
+                    ] as [$label, $path])
+                    <a href="{{ $u($path) }}" class="flex items-center gap-2 py-1.5 text-[15px] text-gray-500 hover:text-[#0B2F5E] hover:font-semibold transition-colors" role="menuitem">{!! $chevron !!} {{ $label }}</a>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</li>
+
+{{-- ── 7. Executive Diploma Programs ──────────────────────────── --}}
+<li @mouseenter="on('diploma')" @mouseleave="off()" role="none">
     <button role="menuitem" aria-haspopup="true" :aria-expanded="openMenu==='diploma'"
-            class="flex items-center gap-1 px-3.5 py-4 text-[13px] font-bold whitespace-nowrap transition-colors focus:outline-none"
-            :class="openMenu==='diploma' ? 'text-[#08186A] border-b-2 border-[#08186A]' : 'text-gray-700 hover:text-[#08186A] border-b-2 border-transparent'">
-        Executive Diplomas
-        <svg class="w-3 h-3 transition-transform duration-200" :class="openMenu==='diploma'?'rotate-180':''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
-        </svg>
+        class="flex items-center gap-1 px-3 py-[14px] text-[15px] font-semibold whitespace-nowrap transition-colors"
+        :class="openMenu==='diploma' ? 'text-[#0B2F5E]' : 'text-gray-500 hover:text-[#0B2F5E]'">
+        Executive Diploma
+        <svg class="w-3 h-3 transition-transform duration-200" :class="openMenu==='diploma'?'rotate-180':''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
     </button>
     <div x-show="openMenu==='diploma'" @mouseenter="keep('diploma')" @mouseleave="off()"
          x-transition:enter="transition ease-out duration-150"
          x-transition:enter-start="opacity-0 translate-y-1"
          x-transition:enter-end="opacity-100 translate-y-0"
-         class="absolute left-0 right-0 top-full z-50"
-         style="display:none"
-         aria-label="Executive Diplomas menu">
-        <div class="bg-white border-t-2 border-[#08186A] shadow-2xl">
-            <div class="max-w-[1440px] mx-auto px-6 py-5">
-                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-4">Executive Diploma Programs</p>
+         class="absolute left-0 right-0 top-full pt-1 z-50" style="display:none">
+        <div class="bg-white border border-gray-200 rounded-b-xl shadow-2xl" role="menu">
+            <div class="p-6">
+                <p class="text-[14px] font-bold uppercase tracking-widest text-gray-400 mb-4">Executive Diploma Programs</p>
+                @php
+                $diplomaLinks = [
+                    ['ED-AIPST®',   'AI-Driven Procurement Strategy &amp; Transformation',        '/executive-diploma-in-ai-driven-procurement-strategy-transformation-ed-aipst'],
+                    ['ED-SRCEAI®',  'AI-Powered Supplier Risk, Compliance &amp; ESG Management',  '/executive-diploma-in-ai-powered-supplier-risk-compliance-esg-management-ed-srceai'],
+                    ['ED-CMAAI®',   'AI-Integrated Contract Management &amp; Automation',          '/executive-diploma-in-ai-integrated-contract-management-automation-ed-cmaai'],
+                    ['ED-SSNI-AI®', 'AI-Based Strategic Sourcing &amp; Negotiation Intelligence', '/executive-diploma-in-ai-based-strategic-sourcing-negotiation-intelligence-ed-ssni-ai'],
+                    ['ED-POAAI®',   'AI-Driven Procurement Operations &amp; Automation',           '/executive-diploma-in-ai-driven-procurement-operations-automation-ed-poaai'],
+                ];
+                @endphp
                 <div class="grid grid-cols-2 gap-3 max-w-3xl">
-                    @foreach($nav['executive_diplomas'] as $ed)
-                    <a href="{{ $u($ed['path']) }}"
-                       class="flex gap-3 p-3 rounded-xl border border-gray-100 hover:border-[#08186A]/30 hover:shadow-md transition-all group"
+                    @foreach($diplomaLinks as [$code, $l, $path])
+                    <a href="{{ $u($path) }}"
+                       class="flex gap-3 p-3 rounded-xl border border-gray-100 hover:border-[#0B2F5E]/30 hover:shadow-md transition-all group"
                        role="menuitem">
-                        <div class="flex-shrink-0 w-14 h-10 bg-[#08186A]/5 rounded-lg flex items-center justify-center">
-                            <span class="text-[9px] font-bold text-[#08186A] text-center leading-tight px-1">{{ $ed['code'] }}</span>
+                        <div class="flex-shrink-0 w-14 h-10 bg-[#0B2F5E]/5 rounded-lg flex items-center justify-center">
+                            <span class="text-[11px] font-bold text-[#0B2F5E] text-center leading-tight px-1">{{ $code }}</span>
                         </div>
                         <div class="min-w-0">
-                            <p class="text-[11px] font-bold text-[#08186A] group-hover:text-[#E85D04] transition-colors leading-snug">{{ $ed['code'] }}</p>
-                            <p class="text-[11px] text-gray-500 leading-snug mt-0.5">{{ $ed['label'] }}</p>
+                            <p class="text-[13px] font-bold text-[#0B2F5E] group-hover:text-[#E85D04] transition-colors leading-snug">{{ $code }}</p>
+                            <p class="text-[13px] text-gray-500 leading-snug mt-0.5">{!! $l !!}</p>
                         </div>
                     </a>
                     @endforeach
@@ -541,196 +823,13 @@
     </div>
 </li>
 
-{{-- ────────────────────────────────────────────────────────────────────
-     NAV 4 — Exams & Learning
-──────────────────────────────────────────────────────────────────────── --}}
-<li @mouseenter="on('exams')" @mouseleave="off()">
-    <button role="menuitem" aria-haspopup="true" :aria-expanded="openMenu==='exams'"
-            class="flex items-center gap-1 px-3.5 py-4 text-[13px] font-bold whitespace-nowrap transition-colors focus:outline-none"
-            :class="openMenu==='exams' ? 'text-[#08186A] border-b-2 border-[#08186A]' : 'text-gray-700 hover:text-[#08186A] border-b-2 border-transparent'">
-        Exams & Learning
-        <svg class="w-3 h-3 transition-transform duration-200" :class="openMenu==='exams'?'rotate-180':''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
-        </svg>
-    </button>
-    <div x-show="openMenu==='exams'" @mouseenter="keep('exams')" @mouseleave="off()"
-         x-transition:enter="transition ease-out duration-150"
-         x-transition:enter-start="opacity-0 translate-y-1"
-         x-transition:enter-end="opacity-100 translate-y-0"
-         class="absolute left-0 right-0 top-full z-50"
-         style="display:none"
-         aria-label="Exams and Learning menu">
-        <div class="bg-white border-t-2 border-[#08186A] shadow-2xl">
-            <div class="max-w-[1440px] mx-auto px-6 py-5">
-                <div class="grid grid-cols-2 gap-8 max-w-2xl divide-x divide-gray-100">
-                    <div>
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Testing Overview</p>
-                        @foreach($nav['exams_learning']['testing'] as $link)
-                        <a href="{{ $u($link['path']) }}"
-                           class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#08186A] hover:font-semibold transition-colors"
-                           role="menuitem">
-                            {!! $chevron !!} {{ $link['label'] }}
-                        </a>
-                        @endforeach
-                    </div>
-                    <div class="pl-8">
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Policies & Support</p>
-                        @foreach($nav['exams_learning']['policies'] as $link)
-                        <a href="{{ $u($link['path']) }}"
-                           class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#08186A] hover:font-semibold transition-colors"
-                           role="menuitem">
-                            {!! $chevron !!} {{ $link['label'] }}
-                        </a>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</li>
-
-{{-- ────────────────────────────────────────────────────────────────────
-     NAV 5 — Membership
-──────────────────────────────────────────────────────────────────────── --}}
-<li @mouseenter="on('membership')" @mouseleave="off()">
-    <button role="menuitem" aria-haspopup="true" :aria-expanded="openMenu==='membership'"
-            class="flex items-center gap-1 px-3.5 py-4 text-[13px] font-bold whitespace-nowrap transition-colors focus:outline-none"
-            :class="openMenu==='membership' ? 'text-[#08186A] border-b-2 border-[#08186A]' : 'text-gray-700 hover:text-[#08186A] border-b-2 border-transparent'">
-        Membership
-        <svg class="w-3 h-3 transition-transform duration-200" :class="openMenu==='membership'?'rotate-180':''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
-        </svg>
-    </button>
-    <div x-show="openMenu==='membership'" @mouseenter="keep('membership')" @mouseleave="off()"
-         x-transition:enter="transition ease-out duration-150"
-         x-transition:enter-start="opacity-0 translate-y-1"
-         x-transition:enter-end="opacity-100 translate-y-0"
-         class="absolute left-0 right-0 top-full z-50"
-         style="display:none"
-         aria-label="Membership menu">
-        <div class="bg-white border-t-2 border-[#08186A] shadow-2xl">
-            <div class="max-w-[1440px] mx-auto px-6 py-5">
-                <div class="grid grid-cols-2 gap-8 max-w-2xl divide-x divide-gray-100">
-                    <div>
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Membership Types</p>
-                        @foreach($nav['membership']['types'] as $link)
-                        <a href="{{ $u($link['path']) }}"
-                           class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#08186A] hover:font-semibold transition-colors"
-                           role="menuitem">
-                            {!! $chevron !!} {{ $link['label'] }}
-                        </a>
-                        @endforeach
-                    </div>
-                    <div class="pl-8">
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Membership Overview</p>
-                        @foreach($nav['membership']['overview'] as $link)
-                        <a href="{{ $u($link['path']) }}"
-                           class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#08186A] hover:font-semibold transition-colors"
-                           role="menuitem">
-                            {!! $chevron !!} {{ $link['label'] }}
-                        </a>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</li>
-
-{{-- ────────────────────────────────────────────────────────────────────
-     NAV 6 — For Business
-──────────────────────────────────────────────────────────────────────── --}}
-<li @mouseenter="on('business')" @mouseleave="off()">
-    <button role="menuitem" aria-haspopup="true" :aria-expanded="openMenu==='business'"
-            class="flex items-center gap-1 px-3.5 py-4 text-[13px] font-bold whitespace-nowrap transition-colors focus:outline-none"
-            :class="openMenu==='business' ? 'text-[#08186A] border-b-2 border-[#08186A]' : 'text-gray-700 hover:text-[#08186A] border-b-2 border-transparent'">
-        For Business
-        <svg class="w-3 h-3 transition-transform duration-200" :class="openMenu==='business'?'rotate-180':''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
-        </svg>
-    </button>
-    <div x-show="openMenu==='business'" @mouseenter="keep('business')" @mouseleave="off()"
-         x-transition:enter="transition ease-out duration-150"
-         x-transition:enter-start="opacity-0 translate-y-1"
-         x-transition:enter-end="opacity-100 translate-y-0"
-         class="absolute left-0 right-0 top-full z-50"
-         style="display:none"
-         aria-label="For Business menu">
-        <div class="bg-white border-t-2 border-[#08186A] shadow-2xl">
-            <div class="max-w-[1440px] mx-auto px-6 py-5">
-                <div class="grid grid-cols-2 gap-8 max-w-2xl divide-x divide-gray-100">
-                    <div>
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Corporate Programs</p>
-                        @foreach($nav['for_business']['programs'] as $link)
-                        <a href="{{ $u($link['path']) }}"
-                           class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#08186A] hover:font-semibold transition-colors"
-                           role="menuitem">
-                            {!! $chevron !!} {{ $link['label'] }}
-                        </a>
-                        @endforeach
-                    </div>
-                    <div class="pl-8">
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Training & Resources</p>
-                        @foreach($nav['for_business']['training'] as $link)
-                        <a href="{{ $u($link['path']) }}"
-                           class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#08186A] hover:font-semibold transition-colors"
-                           role="menuitem">
-                            {!! $chevron !!} {{ $link['label'] }}
-                        </a>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</li>
-
-{{-- ────────────────────────────────────────────────────────────────────
-     NAV 7 — Resources
-──────────────────────────────────────────────────────────────────────── --}}
-<li @mouseenter="on('resources')" @mouseleave="off()">
-    <button role="menuitem" aria-haspopup="true" :aria-expanded="openMenu==='resources'"
-            class="flex items-center gap-1 px-3.5 py-4 text-[13px] font-bold whitespace-nowrap transition-colors focus:outline-none"
-            :class="openMenu==='resources' ? 'text-[#08186A] border-b-2 border-[#08186A]' : 'text-gray-700 hover:text-[#08186A] border-b-2 border-transparent'">
-        Resources
-        <svg class="w-3 h-3 transition-transform duration-200" :class="openMenu==='resources'?'rotate-180':''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
-        </svg>
-    </button>
-    <div x-show="openMenu==='resources'" @mouseenter="keep('resources')" @mouseleave="off()"
-         x-transition:enter="transition ease-out duration-150"
-         x-transition:enter-start="opacity-0 translate-y-1"
-         x-transition:enter-end="opacity-100 translate-y-0"
-         class="absolute left-0 right-0 top-full z-50"
-         style="display:none"
-         aria-label="Resources menu">
-        <div class="bg-white border-t-2 border-[#08186A] shadow-2xl">
-            <div class="max-w-[1440px] mx-auto px-6 py-5">
-                <div class="grid grid-cols-2 gap-8 max-w-2xl divide-x divide-gray-100">
-                    <div>
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Quick Links</p>
-                        @foreach($nav['resources']['quick'] as $link)
-                        <a href="{{ $u($link['path']) }}"
-                           class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#08186A] hover:font-semibold transition-colors"
-                           role="menuitem">
-                            {!! $chevron !!} {{ $link['label'] }}
-                        </a>
-                        @endforeach
-                    </div>
-                    <div class="pl-8">
-                        <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Career Tools</p>
-                        @foreach($nav['resources']['tools'] as $link)
-                        <a href="{{ $u($link['path']) }}"
-                           class="flex items-center gap-2 py-1.5 text-sm text-gray-700 hover:text-[#08186A] hover:font-semibold transition-colors"
-                           role="menuitem">
-                            {!! $chevron !!} {{ $link['label'] }}
-                        </a>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+{{-- ── 8. AI Courses (direct link) ──────────────────────────── --}}
+<li role="none">
+    <a href="{{ $u('/artificial-intelligence-ai-courses') }}"
+       role="menuitem"
+       class="block px-3 py-[14px] text-[15px] font-semibold whitespace-nowrap text-gray-500 hover:text-[#0B2F5E] transition-colors">
+        AI Courses
+    </a>
 </li>
 
             </ul>
@@ -761,7 +860,7 @@
                 </svg>
                 <input type="text" name="q"
                        placeholder="Search courses, certifications..."
-                       class="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none border-0 focus:ring-0"
+                       class="flex-1 bg-transparent text-base text-gray-500 placeholder-gray-400 outline-none border-0 focus:ring-0"
                        aria-label="Search AAPSCM">
                 <button type="submit" class="flex-shrink-0 text-[#08186A]" aria-label="Submit search">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -775,7 +874,7 @@
     {{-- Explore Courses CTA --}}
     <div class="px-4 py-3 border-b border-gray-100">
         <a href="{{ $u('/all-courses') }}"
-           class="flex items-center justify-center gap-2 w-full text-sm font-bold text-white bg-[#E85D04] hover:bg-[#c94e02] px-5 py-3 rounded-full transition-colors">
+           class="flex items-center justify-center gap-2 w-full text-base font-bold text-white bg-[#E85D04] hover:bg-[#c94e02] px-5 py-3 rounded-full transition-colors">
             Explore Courses
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -788,20 +887,20 @@
         @auth
             <div class="flex items-center gap-3">
                 <a href="{{ $u('/dashboard') }}"
-                   class="flex-1 text-center text-sm font-semibold text-white bg-[#08186A] px-4 py-2.5 rounded-full transition-colors">
+                   class="flex-1 text-center text-base font-semibold text-white bg-[#08186A] px-4 py-2.5 rounded-full transition-colors">
                     My Dashboard
                 </a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
-                            class="text-sm text-gray-500 hover:text-[#08186A] px-3 py-2.5 rounded-full border border-gray-200 transition-colors">
+                            class="text-base text-gray-500 hover:text-[#08186A] px-3 py-2.5 rounded-full border border-gray-200 transition-colors">
                         Logout
                     </button>
                 </form>
             </div>
         @else
             <a href="{{ route('login') }}"
-               class="flex items-center justify-center w-full text-sm font-bold text-[#08186A] border-2 border-[#08186A] px-4 py-2.5 rounded-full hover:bg-[#08186A] hover:text-white transition-colors">
+               class="flex items-center justify-center w-full text-base font-bold text-[#08186A] border-2 border-[#08186A] px-4 py-2.5 rounded-full hover:bg-[#08186A] hover:text-white transition-colors">
                 Members Login
             </a>
         @endauth
@@ -812,7 +911,7 @@
     <div class="border-b border-gray-100">
         <button @click="mob('{{ $section['key'] }}')"
                 :aria-expanded="mobileSection === '{{ $section['key'] }}'"
-                class="w-full flex items-center justify-between px-4 py-4 text-sm font-bold text-gray-800 hover:text-[#08186A] hover:bg-gray-50 transition-colors focus:outline-none">
+                class="w-full flex items-center justify-between px-4 py-4 text-base font-bold text-gray-800 hover:text-[#08186A] hover:bg-gray-50 transition-colors focus:outline-none">
             {{ $section['label'] }}
             <svg class="w-4 h-4 text-gray-400 transition-transform duration-200 flex-shrink-0"
                  :class="mobileSection === '{{ $section['key'] }}' ? 'rotate-180 text-[#08186A]' : ''"
@@ -828,7 +927,7 @@
              style="display:none">
             @foreach($section['links'] as $link)
             <a href="{{ $u($link['path']) }}"
-               class="flex items-center gap-2.5 py-2.5 text-sm text-gray-700 hover:text-[#08186A] border-b border-gray-100 last:border-0 transition-colors">
+               class="flex items-center gap-2.5 py-2.5 text-base text-gray-500 hover:text-[#08186A] border-b border-gray-100 last:border-0 transition-colors">
                 <svg class="w-2.5 h-2.5 text-[#E85D04] flex-shrink-0" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
                 {{ $link['label'] }}
             </a>
@@ -836,19 +935,6 @@
         </div>
     </div>
     @endforeach
-
-    {{-- Utility links footer --}}
-    <div class="px-4 py-4 bg-slate-50 border-t border-gray-100">
-        <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Quick Links</p>
-        <div class="grid grid-cols-2 gap-1">
-            @foreach($nav['utility'] as $link)
-            <a href="{{ $u($link['path']) }}"
-               class="py-2 text-sm text-gray-600 hover:text-[#08186A] transition-colors">
-                {!! $link['label'] !!}
-            </a>
-            @endforeach
-        </div>
-    </div>
 
 </div>
 

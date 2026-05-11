@@ -12,7 +12,6 @@ use App\Listeners\ActivateMembershipOnOrderPaid;
 use App\Listeners\EnrollUserInCourseOnOrderPaid;
 use App\Listeners\LogPagePublished;
 use App\Listeners\LogPageUnpublished;
-use App\Listeners\ResolveGuestCheckoutAccountOnOrderPaid;
 use App\Models\Order;
 use App\Models\Page;
 use App\Models\User;
@@ -33,11 +32,8 @@ use App\Support\Security\PhpCompatibleEncrypter;
 use Illuminate\Encryption\MissingAppKeyException;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use Livewire\Livewire;
-use Livewire\Mechanisms\HandleRequests\RequireLivewireHeaders;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -62,23 +58,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Livewire::setScriptRoute(function ($handle) {
-            return Route::get('/livewire/script', $handle);
-        });
-
-        Livewire::setUpdateRoute(function ($handle) {
-            return Route::post('/livewire/update', $handle);
-        });
-
-        Route::get('/livewire/livewire.js', [\Livewire\Mechanisms\FrontendAssets\FrontendAssets::class, 'returnJavaScriptAsFile']);
-
-        Route::get('/livewire-{hash}/livewire.js', [\Livewire\Mechanisms\FrontendAssets\FrontendAssets::class, 'returnJavaScriptAsFile'])
-            ->where('hash', '[A-Za-z0-9]+');
-
-        Route::post('/livewire-{hash}/update', [\Livewire\Mechanisms\HandleRequests\HandleRequests::class, 'handleUpdate'])
-            ->middleware(['web', RequireLivewireHeaders::class])
-            ->where('hash', '[A-Za-z0-9]+');
-
         Page::observe(PageObserver::class);
         User::observe(UserObserver::class);
 
@@ -88,7 +67,6 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(PagePublished::class, [LogPagePublished::class, 'handle']);
         Event::listen(PageUnpublished::class, [LogPageUnpublished::class, 'handle']);
 
-        Event::listen(OrderPaid::class, [ResolveGuestCheckoutAccountOnOrderPaid::class, 'handle']);
         Event::listen(OrderPaid::class, [ActivateMembershipOnOrderPaid::class, 'handle']);
         Event::listen(OrderPaid::class, [EnrollUserInCourseOnOrderPaid::class, 'handle']);
     }
