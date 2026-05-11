@@ -4,6 +4,7 @@
 ])
 
 @php
+    use App\Support\Media\ImageAttributes;
     use Database\Seeders\Support\MirrorLinkReconciler;
 
     $data = is_array($page->page_data ?? null) ? $page->page_data : [];
@@ -476,6 +477,71 @@
         return $output !== '' ? $output : $html;
     };
 
+    $enhanceMirrorImages = static function (string $html): string {
+        if ($html === '' || ! str_contains($html, '<img')) {
+            return $html;
+        }
+
+        $document = new \DOMDocument('1.0', 'UTF-8');
+        $previous = libxml_use_internal_errors(true);
+        $loaded = $document->loadHTML(
+            '<?xml encoding="utf-8" ?><div id="exact-mirror-image-root">' . $html . '</div>',
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD,
+        );
+        libxml_clear_errors();
+        libxml_use_internal_errors($previous);
+
+        if (! $loaded) {
+            return $html;
+        }
+
+        $xpath = new \DOMXPath($document);
+        $root = $xpath->query('//*[@id="exact-mirror-image-root"]')->item(0);
+
+        if (! $root instanceof \DOMElement) {
+            return $html;
+        }
+
+        $imageIndex = 0;
+
+        foreach ($xpath->query('.//img[@src]', $root) ?: [] as $image) {
+            if (! $image instanceof \DOMElement) {
+                continue;
+            }
+
+            $src = trim($image->getAttribute('src'));
+            $isPriority = $imageIndex === 0;
+            $defaults = ImageAttributes::defaultAttributes($src, $isPriority);
+            $optimizedSrcset = ImageAttributes::optimizedSrcset($image->getAttribute('srcset'));
+
+            if ($optimizedSrcset !== null) {
+                $image->setAttribute('srcset', $optimizedSrcset);
+            }
+
+            $optimizedSrc = ImageAttributes::optimizedUrlFor($src);
+
+            if ($optimizedSrc !== null) {
+                $image->setAttribute('src', $optimizedSrc);
+            }
+
+            foreach ($defaults as $name => $value) {
+                if (! $image->hasAttribute($name)) {
+                    $image->setAttribute($name, $value);
+                }
+            }
+
+            $imageIndex++;
+        }
+
+        $output = '';
+
+        foreach ($root->childNodes as $childNode) {
+            $output .= $document->saveHTML($childNode) ?: '';
+        }
+
+        return $output !== '' ? $output : $html;
+    };
+
     if (is_string($bodyHtml) && $bodyHtml !== '') {
         foreach ($shortcodeReplacements as $shortcode => $replacement) {
             if (! is_string($shortcode) || $shortcode === '' || ! is_string($replacement)) {
@@ -494,6 +560,7 @@
         $bodyHtml = MirrorLinkReconciler::removeCourseBuyExamButtons($bodyHtml);
         $bodyHtml = $adaptMirrorCartForms($bodyHtml);
         $bodyHtml = $adaptMirrorPublicForms($bodyHtml, $page->slug);
+        $bodyHtml = $enhanceMirrorImages($bodyHtml);
 
         $bodyHtml = preg_replace_callback(
             '/<a\b(?P<attributes>[^>]*)\bdata-cfemail=(["\"])(?P<hex>[0-9a-fA-F]+)\2(?P<tail>[^>]*)>.*?<\/a>/is',

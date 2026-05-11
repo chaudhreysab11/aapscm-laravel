@@ -123,7 +123,7 @@
             <nav class="flex items-center gap-0" aria-label="Utility navigation">
                 @foreach($nav['utility'] as $link)
                 <a href="{{ $u($link['path']) }}"
-                   class="px-2.5 py-1 text-base text-gray-500 font-thin hover:text-[#08186A] hover:bg-white rounded transition-colors whitespace-nowrap">
+                   class="px-2.5 py-1 text-base text-gray-500 font-normal hover:text-[#08186A] hover:bg-white rounded transition-colors whitespace-nowrap">
                     {!! $link['label'] !!}
                 </a>
                 @endforeach
@@ -138,7 +138,7 @@
                      @mouseenter="show()" @mouseleave="hide()">
                     <button @click="open = !open"
                             :aria-expanded="open"
-                            class="flex items-center gap-1 px-2.5 py-1 text-base text-gray-500 font-thin hover:text-[#08186A] hover:bg-white rounded transition-colors">
+                            class="flex items-center gap-1 px-2.5 py-1 text-base text-gray-500 font-normal hover:text-[#08186A] hover:bg-white rounded transition-colors">
                         Free Student Training
                         <svg class="w-2.5 h-2.5 transition-transform duration-150" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
@@ -168,7 +168,7 @@
                      @mouseenter="show()" @mouseleave="hide()">
                     <button @click="open = !open"
                             :aria-expanded="open"
-                            class="flex items-center gap-1 px-2.5 py-1 text-base text-gray-500 font-thin hover:text-[#08186A] hover:bg-white rounded transition-colors">
+                            class="flex items-center gap-1 px-2.5 py-1 text-base text-gray-500 font-normal hover:text-[#08186A] hover:bg-white rounded transition-colors">
                         Exam, Tests & Training
                         <svg class="w-2.5 h-2.5 transition-transform duration-150" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>

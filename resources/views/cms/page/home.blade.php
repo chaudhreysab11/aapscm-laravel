@@ -14,6 +14,12 @@
         $partners       = $page->page_data['partners']       ?? [];
     @endphp
 
+    @if (! empty($sliderSlides[0]['image']))
+        @push('head')
+            <link rel="preload" as="image" href="{{ \App\Support\Media\ImageAttributes::optimizedUrlFor($sliderSlides[0]['image']) ?? $sliderSlides[0]['image'] }}" fetchpriority="high">
+        @endpush
+    @endif
+
     {{-- Live homepage slider parity --}}
     @if (! empty($sliderSlides))
         <section
@@ -62,9 +68,12 @@
                         x-transition:leave-end="opacity-0"
                         :aria-hidden="active === {{ $loop->index }} ? 'false' : 'true'">
                         <img
-                            src="{{ $slide['image'] }}"
+                            src="{{ \App\Support\Media\ImageAttributes::optimizedUrlFor($slide['image']) ?? $slide['image'] }}"
                             alt="{{ $slide['title'] }}"
                             class="home-hero-slide-image absolute inset-0 h-full w-full object-cover"
+                            loading="{{ $loop->first ? 'eager' : 'lazy' }}"
+                            decoding="async"
+                            @if ($loop->first) fetchpriority="high" @endif
                         >
                         <div class="relative z-10 flex h-full items-center">
                             <div class="mx-auto w-full max-w-[1240px] px-5 sm:px-8 lg:px-10">
@@ -164,8 +173,9 @@
                 </div>
                 @if (! empty($intro['image']))
                     <div class="flex justify-center">
-                        <img src="{{ $intro['image'] }}" alt="Advancing Excellence"
-                             class="w-full max-w-[521px] h-auto rounded-lg shadow-[rgba(100,100,111,0.15)_0px_4px_18px_0px]">
+                        <img src="{{ \App\Support\Media\ImageAttributes::optimizedUrlFor($intro['image']) ?? $intro['image'] }}" alt="Advancing Excellence"
+                                class="w-full max-w-[521px] h-auto rounded-lg shadow-[rgba(100,100,111,0.15)_0px_4px_18px_0px]"
+                                loading="lazy" decoding="async">
                     </div>
                 @endif
             </div>
@@ -179,8 +189,9 @@
                 @foreach ($certifications as $cert)
                     <div class="bg-white rounded-lg shadow-[rgba(100,100,111,0.12)_0px_4px_14px_0px] p-6 flex flex-col text-center hover:-translate-y-1 transition-transform">
                         @if (! empty($cert['image']))
-                            <img src="{{ $cert['image'] }}" alt="{{ $cert['title'] }}"
-                                 class="w-[200px] h-[200px] object-contain mx-auto mb-4">
+                            <img src="{{ \App\Support\Media\ImageAttributes::optimizedUrlFor($cert['image']) ?? $cert['image'] }}" alt="{{ $cert['title'] }}"
+                                   class="w-[200px] h-[200px] object-contain mx-auto mb-4"
+                                   width="200" height="200" loading="lazy" decoding="async">
                         @endif
                         <h2 class="text-[35px] font-semibold text-[#14166e] leading-snug mb-3 min-h-[56px]">
                             {{ $cert['title'] }}
@@ -189,8 +200,9 @@
                             {{ $cert['desc'] }}
                         </p>
                         @if (! empty($cert['badge']))
-                            <img src="{{ $cert['badge'] }}" alt="{{ $cert['title'] }} badge"
-                                 class="w-[130px] h-[130px] object-contain mx-auto mb-4">
+                            <img src="{{ \App\Support\Media\ImageAttributes::optimizedUrlFor($cert['badge']) ?? $cert['badge'] }}" alt="{{ $cert['title'] }} badge"
+                                   class="w-[130px] h-[130px] object-contain mx-auto mb-4"
+                                   width="130" height="130" loading="lazy" decoding="async">
                         @endif
                         <a href="{{ $cert['href'] ?? '#' }}"
                            class="inline-flex items-center justify-center gap-2 bg-[#14166e] hover:bg-[#1e2199] text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-colors">
@@ -216,8 +228,9 @@
                             @if (! empty($card['image']))
                                 <a href="{{ $card['href'] ?? '#' }}"
                                    class="block rounded-lg">
-                                    <img src="{{ $card['image'] }}" alt="{{ $card['title'] }}"
-                                         class="w-full h-[250px] object-cover rounded-md">
+                                    <img src="{{ \App\Support\Media\ImageAttributes::optimizedUrlFor($card['image']) ?? $card['image'] }}" alt="{{ $card['title'] }}"
+                                         class="w-full h-[250px] object-cover rounded-md"
+                                         width="520" height="250" loading="lazy" decoding="async">
                                 </a>
                             @endif
                             <div class="px-1 pt-5 text-center">
@@ -245,12 +258,14 @@
     @if (! empty($testCta))
         <section class="bg-[#14166e] relative isolate overflow-hidden py-16">
             @if (! empty($testCta['icon2']))
-                <img src="{{ $testCta['icon2'] }}" alt="" aria-hidden="true"
-                     class="pointer-events-none absolute top-0 left-0 z-0 w-full h-full object-cover opacity-20 select-none">
+                <img src="{{ \App\Support\Media\ImageAttributes::optimizedUrlFor($testCta['icon2']) ?? $testCta['icon2'] }}" alt="" aria-hidden="true"
+                     class="pointer-events-none absolute top-0 left-0 z-0 w-full h-full object-cover opacity-20 select-none"
+                     loading="lazy" decoding="async">
             @endif
             @if (! empty($testCta['icon']))
-                <img src="{{ $testCta['icon'] }}" alt="" aria-hidden="true"
-                     class="pointer-events-none absolute top-8 left-8 z-0 w-12 h-auto opacity-40 select-none">
+                <img src="{{ \App\Support\Media\ImageAttributes::optimizedUrlFor($testCta['icon']) ?? $testCta['icon'] }}" alt="" aria-hidden="true"
+                     class="pointer-events-none absolute top-8 left-8 z-0 w-12 h-auto opacity-40 select-none"
+                     loading="lazy" decoding="async">
             @endif
             <div class="relative z-10 max-w-[900px] mx-auto px-4 text-center text-white">
                 @if (! empty($testCta['eyebrow']))
@@ -289,8 +304,9 @@
                         <div class="flex h-full flex-col bg-[#f6f8fb] rounded-lg p-6 text-center shadow-[rgba(100,100,111,0.12)_0px_4px_14px_0px] hover:-translate-y-1 transition-transform">
                             <div class="flex flex-1 flex-col">
                                 @if (! empty($card['icon']))
-                                    <img src="{{ $card['icon'] }}" alt="{{ $card['title'] }}"
-                                        class="w-16 h-16 object-contain mx-auto mb-5">
+                                    <img src="{{ \App\Support\Media\ImageAttributes::optimizedUrlFor($card['icon']) ?? $card['icon'] }}" alt="{{ $card['title'] }}"
+                                        class="w-16 h-16 object-contain mx-auto mb-5"
+                                        width="64" height="64" loading="lazy" decoding="async">
                                 @endif
                                 <h2 class="text-[18px] font-semibold text-[#14166e] mb-3 leading-snug">{{ $card['title'] }}</h2>
                                 <p class="text-[16px] text-gray-600 leading-relaxed">{{ $card['text'] }}</p>
@@ -320,8 +336,9 @@
                         <div class="bg-white rounded-lg p-6 flex gap-5 shadow-[rgba(100,100,111,0.10)_0px_4px_12px_0px]">
                             @if (! empty($step['icon']))
                                 <div class="flex-shrink-0">
-                                    <img src="{{ $step['icon'] }}" alt="{{ $step['title'] }}"
-                                         class="w-16 h-16 object-contain">
+                                    <img src="{{ \App\Support\Media\ImageAttributes::optimizedUrlFor($step['icon']) ?? $step['icon'] }}" alt="{{ $step['title'] }}"
+                                         class="w-16 h-16 object-contain"
+                                         width="64" height="64" loading="lazy" decoding="async">
                                 </div>
                             @endif
                             <div class="flex-grow">
@@ -357,8 +374,9 @@
                     <div x-ref="track" class="flex gap-10 items-center animate-[scroll-x_40s_linear_infinite]">
                         @foreach (($partners['logos'] ?? []) as $logo)
                             <div class="flex-shrink-0">
-                                <img src="{{ $logo }}" alt="Affiliate partner"
-                                     class="w-[120px] h-[120px] object-contain opacity-80 hover:opacity-100 transition-opacity">
+                                <img src="{{ \App\Support\Media\ImageAttributes::optimizedUrlFor($logo) ?? $logo }}" alt="Affiliate partner"
+                                      class="w-[120px] h-[120px] object-contain opacity-80 hover:opacity-100 transition-opacity"
+                                      width="120" height="120" loading="lazy" decoding="async">
                             </div>
                         @endforeach
                     </div>
