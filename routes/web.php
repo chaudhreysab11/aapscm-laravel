@@ -30,7 +30,13 @@ Route::get('/search/suggest', [SearchController::class, 'suggest'])
     ->name('search.suggest')
     ->middleware('throttle:60,1');   // 60 requests / minute per IP
 
-Route::get('/', fn () => app(CmsPageController::class)('home'))->name('home');
+Route::get('/', function () {
+    try {
+        return app(CmsPageController::class)('home');
+    } catch (Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+        return view('welcome');
+    }
+})->name('home');
 
 // Certifications listing is a CMS page (seeded from live WP snapshot).
 Route::get('/certifications-for-professionals', fn () => app(CmsPageController::class)('certifications-for-professionals'))

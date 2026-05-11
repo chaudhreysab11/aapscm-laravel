@@ -1571,6 +1571,25 @@ class WpCmsPagesImportSeeder extends Seeder
                 'show_in_nav' => false,
                 'sort_order' => 0,
             ],
+            [
+                'source_id' => 102895,
+                'slug' => 'mohammed-zul-jamal',
+                'title' => 'Mohammed Zul Jamal',
+                'seo_title' => 'Mohammed Zul Jamal - AAPSCM®',
+                'seo_description' => 'Mohammed Zul Jamal, Regional PR Manager (MENA Region) at AAPSCM®.',
+                'canonical' => 'https://aapscm.org/mohammed-zul-jamal/',
+                'og_image' => 'https://aapscm.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-16-at-22.13.01.jpeg',
+                'template' => 'person_profile',
+                'page_data' => [
+                    'person_name' => 'Mohammed Zul Jamal',
+                    'role' => 'REGIONAL PR MANAGER (MENA Region)',
+                    'avatar_image' => 'https://aapscm.org/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-16-at-22.13.01.jpeg',
+                    'linkedin_url' => null,
+                    'bio' => "<p>Mohammed Zul Jamal serves as a Regional PR Manager (MENA Region), where he is responsible for Business development, client relationship management, and stakeholder engagement.</p>\n<p>Jamal brings a proven record of accomplishment in driving growth, innovation, and operational excellence across the education, training, procurement, and supply chain sectors.</p>",
+                ],
+                'show_in_nav' => false,
+                'sort_order' => 0,
+            ],
         ];
     }
 }

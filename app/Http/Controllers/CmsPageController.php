@@ -161,6 +161,7 @@ class CmsPageController extends Controller
         'influencing-suppliers' => 'cms.page.influencing-suppliers-mirror',
         'james-raussen' => 'cms.page.james-raussen',
         'mohamed-aboelela' => 'cms.page.mohamed-aboelela',
+        'mohammed-zul-jamal' => 'cms.page.mohammed-zul-jamal',
         'board-of-directors' => 'cms.page.board-of-directors',
         'certifications-for-professionals' => 'cms.page.certifications-for-professionals',
         'certifications' => 'cms.page.certifications',
@@ -422,12 +423,29 @@ class CmsPageController extends Controller
         }
 
         if (isset(self::SLUG_VIEWS[$slug])) {
-            return view(self::SLUG_VIEWS[$slug], $viewData);
+            if ($this->shouldUseSlugView($slug, $page)) {
+                return view(self::SLUG_VIEWS[$slug], $viewData);
+            }
+
+            return view('cms.page.wp-content', $viewData);
         }
 
         $viewName = self::TEMPLATE_VIEWS[$page->template] ?? 'cms.page.default';
 
         return view($viewName, $viewData);
+    }
+
+    private function shouldUseSlugView(string $slug, Page $page): bool
+    {
+        if ($slug === 'verify-a-certificate') {
+            return true;
+        }
+
+        if ($page->source_id !== null) {
+            return true;
+        }
+
+        return is_array($page->page_data) && $page->page_data !== [];
     }
 
     /**

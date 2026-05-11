@@ -1,5 +1,5 @@
 <x-layouts.auth-portal
-    eyebrow="AAPSCM® Secure Access"
+    eyebrow="AAPSCM Secure Access"
     title="Confirm Password"
     compact
 >

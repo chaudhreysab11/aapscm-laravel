@@ -9,8 +9,8 @@ use App\Http\Requests\StoreCheckoutRequest;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Services\CartPricingService;
 use App\Services\CartService;
-use App\Services\PricingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +21,7 @@ class CheckoutController extends Controller
 {
     public function __construct(
         private CartService $cart,
-        private PricingService $pricing,
+        private CartPricingService $cartPricing,
         private AddProductToCartBySourceIdAction $addProductToCartBySourceId,
     ) {}
 
@@ -39,7 +39,9 @@ class CheckoutController extends Controller
                     ->with('error', 'The requested product is not available.');
             }
 
-            return redirect()->route('checkout.show');
+            return redirect()
+                ->route('cart.show')
+                ->with('success', "{$product->name} added to your cart.");
         }
 
         if ($this->cart->isEmpty()) {
@@ -48,9 +50,14 @@ class CheckoutController extends Controller
                 ->with('error', 'Your cart is currently empty. Add a product before checking out.');
         }
 
+        $items = $this->cart->items();
+        $summary = $this->cartPricing->summarize($items, $this->cart->couponCode());
+
         return view('cms.page.checkout', [
-            'items' => $this->cart->items(),
-            'subtotal' => $this->cart->subtotal(),
+            'items' => $items,
+            'subtotal' => $summary['totals']['subtotal'],
+            'totals' => $summary['totals'],
+            'appliedCoupon' => $summary['coupon'],
         ]);
     }
 
@@ -61,11 +68,13 @@ class CheckoutController extends Controller
         }
 
         $items = $this->cart->items();
-        $subtotal = (float) $this->cart->subtotal();
+        $summary = $this->cartPricing->summarize($items, $this->cart->couponCode());
+        $totals = $summary['totals'];
+        $coupon = $summary['coupon'];
         $currency = $items->first()['currency'] ?? 'USD';
         $data = $request->validated();
 
-        $order = DB::transaction(function () use ($items, $subtotal, $currency, $data, $request): Order {
+        $order = DB::transaction(function () use ($items, $totals, $coupon, $currency, $data, $request): Order {
             $order = Order::create([
                 'user_id' => $request->user()?->id,
                 'billing_email' => $data['billing_email'],
@@ -75,15 +84,15 @@ class CheckoutController extends Controller
                 'payment_method' => $data['gateway'],
                 'payment_status' => 'unpaid',
                 'currency' => $currency,
-                'subtotal' => number_format($subtotal, 2, '.', ''),
-                'tax' => '0.00',
-                'discount' => '0.00',
-                'total' => number_format($subtotal, 2, '.', ''),
-                'notes' => $data['notes'] ?? json_encode([
-                    'billing_address' => $data['billing_address'],
-                    'billing_city' => $data['billing_city'],
-                    'billing_country' => $data['billing_country'],
-                ]),
+                'subtotal' => $totals['subtotal'],
+                'tax' => $totals['tax'],
+                'discount' => $totals['discount'],
+                'coupon_id' => $coupon['id'] ?? null,
+                'coupon_code' => $coupon['code'] ?? null,
+                'coupon_type' => $coupon['type'] ?? null,
+                'coupon_value' => $coupon['value'] ?? null,
+                'total' => $totals['total'],
+                'notes' => $this->checkoutNotes($data, $request),
             ]);
 
             foreach ($items as $line) {
@@ -117,5 +126,25 @@ class CheckoutController extends Controller
     private function generateOrderNumber(): string
     {
         return 'AAPSCM-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
+    }
+
+    /** @param array<string, mixed> $data */
+    private function checkoutNotes(array $data, StoreCheckoutRequest $request): string
+    {
+        $notes = [
+            'billing_address' => $data['billing_address'],
+            'billing_city' => $data['billing_city'],
+            'billing_country' => $data['billing_country'],
+        ];
+
+        if (! empty($data['notes'])) {
+            $notes['customer_notes'] = $data['notes'];
+        }
+
+        if ($request->user() === null && (bool) ($data['create_account'] ?? false)) {
+            $notes['checkout_context'] = ['create_account' => true];
+        }
+
+        return (string) json_encode($notes, JSON_THROW_ON_ERROR);
     }
 }

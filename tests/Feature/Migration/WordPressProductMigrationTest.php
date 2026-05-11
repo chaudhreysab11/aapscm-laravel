@@ -180,7 +180,7 @@ it('supports WooCommerce checkout add-to-cart URLs for imported products', funct
     $product = Product::where('source_id', 2004)->firstOrFail();
 
     $this->get('/checkout/?add-to-cart=2004')
-        ->assertRedirect(route('checkout.show'));
+        ->assertRedirect(route('cart.show'));
 
     expect(session('cart.items.' . $product->id . '.quantity'))->toBe(1);
 });

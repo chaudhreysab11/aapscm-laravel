@@ -22,6 +22,7 @@ class Product extends Model
         'category',
         'type',
         'certification_catalog_id',
+        'membership_tier_id',
         'is_active',
         'image',
         'source_id',
@@ -50,6 +51,11 @@ class Product extends Model
         return $this->belongsTo(CertificationCatalog::class);
     }
 
+    public function membershipTier(): BelongsTo
+    {
+        return $this->belongsTo(MembershipTier::class);
+    }
+
     public function prices(): HasMany
     {
         return $this->hasMany(ProductPrice::class);
@@ -60,5 +66,24 @@ class Product extends Model
         return $this->hasOne(ProductPrice::class)
             ->whereNull('membership_tier_id')
             ->latestOfMany();
+    }
+
+    public function isTrainingProduct(): bool
+    {
+        return $this->type === 'training';
+    }
+
+    public function isMembershipProduct(): bool
+    {
+        return $this->type === 'membership';
+    }
+
+    public function isMembershipRenewalProduct(): bool
+    {
+        $name = strtolower($this->name);
+        $slug = strtolower($this->slug);
+
+        return $this->isMembershipProduct()
+            && (str_contains($name, 'renewal') || str_contains($slug, 'renewal'));
     }
 }

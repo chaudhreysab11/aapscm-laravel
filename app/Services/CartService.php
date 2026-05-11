@@ -30,10 +30,11 @@ class CartService
     public function add(Product $product, int $quantity = 1, ?User $user = null, ?array $meta = null): void
     {
         $items = $this->raw();
+        $quantity = max(1, $quantity);
         $meta = $this->sanitizeMeta($meta);
 
         if (isset($items[$product->id])) {
-            $items[$product->id]['quantity'] = 1;
+            $items[$product->id]['quantity'] = $quantity;
 
             if ($meta !== []) {
                 $items[$product->id]['meta'] = $meta;
@@ -42,7 +43,7 @@ class CartService
             $resolved = $this->pricingService->resolvePrice($product, $user);
 
             $items[$product->id] = [
-                'quantity' => 1,
+                'quantity' => $quantity,
                 'unit_price' => $resolved['price'],
                 'currency' => $resolved['currency'],
                 'membership_tier_id' => $resolved['membership_tier_id'],
@@ -64,7 +65,7 @@ class CartService
         if ($quantity <= 0) {
             unset($items[$productId]);
         } else {
-            $items[$productId]['quantity'] = 1;
+            $items[$productId]['quantity'] = $quantity;
         }
 
         $this->storeRaw($items);

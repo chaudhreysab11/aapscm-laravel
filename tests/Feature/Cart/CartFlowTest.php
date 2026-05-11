@@ -58,11 +58,12 @@ it('adds a product to the cart from a WooCommerce checkout add-to-cart query', f
     $product->update(['source_id' => 4234]);
 
     $this->get('/checkout/?add-to-cart=4234')
-        ->assertRedirect(route('checkout.show'));
+        ->assertRedirect(route('cart.show'))
+        ->assertSessionHas('success', "{$product->name} added to your cart.");
 
     expect(session('cart.items.' . $product->id . '.quantity'))->toBe(1);
 
-    $this->get(route('checkout.show'))
+    $this->get(route('cart.show'))
         ->assertOk()
         ->assertSee($product->name)
         ->assertSee('USD 49.99');
@@ -73,7 +74,7 @@ it('does not duplicate a WooCommerce checkout add-to-cart item after the query i
     $product->update(['source_id' => 4234]);
 
     $this->get('/checkout/?add-to-cart=4234')
-        ->assertRedirect(route('checkout.show'));
+        ->assertRedirect(route('cart.show'));
 
     expect(session('cart.items.' . $product->id . '.quantity'))->toBe(1);
 
@@ -81,6 +82,15 @@ it('does not duplicate a WooCommerce checkout add-to-cart item after the query i
     $this->get(route('checkout.show'))->assertOk();
 
     expect(session('cart.items.' . $product->id . '.quantity'))->toBe(1);
+});
+
+it('ignores add-to-cart redirect overrides and returns to the cart page', function (): void {
+    $product = seedPricedProduct();
+
+    $this->post(route('cart.add', $product->id), [
+        'quantity' => 1,
+        'redirect_to' => route('checkout.show'),
+    ])->assertRedirect(route('cart.show'));
 });
 
 it('redirects an invalid WooCommerce checkout add-to-cart source id to the cart with an error', function (): void {

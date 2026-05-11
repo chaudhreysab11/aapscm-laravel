@@ -238,7 +238,7 @@ it('supports WooCommerce checkout add-to-cart URLs for fully imported products',
     $product = Product::where('source_id', 3006)->firstOrFail();
 
     $this->get('/checkout/?add-to-cart=3006')
-        ->assertRedirect(route('checkout.show'));
+        ->assertRedirect(route('cart.show'));
 
     expect(session('cart.items.' . $product->id . '.quantity'))->toBe(1);
 });

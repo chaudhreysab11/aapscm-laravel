@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             BoardProfilesSeeder::class,
             JamesRaussenPageSeeder::class,
             MohamedAboelelaPageSeeder::class,
+            MohammedZulJamalPageSeeder::class,
             AapscmHotlinePageSeeder::class,
             CareerCenterMirrorPagesSeeder::class,
             TrademarkPageSeeder::class,

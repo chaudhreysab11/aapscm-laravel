@@ -6,6 +6,7 @@ use App\Models\BoardMember;
 use App\Models\Page;
 use Database\Seeders\BoardMembersSeeder;
 use Database\Seeders\BoardOfDirectorsPageSeeder;
+use Database\Seeders\MohammedZulJamalPageSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -84,4 +85,51 @@ it('links every board member profile_page_slug to an existing CMS page when pres
         $exists = Page::where('slug', $slug)->exists();
         expect($exists)->toBeTrue("Expected a CMS page row for board member profile slug '{$slug}'.");
     }
+});
+
+it('renders board member profile links with trailing slashes', function () {
+    $member = BoardMember::active()
+        ->whereNotNull('profile_page_slug')
+        ->ordered()
+        ->firstOrFail();
+
+    Page::firstOrCreate(
+        ['slug' => $member->profile_page_slug],
+        [
+            'title' => $member->name,
+            'status' => 'published',
+            'is_published' => true,
+            'template' => 'standard_content',
+        ],
+    );
+
+    $profileUrl = url('/' . trim($member->profile_page_slug, '/')) . '/';
+
+    $this->get('/board-of-directors/')
+        ->assertOk()
+        ->assertSee('href="' . $profileUrl . '"', false);
+
+    $this->get('/' . $member->profile_page_slug)
+        ->assertRedirect('/' . $member->profile_page_slug . '/');
+
+    $this->get('/' . $member->profile_page_slug . '/')
+        ->assertOk()
+        ->assertSee($member->name, false);
+});
+
+it('seeds and renders the Mohammed Zul Jamal board profile page', function () {
+    $this->seed(MohammedZulJamalPageSeeder::class);
+
+    $page = Page::where('slug', 'mohammed-zul-jamal')->firstOrFail();
+
+    expect($page->source_id)->toBe(102895)
+        ->and($page->is_published)->toBeTrue()
+        ->and($page->seo_canonical)->toBe(config('app.url') . '/mohammed-zul-jamal/');
+
+    $this->get('/mohammed-zul-jamal/')
+        ->assertOk()
+        ->assertSee('Mohammed Zul Jamal', false)
+        ->assertSee('REGIONAL PR MANAGER (MENA Region)', false)
+        ->assertSee('client relationship management', false)
+        ->assertDontSee('https://aapscm.org/wp-content/uploads', false);
 });

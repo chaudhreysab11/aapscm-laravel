@@ -1,1 +1,0 @@
-<?php echo $__env->make('cms.page.partials.order-document', ['documentType' => 'invoice'], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Personal Work\AAPSCM-LARAVEL\resources\views\cms\page\order-invoice.blade.php ENDPATH**/ ?>
